@@ -2,7 +2,7 @@
   <app-dropdown-row (status)="setStatus($event)">
     <div class="header" row-header [ngClass]="{'expanded': status !== 'collapsed'}">
       <div class="name-container">
-        <div class="name">
+        <div #shelfName class="name" contenteditable="true" (click)="$event.stopPropagation()" (input)="getName()">
           {{shelf.name}}
         </div>
         <div class="shelf-count">
@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="actions">
-        <button class="button" md-raised-button color="primary" (click)="editShelf($event)">Edit</button>
+        <button class="button" md-raised-button color="primary" [disabled]="unique" (click)="editShelf($event)">Edit</button>
         <button class="button" md-raised-button color="warn" (click)="deleteShelf(shelf.id, $event)">Delete</button>
         <i class="material-icons dropdown-icon" [ngClass]="{'expanded': status !== 'collapsed'}">arrow_drop_down_circle</i>
       </div>

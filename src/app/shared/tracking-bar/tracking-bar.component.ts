@@ -6,6 +6,7 @@ import { StoredReading, Reading } from '../models/tracking.model';
 import { trackingActions } from '../../reducers/tracking.reducer';
 import * as moment from 'moment'
 import { User } from '../models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tracking-bar',
@@ -20,7 +21,7 @@ export class TrackingBarComponent {
   time: string = '';
   getLast: boolean = true;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.dispatcher = new ComponentDispatcher(store, this);
     let {dataStream: trackingData, errorStream: trackingError} = squirrel(store, 'tracking', this);
     let {dataStream: userData, errorStream: userError} = squirrel(store, 'users', this);
@@ -68,6 +69,10 @@ export class TrackingBarComponent {
 
   stop() {
     this.dispatcher.dispatch(trackingActions.ADDITIONAL.API_END, {id: this.reading.bookId, readings: true});
+  }
+
+  redirectToDetail(){
+    this.router.navigate([`platform/detail/${this.reading.bookId}`]);
   }
 
 }

@@ -23,7 +23,15 @@ $padding: 15px;
     display: flex;
     align-items: center;
     .name {
-
+      min-width: 20px;
+      padding: 4px 8px;
+      transition: background-color .5s;
+      outline: none;
+      border: none;
+      background-color: transparent;
+      &:focus{
+        background-color: rgba(black, .05);
+      }
     }
     .shelf-count {
       margin-left: 15px;

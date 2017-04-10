@@ -15,7 +15,8 @@ export class ShelvesComponent {
 
   dispatcher: ComponentDispatcher;
   shelfName = '';
-  shelves = [];
+  shelves: Shelf[] = [];
+  shelfNames: string[] = [];
   subscriptions = [];
 
   constructor(private store: Store<AppState>, private router: Router) {
@@ -26,6 +27,7 @@ export class ShelvesComponent {
       dataStream.subscribe(
         (data: SquirrelData<Shelf>) => {
           this.shelves = data.data;
+          this.shelfNames = this.shelves.map(shelf => shelf.name);
         }
       ));
     this.subscriptions.push(
@@ -49,4 +51,13 @@ export class ShelvesComponent {
     console.log('id ', id);
     this.router.navigate([`platform/detail/${id}`]);
   }
+
+  editShelf(shelf: Shelf){
+    this.dispatcher.dispatch(shelvesActions.API_UPDATE, shelf);
+  }
+
+  get unique(){
+    return this.shelfNames.indexOf(this.shelfName) > -1;
+  }
+
 }

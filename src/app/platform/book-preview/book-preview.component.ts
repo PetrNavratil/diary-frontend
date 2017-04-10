@@ -13,7 +13,7 @@ const STATIC = 'statis';
   animations: [
     trigger('hover', [
       state(HOVERED, style({'height': '50%', 'width': '40%', 'right': '10px', 'top': '20px'})),
-      state(STATIC, style({'height': '100%', 'width': '100%', 'right': '0'})),
+      state(STATIC, style({'height': '100%', 'width': '100%', 'right': '0', 'top': '0'})),
       transition('* => *', animate('300ms'))
     ])
   ],

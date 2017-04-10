@@ -1,5 +1,5 @@
 <div class="tracking-container" *ngIf="reading">
-  <div class="info">
+  <div class="info" (click)="redirectToDetail()">
     <div class="title">{{reading.title | truncate:40}}</div>
     <div class="second-row">
       <div class="author">{{reading.author|truncate:35}}</div>

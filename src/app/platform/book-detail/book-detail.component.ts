@@ -1,4 +1,4 @@
-import { Component, AfterViewChecked, OnDestroy, OnInit } from '@angular/core';
+import { Component, AfterViewChecked, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AppState } from '../../shared/models/store-model';
 import { Store } from '@ngrx/store';
 import { GRBook, GRSimilarBook } from '../../shared/models/goodreadsBook.model';
@@ -22,11 +22,13 @@ import { trackingActions } from '../../reducers/tracking.reducer';
 import { StoredReading, Interval } from '../../shared/models/tracking.model';
 import * as moment from 'moment';
 import 'moment/locale/cs';
+import { getDurationFormat } from '../../shared/duration-format';
 
 @Component({
   selector: 'app-book-detail',
   templateUrl: './book-detail.component.html',
-  styleUrls: ['./book-detail.component.scss']
+  styleUrls: ['./book-detail.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy {
 
@@ -348,6 +350,16 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     this.dispatcher.dispatch(trackingActions.ADDITIONAL.API_END, {id: this.id, readings: true});
   }
 
+
+  selectReading(index: number) {
+    this.selectedReading = index;
+  }
+
+  get existThisShelf() {
+    return this.shelves.filter(shelf => shelf.name === this.newShelf).length === 1;
+  }
+
+  // gets reading interval for currently selected reading
   get readingInterval() {
     if (this.trackings.readings[this.selectedReading].completed) {
       return `${moment(this.trackings.readings[this.selectedReading].start).format('LLL')}
@@ -357,31 +369,32 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
   }
 
+  // gets reading interval through all readings
   get wholeReadingTime() {
     let time = 0;
     for (let reading of this.trackings.readings) {
       time = time + this.getIntervalHours(reading.intervals);
     }
-    return moment.utc(moment.duration(time).asMilliseconds()).format("HH:mm");
+    return getDurationFormat(moment.duration(time));
   }
 
-  selectReading(index: number) {
-    this.selectedReading = index;
-  }
 
+  // gets formatted time
   getTime(timestamp: string) {
     return timestamp !== '0001-01-01T00:00:00Z' ? moment(timestamp).format('LLL') : '-';
   }
 
+  // gets interval duration
   getDuration(start: string, stop: string) {
     if (stop === '0001-01-01T00:00:00Z') {
       return '-';
     }
     let duration = moment.duration(moment(stop).diff(moment(start)));
-    return this.getDurationFormat(duration);
+    return getDurationFormat(duration);
   }
 
-  getIntervalHours(intervals: Interval[]) {
+  // gets time of reading intervals
+  getIntervalHours(intervals: Interval[]): number {
     let time = 0;
     for (let interval of intervals) {
       if (interval.stop !== '0001-01-01T00:00:00Z') {
@@ -394,109 +407,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   get readingTime() {
     let duration = moment
       .duration(this.getIntervalHours(this.trackings.readings[this.selectedReading].intervals));
-    return this.getDurationFormat(moment.duration(this.getIntervalHours(this.trackings.readings[this.selectedReading].intervals)));
+    return getDurationFormat(moment.duration(this.getIntervalHours(this.trackings.readings[this.selectedReading].intervals)));
   }
 
-  getDurationFormat(time: moment.Duration) {
-    let formatted: string = '';
-    if (time.years()) {
-      switch (time.years()) {
-        case 1:
-          formatted = '1 rok ';
-          break;
-        case 2:
-        case 3:
-        case 4:
-          formatted = `${time.years()} roky `;
-          break;
-        default:
-          formatted = `${time.years()} let `;
-      }
-    }
-    if (time.months()) {
-      switch (time.months()) {
-        case 1:
-          formatted += '1 měsíc ';
-          break;
-        case 2:
-        case 3:
-        case 4:
-          formatted += `${time.months()} měsíce `;
-          break;
-        default:
-          formatted += `${time.months()} měsíců `;
-      }
-    }
-    if (time.weeks()) {
-      switch (time.weeks()) {
-        case 1:
-          formatted += '1 týden ';
-          break;
-        case 2:
-        case 3:
-        case 4:
-          formatted += `${time.weeks()} týdny `;
-          break;
-        default:
-          formatted += `${time.weeks()} měsíců `;
-      }
-    }
-    if (time.days()) {
-      switch (time.days()) {
-        case 1:
-          formatted += '1 den ';
-          break;
-        case 2:
-        case 3:
-        case 4:
-          formatted += `${time.days()} dny `;
-          break;
-        default:
-          formatted += `${time.days()} dnů `;
-      }
-    }
-    if (time.hours()) {
-      switch (time.hours()) {
-        case 1:
-          formatted += '1 hodina ';
-          break;
-        case 2:
-        case 3:
-        case 4:
-          formatted += `${time.hours()} hodiny `;
-          break;
-        default:
-          formatted += `${time.hours()} hodin `;
-      }
-    }
-    if (time.minutes()) {
-      switch (time.minutes()) {
-        case 1:
-          formatted += '1 minuta ';
-          break;
-        case 2:
-        case 3:
-        case 4:
-          formatted += `${time.minutes()} minuty `;
-          break;
-        default:
-          formatted += `${time.minutes()} minut `;
-      }
-    }
-    if (time.seconds()) {
-      switch (time.seconds()) {
-        case 1:
-          formatted += '1 sekunda ';
-          break;
-        case 2:
-        case 3:
-        case 4:
-          formatted += `${time.seconds()} sekundy `;
-          break;
-        default:
-          formatted += `${time.seconds()} sekund `;
-      }
-    }
-    return formatted;
-  }
 }

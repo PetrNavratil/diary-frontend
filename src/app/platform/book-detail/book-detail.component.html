@@ -35,7 +35,7 @@
               <md-input-container>
                 <input mdInput placeholder="Add new shelf" type="text" [(ngModel)]="newShelf">
               </md-input-container>
-              <button class="button" md-raised-button color="primary" (click)="addNewShelf()">Add <i class="material-icons">add</i></button>
+              <button class="button" md-raised-button color="primary" [disabled]="!newShelf.length || existThisShelf" (click)="addNewShelf()">Add <i class="material-icons">add</i></button>
             </div>
           </div>
         </app-dropdown>
@@ -81,11 +81,11 @@
         <app-card *ngIf="bookInfo?.inBooks && selectedReading !== -1">
           <div class="reading">
             <div class="title-row">
-              <div class="item">
+              <div class="reading-item">
                 <div class="label">období čtení</div>
                 <div class="content">{{readingInterval}}</div>
               </div>
-              <div class="item">
+              <div class="reading-item">
                 <div class="label">status</div>
                 <div class="content">{{trackings.readings[selectedReading].completed ? (BookStatus.READ | bookStatus) : (BookStatus.READING
                   | bookStatus) }}
@@ -109,8 +109,6 @@
                   -1}}x
                 </div>
                 <div class="label">celková doba čtení</div>
-                <div class="content">12-14</div>
-                <div class="label">doba vlastního čtení</div>
                 <div class="content">{{wholeReadingTime}}</div>
               </div>
               <div class="reading-table-column">

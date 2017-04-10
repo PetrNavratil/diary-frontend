@@ -10,5 +10,9 @@ export const detailActions = new SquirrelActions(modelName);
 
 export function detailReducer(state: SquirrelState<GRBook> = {data: [], error: null, loading: false, origin: null},
                               action: Action) {
-  return generic(state, action);
+  switch(action.type){
+    default:
+      return generic(state, action);
+  }
+
 }

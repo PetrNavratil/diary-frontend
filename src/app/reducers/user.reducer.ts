@@ -10,6 +10,8 @@ export const userActions = new SquirrelActions(modelName);
 export function usersReducer(state: SquirrelState<User> = {data: [], error: null, loading: false, origin: null},
                              action: Action) {
   switch (action.type) {
+    case 'CLEAR':
+      return state;
     default:
       return generic(state, action);
   }

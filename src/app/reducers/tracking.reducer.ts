@@ -61,6 +61,8 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
         })],
         origin: action.payload.origin
       });
+    case 'CLEAR':
+      return state;
     default:
       return generic(state, action);
   }

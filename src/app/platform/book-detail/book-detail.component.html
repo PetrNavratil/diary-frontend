@@ -35,7 +35,7 @@
               <md-input-container>
                 <input mdInput placeholder="Add new shelf" type="text" [(ngModel)]="newShelf">
               </md-input-container>
-              <button class="button" md-raised-button color="primary" [disabled]="!newShelf.length || existThisShelf" (click)="addNewShelf()">Add <i class="material-icons">add</i></button>
+              <button class="button" md-raised-button color="primary" [disabled]="!newShelf.length || existThisShelf" (click)="addNewShelf($event)">Add <i class="material-icons">add</i></button>
             </div>
           </div>
         </app-dropdown>

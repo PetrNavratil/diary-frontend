@@ -1,6 +1,6 @@
 import {
   Component, AfterViewChecked, OnDestroy, ElementRef, animate, transition, style,
-  state, trigger, ViewChild, Input
+  state, trigger, ViewChild, Input, ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
 import * as Tether from 'tether';
 
@@ -17,7 +17,8 @@ const EXPANDED = 'expanded';
       state(EXPANDED, style({'height': '*', 'opacity': '1'})),
       transition('* => *', animate('500ms ease-out'))
     ])
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropdownComponent implements AfterViewChecked, OnDestroy {
 
@@ -28,10 +29,11 @@ export class DropdownComponent implements AfterViewChecked, OnDestroy {
   @Input() closeOnClick: boolean = false;
   @Input() disabled = false;
 
-  constructor(private el: ElementRef) {
+  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {
     document.body.addEventListener('click', (event) => {
       if (!this.el.nativeElement.contains(event.target)) {
         this.state = COLLAPSED;
+        this.cd.markForCheck();
       }
     });
   }

@@ -17,7 +17,8 @@ export function searchReducer(state: SquirrelState<GRSearchBook> = {data: [], er
   switch (action.type) {
     case searchAdditionalActions.DESTROY:
       return {data: [], error: null, loading: false, origin: null};
-
+    case 'CLEAR':
+      return state;
     default:
       return generic(state, action);
   }

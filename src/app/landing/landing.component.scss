@@ -1,0 +1,54 @@
+$login-width: 650px;
+$error-color: #f44336;
+
+.landing-container {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  min-width: $login-width;
+
+  app-card {
+    //margin-top: 5%;
+    .action {
+      padding: 25px;
+      width: 500px;
+      form {
+        display: flex;
+        flex-direction: column;
+
+        md-input-container {
+
+          margin-bottom: 5px;
+
+          /deep/ span.mat-placeholder-required {
+            display: none;
+          }
+
+          .alert {
+            color: $error-color;
+          }
+
+        }
+
+        .error {
+          color: $error-color;
+          margin-bottom: 5px;
+          font-family: Roboto, "Helvetica Neue", sans-serif;
+          font-size: 14px;
+          text-align: center;
+          visibility: hidden;
+          &.visible {
+            visibility: visible;
+          }
+        }
+
+        button {
+          margin-top: 5px;
+        }
+
+      }
+    }
+
+  }
+}

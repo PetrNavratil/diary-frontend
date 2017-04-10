@@ -1,0 +1,22 @@
+$toolbar-background-color: linear-gradient(to right, rgba(#272522, .8), rgba(#272522, 1));
+$toolbar-font-size: 18px;
+$toolbar-weight: bold;
+$toolbar-font-color: #917865;
+$toolbar-height: 60px;
+
+$side-nav-color: #272522;
+$side-nav-text-color: #917865;
+$side-nav-font-size: 26px;
+$side-nav-height: 60px;
+
+$loader-background-color: #816955;
+$loader-spinner-color: #40352B;
+
+$book-height: 250px;
+$book-width: 200px;
+$book-background: linear-gradient(150deg, rgba(#f44336, .9) 40%, rgba(#f44336, .05));
+
+@font-face {
+  font-family: 'hand-written';
+  src: url('/../assets/font/CAROBTN_.TTF') format('truetype');
+}

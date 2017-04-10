@@ -1,0 +1,97 @@
+$photo-size: 70px;
+$photo-margin: 40px;
+
+.profile-container {
+  display: flex;
+  .user-info-card {
+    margin-right: 50px;
+    flex-grow: 1;
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      .photo-row {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        .photo {
+          border-radius: 50%;
+          height: $photo-size;
+          width: $photo-size;
+          border: 2px solid rgba(black, .4);
+        }
+        .nickname {
+          bottom: -10px;
+          position: absolute;
+          margin-left: $photo-margin + $photo-size;
+          width: 50%;
+          input {
+            width: 100%;
+          }
+        }
+      }
+
+      .details {
+        display: flex;
+        flex-direction: column;
+        .detail-input {
+          width: calc(50% + #{$photo-size} + #{$photo-margin});
+        }
+      }
+      .dropdown {
+        .buttons {
+          display: flex;
+          justify-content: flex-end;
+          cursor: default;
+          .button {
+            margin-left: 20px;
+            height: 36px;
+          }
+        }
+        .password-change {
+          display: flex;
+          margin-top: 20px;
+          padding-top: 30px;
+          .password-form {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            .password-inputs {
+              display: flex;
+              flex-direction: column;
+              width: calc(50% + #{$photo-size} + #{$photo-margin});
+              input {
+                margin-top: 5px;
+              }
+
+            }
+            .right {
+              display: flex;
+              flex-direction: column;
+
+            }
+            .submit {
+              padding-bottom: 16px;
+              margin-left: 10px;
+              height: 36px;
+              .button {
+
+              }
+            }
+          }
+
+        }
+      }
+
+    }
+
+  }
+  .friends-card {
+    flex-grow: 1;
+  }
+}
+
+.alert {
+  color: #f44336;
+}

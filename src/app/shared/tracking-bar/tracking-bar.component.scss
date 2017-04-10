@@ -1,0 +1,41 @@
+$height: 40px;
+
+.tracking-container {
+  display: flex;
+  width: 350px;
+  border: 1px solid black;
+  height: $height;
+  font-size: 14px;
+  .info {
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    .second-row {
+      display: flex;
+      justify-content: space-between;
+      .author {
+
+      }
+      .time {
+        font-size: 14px;
+      }
+    }
+
+  }
+  .track {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    width: $height;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid black;
+    overflow: hidden;
+    .button {
+      width: $height;
+      height: $height;
+    }
+  }
+}

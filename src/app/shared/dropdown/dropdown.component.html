@@ -1,0 +1,8 @@
+<button md-raised-button color="primary" [id]="'dropdown-button' +getId()" class="dropdown-button" (click)="toggle()" [disabled]="disabled">
+  {{buttonTitle}}
+  <i class="material-icons dropdown-icon" [ngClass]="{'expanded': state === 'expanded'}">arrow_drop_down</i>
+</button>
+
+<div #dropdownContent [id]="'dropdown-content' + getId()" class="dropdown-content" [@expandable]="state" (click)="dropdownClick()">
+  <ng-content></ng-content>
+</div>

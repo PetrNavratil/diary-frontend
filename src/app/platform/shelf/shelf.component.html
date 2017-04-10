@@ -1,0 +1,26 @@
+<app-card noPaddingCard *ngIf="shelf">
+  <app-dropdown-row (status)="setStatus($event)">
+    <div class="header" row-header [ngClass]="{'expanded': status !== 'collapsed'}">
+      <div class="name-container">
+        <div class="name">
+          {{shelf.name}}
+        </div>
+        <div class="shelf-count">
+          {{shelf.books.length}}
+        </div>
+      </div>
+      <div class="actions">
+        <button class="button" md-raised-button color="primary" (click)="editShelf($event)">Edit</button>
+        <button class="button" md-raised-button color="warn" (click)="deleteShelf(shelf.id, $event)">Delete</button>
+        <i class="material-icons dropdown-icon" [ngClass]="{'expanded': status !== 'collapsed'}">arrow_drop_down_circle</i>
+      </div>
+    </div>
+    <div class="content" dropdown-content>
+      <app-card noPaddingCard *ngFor="let book of shelf.books" (click)="goToBook(book.id)">
+        <div class="book">
+          <app-book-preview [book]="book"></app-book-preview>
+        </div>
+      </app-card>
+    </div>
+  </app-dropdown-row>
+</app-card>

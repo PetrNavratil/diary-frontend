@@ -1,0 +1,24 @@
+@import '../../theme';
+
+.loader-container {
+  display: flex;
+
+  .loader {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 5px solid $loader-background-color;
+    border-top: 5px solid $loader-spinner-color;
+
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

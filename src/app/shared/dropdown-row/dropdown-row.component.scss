@@ -1,0 +1,12 @@
+.expandable-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .row-header {
+    width: 100%;
+    cursor: pointer;
+  }
+  .expanded-container {
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,28 @@
+<div class="comment-container" [ngClass]="{'editable': editable}">
+  <img src="https://talks.golang.org/2012/splash/appenginegophercolor.jpg" class="avatar" *ngIf="commentData?.userAvatar">
+  <i class="material-icons avatar" *ngIf="!commentData?.userAvatar">person</i>
+  <div class="content">
+    <div class="title-row">
+      <div class="title">{{commentData.userName}}</div>
+      <div class="right-section">
+        <div class="time">{{commentData.date}}</div>
+        <i class="material-icons edit" (click)="switchMode()">{{displayed === 'display' ? 'mode_edit' : 'keyboard_backspace' }}</i>
+      </div>
+    </div>
+    <div class="text" [@display]="displayState" (click)="switchMode()" (@display.done)="swapState('display')"
+         [ngClass]="{'hidden': displayed !== 'display'}">
+      {{commentData.text}}
+    </div>
+
+    <div class="edit-comment" [@edit]="editState" (@edit.done)="swapState('edit')" [ngClass]="{'hidden': displayed !== 'edit'}">
+      <div #commentEdit class="text editable" contenteditable="true" (focus)="removePlaceholder()" (blur)="setPlaceholder()">
+        {{commentData.text.length > 0 ? commentData.text : commentPlaceholder}}
+      </div>
+      <div class="buttons">
+        <app-loading-button [title]="'Remove'" [color]="'warn'" class="button" (click)="remove()" *ngIf="!newComment"></app-loading-button>
+        <app-loading-button [title]="'Add new'" class="button" (click)="add()" *ngIf="newComment"></app-loading-button>
+        <app-loading-button [title]="'Edit'" class="button" (click)="edit()" *ngIf="!newComment"></app-loading-button>
+      </div>
+    </div>
+  </div>
+</div>

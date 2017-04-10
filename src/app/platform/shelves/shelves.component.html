@@ -1,0 +1,9 @@
+<app-card>
+  <h1>Your Shelves</h1>
+  <md-input-container>
+    <input mdInput placeholder="New shelf name" type="text" [(ngModel)]="shelfName">
+  </md-input-container>
+  <button md-raised-button (click)="addShelf()">Add shelf</button>
+  <app-shelf *ngFor="let shelf of shelves" [shelf]="shelf" (removeShelf)="deleteShelf($event)"
+             (goToDetail)="goToDetail($event)"></app-shelf>
+</app-card>

@@ -1,0 +1,181 @@
+<app-card>
+  <div class="book-detail-container">
+    <div class="actions-row">
+      <div class="source-name">
+        GOODREADS
+      </div>
+      <div class="actions" *ngIf="bookInfo">
+        <app-loading-button [icon]="'add'" [color]="'primary'" [title]="'Add'" [loading]="insertLoading" class="button action-item"
+                            *ngIf="!bookInfo.inBooks" (click)="addBook()"></app-loading-button>
+        <app-loading-button [icon]="'delete'" [color]="'warn'" class="button action-item" [loading]="insertLoading" [title]="'Remove'"
+                            *ngIf="bookInfo.inBooks" (click)="removeBook()"></app-loading-button>
+        <app-loading-button [icon]="'play_circle_outline'" [color]="'primary'" class="button action-item" [loading]="false"
+                            [title]="'Start tracking'"
+                            *ngIf="bookInfo.inBooks && trackings?.lastInterval?.id >= 0 && !showTimetamp"
+                            (click)="startTracking()"></app-loading-button>
+        <app-loading-button [icon]="'stop'" [color]="'warn'" class="button action-item" [loading]="false"
+                            [title]="'Stop tracking'"
+                            *ngIf="bookInfo.inBooks && trackings?.lastInterval?.id >= 0 && showTimetamp"
+                            (click)="stopTracking()"></app-loading-button>
+        <app-dropdown class="action-item" [buttonTitle]="bookInfo.status | bookStatus" [closeOnClick]="true" [disabled]="!bookInfo.inBooks">
+          <div class="action-dropdown">
+            <div class="item" *ngFor="let item of [0,1,2,3]" (click)="changeStatus(item)"
+                 [ngClass]="{'selected': bookInfo.status === item }">
+              <span class="name">{{item | bookStatus}}</span>
+            </div>
+          </div>
+        </app-dropdown>
+        <app-dropdown class="action-item" [buttonTitle]="'Manage shelves'" [disabled]="!bookInfo.inBooks">
+          <div class="action-dropdown">
+            <div class="item" *ngFor="let shelf of shelves" (click)="toggleShelf(shelf.id)">
+              <span class="name">{{shelf.name | truncate: 13}}</span>
+              <i class="material-icons item-icon">{{isInShelve(shelf.id) ? 'delete' : 'add'}}</i>
+            </div>
+            <div class="item new">
+              <md-input-container>
+                <input mdInput placeholder="Add new shelf" type="text" [(ngModel)]="newShelf">
+              </md-input-container>
+              <button class="button" md-raised-button color="primary" (click)="addNewShelf()">Add <i class="material-icons">add</i></button>
+            </div>
+          </div>
+        </app-dropdown>
+      </div>
+    </div>
+
+    <div class="book-info">
+      <div class="source">
+        <div class="triangle"></div>
+        <app-card noPaddingCard>
+          <div class="tabs-container">
+            <div class="item" *ngFor="let tab of tabs; let i = index" [ngClass]="{'selected-tab': selectedTab === i}"
+                 (click)="selectTab(i)">
+              {{tab}}
+            </div>
+          </div>
+        </app-card>
+      </div>
+
+      <div class="info" *ngIf="book">
+        <app-card>
+          <div class="info-container">
+            <div class="cover">
+              <img src="{{book.imageUrl}}" alt="{{book.authors[0].name}} - {{book.title}}">
+            </div>
+
+            <div class="details">
+              <div class="label">title</div>
+              <div class="content">{{book.title}}</div>
+              <div class="label">author</div>
+              <div class="content">{{book.authors[0].name}}</div>
+              <div class="label">publisher</div>
+              <div class="content">{{book.publisher}}</div>
+              <div class="label">pages</div>
+              <div class="content">{{book.pages}}</div>
+            </div>
+
+            <div class="description">
+              {{book.description}}
+            </div>
+          </div>
+        </app-card>
+        <app-card *ngIf="bookInfo?.inBooks && selectedReading !== -1">
+          <div class="reading">
+            <div class="title-row">
+              <div class="item">
+                <div class="label">období čtení</div>
+                <div class="content">{{readingInterval}}</div>
+              </div>
+              <div class="item">
+                <div class="label">status</div>
+                <div class="content">{{trackings.readings[selectedReading].completed ? (BookStatus.READ | bookStatus) : (BookStatus.READING
+                  | bookStatus) }}
+                </div>
+              </div>
+              <app-dropdown
+                [buttonTitle]="selectedReading === -1 ? 'Vyberte obdobi' : (selectedReading+1) + '. Čtení'"
+                [closeOnClick]="true"
+                [disabled]="trackings.readings.length === 0">
+                <div class="action-dropdown">
+                  <div class="item" *ngFor="let reading of trackings.readings; let i = index" (click)="selectReading(i)">
+                    <span class="name">Reading {{i+1}}.</span>
+                  </div>
+                </div>
+              </app-dropdown>
+            </div>
+            <div class="reading-info-row">
+              <div class="reading-left-column">
+                <div class="label">přečteno</div>
+                <div class="content">{{trackings.readings[selectedReading].completed ? trackings.readings.length : trackings.readings.length
+                  -1}}x
+                </div>
+                <div class="label">celková doba čtení</div>
+                <div class="content">12-14</div>
+                <div class="label">doba vlastního čtení</div>
+                <div class="content">{{wholeReadingTime}}</div>
+              </div>
+              <div class="reading-table-column">
+                <div class="reading-table" *ngIf="selectedReading > -1">
+                  <div class="table-row header-row">
+                    <div class="table-item header">OD</div>
+                    <div class="table-item header">DO</div>
+                    <div class="table-item header">CAS</div>
+                  </div>
+                  <div class="table-row" *ngFor="let item of trackings.readings[selectedReading].intervals">
+                    <div class="table-item">{{getTime(item.start)}}</div>
+                    <div class="table-item">{{getTime(item.stop)}}</div>
+                    <div class="table-item">{{getDuration(item.start, item.stop)}}</div>
+                  </div>
+                  <div class="table-row footer">
+                    <div class="table-item footer-item">Celkový čas</div>
+                    <div class="table-item footer-item"></div>
+                    <div class="table-item footer-item">{{readingTime}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </app-card>
+      </div>
+    </div>
+
+    <app-card>
+      <div class="similar-books-container">
+        <app-book-preview class="book" *ngFor="let simBook of similarBooks" [book]="simBook" (click)="goToBook(simBook)"></app-book-preview>
+      </div>
+    </app-card>
+
+    <app-card>
+      <div class="comments">
+        <div class="my-comment">
+          <app-comment
+            [editable]="bookInfo?.inBooks"
+            [commentData]="userComment"
+            [newComment]="newComment"
+            *ngIf="userComment"
+            (addComment)="addComment($event)"
+            (deleteComment)="deleteComment($event)"
+            (editComment)="editComment($event)"></app-comment>
+        </div>
+        <div class="other-comments">
+          <app-comment *ngFor="let item of comments" [editable]="false" [commentData]="item"></app-comment>
+        </div>
+      </div>
+
+    </app-card>
+
+
+    <div class="buy">
+      <app-card>
+        BUY
+      </app-card>
+    </div>
+    <app-card *ngIf="bookInfo?.inBooks">
+      <app-dropdown-row>
+        <div class="header" row-header>SHOW EDUCATIONAL</div>
+        <div class="education-content" dropdown-content>
+          <app-education [data]="bookInfo.educational" (dataUpdate)="setEducational($event)"></app-education>
+        </div>
+      </app-dropdown-row>
+    </app-card>
+  </div>
+</app-card>

@@ -1,0 +1,9 @@
+button {
+  height: 100%;
+  md-spinner {
+    height: 100% !important;
+    /deep/ path {
+      stroke: white !important;
+    }
+  }
+}

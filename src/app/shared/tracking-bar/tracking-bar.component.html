@@ -1,0 +1,17 @@
+<div class="tracking-container" *ngIf="reading">
+  <div class="info">
+    <div class="title">{{reading.title | truncate:40}}</div>
+    <div class="second-row">
+      <div class="author">{{reading.author|truncate:35}}</div>
+      <div class="time" *ngIf="!reading.completed">{{time}}</div>
+    </div>
+  </div>
+  <div class="track">
+    <button class="button" md-raised-button color="primary" *ngIf="reading.completed" (click)="start()">
+      <i class="material-icons">play_circle_outline</i>
+    </button>
+    <button class="button" md-raised-button color="warn" *ngIf="!reading.completed" (click)="stop()">
+      <i class="material-icons">stop</i>
+    </button>
+  </div>
+</div>

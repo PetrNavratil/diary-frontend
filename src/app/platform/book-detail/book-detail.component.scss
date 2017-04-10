@@ -1,0 +1,310 @@
+@import '../../theme';
+
+$tabs-color: $loader-background-color;
+$book-source-width: 200px;
+$space-between: 15px;
+
+$label-color: black;
+$label-size: 16px;
+
+$content-color: rgba(black, .87);
+$content-size: 15px;
+
+$tabs-item-height: 40px;
+$arrow-size: 40px;
+
+.book-detail-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+
+  .action-dropdown {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+
+    .item {
+      padding: 15px 10px;
+      transition: background-color .7s, color .7s;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: normal;
+      color: rgba(black, .87);
+      &.selected {
+        background-color: #f44336 !important;
+        color: white !important;
+      }
+      &.new {
+        flex-direction: column;
+        &:hover {
+          background-color: white !important;
+          color: black !important;
+        }
+        .button {
+          font-size: 14px;
+          i {
+            font-size: 16px;
+          }
+        }
+      }
+      .item-icon {
+        font-size: 20px;
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid rgba(black, .1);
+      }
+      &:hover {
+        cursor: pointer;
+        background-color: #f44336;
+        color: white;
+      }
+    }
+  }
+
+  .actions-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    .actions {
+      display: flex;
+      align-items: center;
+
+      .action-item {
+        &:not(:last-child) {
+          margin-right: 25px;
+        }
+      }
+      .button {
+        height: 36px;
+      }
+    }
+
+    .source-name {
+      font-weight: bolder;
+      color: black;
+      font-size: 20px;
+    }
+  }
+
+  .book-info {
+    display: flex;
+
+    .source {
+
+      .triangle {
+        width: 0;
+        height: 0;
+        border-left: $arrow-size solid $tabs-color;
+        border-top: $arrow-size/2 solid transparent;
+        border-bottom: $arrow-size/2 solid transparent;
+      }
+
+      .tabs-container {
+        display: flex;
+        flex-direction: column;
+        min-width: $book-source-width;
+
+        .item {
+          display: flex;
+          height: $tabs-item-height;
+          padding: 10px 0;
+          box-sizing: border-box;
+          align-items: center;
+          justify-content: center;
+
+          &:not(:last-child) {
+            border-bottom: 1px solid rgba(black, .2);
+          }
+
+          &:hover {
+            cursor: pointer;
+            background-color: darken(white, 3%);
+          }
+        }
+      }
+      .selected-tab {
+        background-color: $tabs-color;
+        &:hover {
+          background: linear-gradient(to right, darken($tabs-color, 10%), $tabs-color) !important;
+        }
+      }
+    }
+
+    .info {
+      flex-grow: 1;
+      margin-left: $space-between;
+
+      .info-container {
+        display: flex;
+        flex-grow: 1;
+        flex-wrap: wrap;
+
+        .cover {
+
+        }
+
+        .details {
+          margin-left: 20px;
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+          flex-basis: 0;
+        }
+
+        .description {
+          margin-left: 30px;
+          margin-right: 20px;
+          text-align: justify;
+          flex-grow: 4;
+          flex-basis: 0;
+        }
+      }
+      .label {
+        font-size: $label-size;
+        color: $label-color;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      .content {
+        font-size: $content-size;
+        color: $content-color;
+        padding-left: 10px;
+
+        &:not(:first-child) {
+          padding-bottom: 10px;
+        }
+      }
+      .reading {
+        display: flex;
+        flex-direction: column;
+        .title-row {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 25px;
+          border-bottom: 1px solid rgba(black, .08);
+          .item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 8px;
+          }
+
+        }
+        .reading-info-row {
+          display: flex;
+          .reading-left-column {
+            display: flex;
+            flex-direction: column;
+            margin-right: 30px;
+            margin-top: 30px;
+          }
+          .reading-table-column {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            .reading-table {
+              .table-item {
+                flex-grow: 1;
+                flex-basis: 0;
+                font-size: 16px;
+                color: rgba(black, .87);
+                display: flex;
+                align-items: center;
+                padding: 5px 15px;
+                border-bottom: 1px solid rgba(black, .4);
+                &:not(:last-child) {
+                  margin-right: 3px;
+                }
+                &.header {
+                  color: rgba(black, .6);
+                  font-weight: 500;
+                  font-size: 18px;
+                  padding-top: 10px;
+                  padding-bottom: 10px;
+                  border-bottom: 2px solid rgba(black, .4) !important;
+                }
+                &.footer-item {
+                  color: rgba(black, .9);
+                  padding: 10px 15px;
+                  &:first-child {
+                    margin-right: 0;
+                  }
+                  background-color: rgba(black, .07) !important;
+                }
+              }
+              .table-row {
+                display: flex;
+                margin-bottom: 3px;
+
+                &.header-row {
+                  border-top: 1px solid rgba(black, .06);
+                }
+
+                &:nth-child(even) {
+                  .table-item {
+                    background-color: rgba(black, .03);
+                  }
+                }
+
+                &.footer {
+                  margin-bottom: 0;
+
+                }
+
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .buy {
+
+  }
+
+  .comments {
+    display: flex;
+
+    app-comment {
+      width: 100%;
+    }
+
+    .my-comment {
+      display: flex;
+      margin-right: 20px;
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+    .other-comments {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      flex-basis: 0;
+      border-left: 1px solid gray;
+      padding-left: 19px;
+    }
+  }
+
+  .education-content {
+
+  }
+
+  .similar-books-container {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    .book {
+      max-height: $book-height;
+      min-height: $book-height;
+      min-width: $book-width;
+      max-width: $book-width;
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+    }
+  }
+}

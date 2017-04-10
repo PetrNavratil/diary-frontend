@@ -1,0 +1,8 @@
+<div class="expandable-container">
+  <div class="row-header" (click)="toggle()">
+    <ng-content select="[row-header]"></ng-content>
+  </div>
+  <div class="expanded-container" [@expandable]="state">
+    <ng-content select="[dropdown-content]"></ng-content>
+  </div>
+</div>

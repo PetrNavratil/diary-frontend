@@ -1,0 +1,33 @@
+@import '../../theme';
+
+.nav-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 250px;
+  background-color: rgba($side-nav-color, .85);
+
+  .menu-item {
+    background-color: transparent;
+    height: $side-nav-height;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding-left: 20px;
+
+    color: $side-nav-text-color;
+    font-size: $side-nav-font-size;
+
+    &:hover {
+      background-color: darken($side-nav-color, 5%);
+      cursor: pointer;
+    }
+    &:first-child {
+      margin-top: $toolbar-height;
+    }
+  }
+
+  .selected {
+    background-color: darken($side-nav-color, 3%);
+  }
+}

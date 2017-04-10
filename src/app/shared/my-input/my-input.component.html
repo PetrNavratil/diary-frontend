@@ -1,0 +1,7 @@
+<div class="my-input-container">
+  <div class="input-container" (click)="onClick()">
+    <span class="placeholder" [ngClass]="{'hidden': hidden || value.length}">PLACEHOLDER</span>
+    <input #input class="input" type="text" (blur)="onBlur()" [(ngModel)]="value">
+  </div>
+  <i class="material-icons ">clear</i>
+</div>

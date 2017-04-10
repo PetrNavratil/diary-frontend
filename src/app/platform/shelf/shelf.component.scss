@@ -1,0 +1,71 @@
+@import '../../theme';
+
+$padding: 15px;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color .5s;
+
+  &.expanded {
+    background-color: lighten(#f44336, 38%);
+  }
+  &:hover {
+    cursor: pointer;
+    .dropdown-icon {
+      width: 20px !important;
+      opacity: 1 !important;
+      padding-right: 5px;
+    }
+  }
+  padding: $padding;
+  .name-container {
+    display: flex;
+    align-items: center;
+    .name {
+
+    }
+    .shelf-count {
+      margin-left: 15px;
+      border-radius: 50%;
+      background-color: #f44336;
+      color: white;
+      padding: 5px;
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+
+    .button {
+      margin-right: 15px;
+    }
+    .dropdown-icon {
+      width: 0;
+      opacity: 0;
+      color: gray;
+      transition: all .5s;
+      &.expanded {
+        transform: rotate(180deg);
+        width: 20px !important;
+        opacity: 1 !important;
+        padding-right: 5px;
+      }
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+
+  .book {
+    height: $book-height;
+    width: $book-width;
+  }
+
+}

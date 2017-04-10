@@ -1,0 +1,21 @@
+<div class="book-preview-container" (mouseenter)="hover()" (mouseleave)="leave()">
+  <div class="photo" [style.backgroundImage]="sanitize(book.imageUrl)" [@hover]="state">
+    <div class="photo-title">
+      {{book.title}}
+    </div>
+  </div>
+  <div class="book-info">
+    <div class="item">
+      <div class="label">Title</div>
+      <div class="value">{{book.title | truncate:40}}</div>
+    </div>
+    <div class="item">
+      <div class="label">Author</div>
+      <div class="value">{{book.author}}</div>
+    </div>
+    <div class="item" *ngIf="book?.status >= 0">
+      <div class="label">Status</div>
+      <div class="value">{{book.status | bookStatus}}</div>
+    </div>
+  </div>
+</div>

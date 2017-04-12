@@ -31,6 +31,8 @@ import { readingReducer } from './reducers/reading.reducer';
 import { ReadingEffect } from './effects/readings.effect';
 import { statisticReducer } from './reducers/statistic.reducer';
 import { StatisticEffect } from './effects/statistic.effect';
+import { intervalsReducer } from './reducers/statistic-intervals.reducer';
+import { IntervalsEffect } from './effects/statistic-intervals.effect';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { StatisticEffect } from './effects/statistic.effect';
       tracking: trackingReducer,
       users: usersReducer,
       readings: readingReducer,
-      statistics: statisticReducer
+      statistics: statisticReducer,
+      intervals: intervalsReducer
     }),
     EffectsModule.runAfterBootstrap(SearchEffect),
     EffectsModule.runAfterBootstrap(BookDetail),
@@ -67,6 +70,7 @@ import { StatisticEffect } from './effects/statistic.effect';
     EffectsModule.runAfterBootstrap(UserEffect),
     EffectsModule.runAfterBootstrap(ReadingEffect),
     EffectsModule.runAfterBootstrap(StatisticEffect),
+    EffectsModule.runAfterBootstrap(IntervalsEffect),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
 
 

@@ -18,7 +18,7 @@
         <div class="label">not read</div>
         <div class="content">{{statistic.booksNotRead}}</div>
       </div>
-      <div class="summary-column">
+      <div class="summary-column" *ngIf="statistic.booksRead || statistic.booksReading">
         <div class="label">Time spent reading</div>
         <div class="content">{{spentReading}}</div>
         <div class="label">Mostly read book</div>
@@ -26,27 +26,40 @@
       </div>
     </div>
     <div class="statistics">
-      <app-dropdown class="dropdown" [buttonTitle]="selectedYear" [closeOnClick]="true">
-        <div class="action-dropdown">
-          <div class="item" *ngFor="let year of years"
-               (click)="selectYear(year)"
-               [ngClass]="{'selected': selectedYear === year}">
-            <span class="name">{{year}}</span>
+      <h2>{{selectedMonth.name}}/{{selectedYear}} - Reading intervals</h2>
+      <div class="buttons">
+        <app-dropdown class="dropdown" [buttonTitle]="selectedMonth.name" [closeOnClick]="true">
+          <div class="action-dropdown">
+            <div class="item" *ngFor="let month of months"
+                 (click)="selectMonth(month)"
+                 [ngClass]="{'selected': selectedMonth.name === month.name}">
+              <span class="name">{{month.name}}</span>
+            </div>
           </div>
-        </div>
-      </app-dropdown>
-    </div>
-
-    <div #yearTimeline class="chart year"></div>
-    <div #monthTimeline class="chart month"></div>
-    <app-dropdown class="dropdown" [buttonTitle]="selectedMonth.name" [closeOnClick]="true">
-      <div class="action-dropdown">
-        <div class="item" *ngFor="let month of months"
-             (click)="selectMonth(month)"
-             [ngClass]="{'selected': selectedMonth.name === month.name}">
-          <span class="name">{{month.name}}</span>
-        </div>
+        </app-dropdown>
+        <app-dropdown class="dropdown" [buttonTitle]="selectedYear" [closeOnClick]="true">
+          <div class="action-dropdown">
+            <div class="item" *ngFor="let year of years"
+                 (click)="selectYear(year)"
+                 [ngClass]="{'selected': selectedYear === year}">
+              <span class="name">{{year}}</span>
+            </div>
+          </div>
+        </app-dropdown>
       </div>
-    </app-dropdown>
+    </div>
+    <md-spinner  style="margin: 0 auto;" *ngIf="intervalsLoading"></md-spinner>
+    <app-nothing *ngIf="!intervalsLoading && !intervals.length">
+      Ve zvolenem období nebyla čtena žádná kniha
+    </app-nothing>
+    <div #monthTimeline class="chart month" ></div>
+    <div class="statistics">
+      <h2>Reading timeline</h2>
+    </div>
+    <md-spinner  style="margin: 0 auto;" *ngIf="readingsLoading"></md-spinner>
+    <app-nothing *ngIf="!readingsLoading && !wholeTimeReading.length">
+      Žádna kniha zatím nebyla čtena
+    </app-nothing>
+    <div #yearTimeline class="chart year"></div>
   </div>
 </app-card>

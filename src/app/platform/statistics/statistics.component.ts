@@ -11,6 +11,8 @@ import { statisticActions } from '../../reducers/statistic.reducer';
 import { Statistic } from '../../shared/models/statistic.model';
 import { getDurationFormat } from '../../shared/duration-format';
 import { Subscription } from 'rxjs';
+import { StatisticInterval } from '../../shared/models/statistic-interval.model';
+import { intervalsActions } from '../../reducers/statistic-intervals.reducer';
 
 @Component({
   selector: 'app-statistics',
@@ -27,9 +29,11 @@ export class StatisticsComponent implements OnDestroy {
   selectedYear: string;
   yearTimeline: any;
   monthTimeline: any;
-  update = false;
   dispatcher: ComponentDispatcher;
   wholeTimeReading: Reading[] = [];
+  intervals: StatisticInterval[] = [];
+  intervalsLoading = false;
+  readingsLoading = false;
   statistic: Statistic;
   subscriptions: Subscription[] = [];
   @ViewChild('yearTimeline') yearTimelineElement: ElementRef;
@@ -54,8 +58,10 @@ export class StatisticsComponent implements OnDestroy {
     this.dispatcher = new ComponentDispatcher(store, this);
     this.dispatcher.dispatch(readingsActions.API_GET);
     this.dispatcher.dispatch(statisticActions.API_GET);
+    this.dispatcher.dispatch(intervalsActions.API_GET, {month: this.selectedMonth.id + 1, year: this.selectedYear});
     this.subscriptions.push(this.store.select('readings').subscribe(
       (data: SquirrelState<Reading>) => {
+        this.readingsLoading = data.loading;
         if (data.error) {
           console.error(data.error);
         } else {
@@ -78,12 +84,33 @@ export class StatisticsComponent implements OnDestroy {
         }
       }
     ));
+    this.subscriptions.push(this.store.select('intervals').subscribe(
+      (data: SquirrelState<StatisticInterval>) => {
+        this.intervalsLoading = data.loading;
+        if (data.error) {
+          console.error(data.error);
+        } else {
+          if (!data.loading) {
+            this.intervals = data.data;
+            if(this.monthTimeline){
+              this.monthTimeline.destroy();
+              this.monthTimeline = null;
+            }
+            if (this.intervals.length) {
+              this.createIntervalTimeline()
+            }
+          }
+        }
+        this.cd.markForCheck();
+      }
+    ));
   }
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+    this.dispatcher.dispatch('CLEAR');
   }
 
   get spentReading() {
@@ -94,13 +121,13 @@ export class StatisticsComponent implements OnDestroy {
 
   selectMonth(month: Month) {
     this.selectedMonth = month;
-    this.update = true;
+    this.dispatcher.dispatch(intervalsActions.API_GET, {month: this.selectedMonth.id + 1, year: this.selectedYear});
   }
 
   selectYear(year: string) {
     this.selectedYear = year;
-    this.yearTimeline.setOptions(this.createOptions());
-    this.update = true;
+    this.yearTimeline.setOptions(this.createOptions(true));
+    this.dispatcher.dispatch(intervalsActions.API_GET, {month: this.selectedMonth.id + 1, year: this.selectedYear});
   }
 
   createYearTimeline() {
@@ -118,20 +145,41 @@ export class StatisticsComponent implements OnDestroy {
       end: reading.completed ? moment(reading.stop) : moment(),
       group: reading.bookId
     })));
-    console.log('items', items);
-    console.log('groups', groups);
     // Create a Timeline
     this.yearTimeline = new vis.Timeline(
       this.yearTimelineElement.nativeElement,
       items,
       groups,
-      this.createOptions());
+      this.createOptions(true));
   }
 
-  createOptions(): any {
-    return {
-      end: moment(+this.selectedYear + 1, 'YYYY'),
-      start: moment(+this.selectedYear, 'YYYY'),
+  createIntervalTimeline() {
+    console.log('da fuq');
+    const groups = this.intervals.filter((interval, index, intervalArray: StatisticInterval[]) => {
+      return intervalArray.findIndex(intrvl => intrvl.bookId === interval.bookId) === index;
+    }).map(tmpInterval => ({
+      id: tmpInterval.bookId,
+      content: tmpInterval.title.replace(/\(.*\)/g, ''),
+    }));
+    const items = new vis.DataSet(this.intervals.map((interval, index) => ({
+      id: index,
+      title: `${interval.title.replace(/\(.*\)/g, '')}`,
+      content: `${interval.title.replace(/\(.*\)/g, '')}`,
+      start: moment(interval.start),
+      end: interval.completed ? moment(interval.stop) : moment(),
+      group: interval.bookId
+    })));
+    console.log('items', items);
+    console.log('groups', groups);
+    this.monthTimeline = new vis.Timeline(
+      this.monthTimelineElement.nativeElement,
+      items,
+      groups,
+      this.createOptions(false));
+  }
+
+  createOptions(year: boolean): any {
+    let opts = {
       moment: function (date) {
         return moment(date).locale('cs');
       },
@@ -139,7 +187,15 @@ export class StatisticsComponent implements OnDestroy {
         followMouse: true,
       },
       stack: false
+    };
+    if (year){
+      opts['end'] = moment(+this.selectedYear + 1, 'YYYY');
+      opts['start'] = moment(+this.selectedYear, 'YYYY');
+    } else {
+      opts['end'] = moment(this.selectedMonth.id +2, 'M');
+      opts['start'] = moment(this.selectedMonth.id +1, 'M');
     }
+    return opts;
   }
 
 }

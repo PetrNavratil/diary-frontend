@@ -194,6 +194,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     this.subscriptions.push(foxy(store, 'tracking', this)
       .subscribe(
         (data: SquirrelState<StoredReading>) => {
+          this.trackingsLoading = data.loading;
           if (data.error) {
             console.error(data.error);
           } else {
@@ -214,7 +215,6 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
               }
             }
           }
-          this.trackingsLoading = data.loading;
           this.cd.markForCheck();
         })
     );

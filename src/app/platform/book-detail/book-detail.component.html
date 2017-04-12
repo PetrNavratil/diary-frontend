@@ -82,7 +82,7 @@
           </div>
         </app-card>
         <app-card *ngIf="bookInfo?.inBooks && (bookInfo.status === BookStatus.READING ||bookInfo.status === BookStatus.READ)">
-          <div class="reading" *ngIf="!trackingsLoading; else spinner">
+          <div class="reading" *ngIf="!trackingsLoading && trackings.readings.length; else spinner">
             <div class="title-row">
               <div class="reading-item">
                 <div class="label">období čtení</div>

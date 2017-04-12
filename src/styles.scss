@@ -7,4 +7,23 @@ body {
 
   background-image: url('assets/background/1.jpg');
   background-size: cover;
+
+  .vis-timeline{
+    background-color: rgba(goldenrod, .05);
+    border: 1px solid rgba(goldenrod, .2);
+  }
+  .vis-item{
+    border: 2px solid rgba(goldenrod, .3);
+    font-size: 16px;
+    color: rgba(black, .87);
+    background-color: rgba(goldenrod, .25);
+    &.vis-selected{
+      background-color: rgba(goldenrod, .5);
+      border-color: rgba(goldenrod, .7);
+    }
+  }
+  .vis-label, .vis-time-axis.vis-foreground{
+    background-color: rgba(goldenrod, .1);
+  }
 }
+

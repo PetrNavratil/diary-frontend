@@ -9,4 +9,5 @@ export interface Book {
   status?: BookStatus;
   inBooks?: boolean;
   educational?: EducationModel;
+  read?: number;
 }

@@ -23,6 +23,14 @@ export class SideNavComponent implements OnInit {
     {
       name: 'Shelves',
       link: 'shelves'
+    },
+    {
+      name: 'Statistics',
+      link: 'statistics'
+    },
+    {
+      name: 'Profile',
+      link: 'profile'
     }
   ];
 

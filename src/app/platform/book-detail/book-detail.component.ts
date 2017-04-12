@@ -64,12 +64,14 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   showTimetamp = false;
   updateLatest = false;
   selectedReading = -1;
+  trackingsLoading = true;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute, private router: Router, private http: Http, private cd: ChangeDetectorRef) {
     moment.locale('cs');
     this.dispatcher = new ComponentDispatcher(store, this);
     this.route.params.subscribe(params => {
       this.id = +params['id'];
+      this.dispatcher.dispatch('CLEAR');
       if (this.id) {
         this.dispatcher.dispatch(detailActions.API_GET, this.id);
         this.dispatcher.dispatch(booksActions.ADDITIONAL.GET_SINGLE, this.id);
@@ -212,6 +214,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
               }
             }
           }
+          this.trackingsLoading = data.loading;
           this.cd.markForCheck();
         })
     );

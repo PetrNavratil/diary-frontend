@@ -1,3 +1,6 @@
+<ng-template #spinner>
+  <md-spinner style="margin: 0 auto"></md-spinner>
+</ng-template>
 <app-card>
   <div class="book-detail-container">
     <div class="actions-row">
@@ -55,9 +58,9 @@
         </app-card>
       </div>
 
-      <div class="info" *ngIf="book">
+      <div class="info">
         <app-card>
-          <div class="info-container">
+          <div class="info-container" *ngIf="book; else spinner">
             <div class="cover">
               <img src="{{book.imageUrl}}" alt="{{book.authors[0].name}} - {{book.title}}">
             </div>
@@ -78,8 +81,8 @@
             </div>
           </div>
         </app-card>
-        <app-card *ngIf="bookInfo?.inBooks && selectedReading !== -1">
-          <div class="reading">
+        <app-card *ngIf="bookInfo?.inBooks && (bookInfo.status === BookStatus.READING ||bookInfo.status === BookStatus.READ)">
+          <div class="reading" *ngIf="!trackingsLoading; else spinner">
             <div class="title-row">
               <div class="reading-item">
                 <div class="label">období čtení</div>

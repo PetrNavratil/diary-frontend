@@ -2,6 +2,9 @@ $width: 162px;
 
 .dropdown-button {
   width: $width;
+  &:first-letter{
+    text-transform: capitalize;
+  }
   .dropdown-icon {
     transition: transform .5s;
     &.expanded {

@@ -1,0 +1,52 @@
+<ng-template #spinner>
+  <md-spinner  style="margin: 0 auto;">
+  </md-spinner>
+</ng-template>
+<app-card>
+  <div class="statistics-container">
+    <h1>Summary</h1>
+    <div class="summary" *ngIf="statistic; else spinner">
+      <div class="summary-column left">
+        <div class="label">books</div>
+        <div class="content">{{statistic.booksCount}}</div>
+        <div class="label">read</div>
+        <div class="content">{{statistic.booksRead}}</div>
+        <div class="label">reading</div>
+        <div class="content">{{statistic.booksReading}}</div>
+        <div class="label">to read</div>
+        <div class="content">{{statistic.booksToRead}}</div>
+        <div class="label">not read</div>
+        <div class="content">{{statistic.booksNotRead}}</div>
+      </div>
+      <div class="summary-column">
+        <div class="label">Time spent reading</div>
+        <div class="content">{{spentReading}}</div>
+        <div class="label">Mostly read book</div>
+        <div class="content">{{statistic.mostlyRead.title}}</div>
+      </div>
+    </div>
+    <div class="statistics">
+      <app-dropdown class="dropdown" [buttonTitle]="selectedYear" [closeOnClick]="true">
+        <div class="action-dropdown">
+          <div class="item" *ngFor="let year of years"
+               (click)="selectYear(year)"
+               [ngClass]="{'selected': selectedYear === year}">
+            <span class="name">{{year}}</span>
+          </div>
+        </div>
+      </app-dropdown>
+    </div>
+
+    <div #yearTimeline class="chart year"></div>
+    <div #monthTimeline class="chart month"></div>
+    <app-dropdown class="dropdown" [buttonTitle]="selectedMonth.name" [closeOnClick]="true">
+      <div class="action-dropdown">
+        <div class="item" *ngFor="let month of months"
+             (click)="selectMonth(month)"
+             [ngClass]="{'selected': selectedMonth.name === month.name}">
+          <span class="name">{{month.name}}</span>
+        </div>
+      </div>
+    </app-dropdown>
+  </div>
+</app-card>

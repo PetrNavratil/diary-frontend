@@ -6,6 +6,7 @@ import { Book } from '../../shared/models/book.model';
 import { booksActions } from '../../reducers/books.reducer';
 import { Router } from '@angular/router';
 import { BookStatus } from '../../shared/models/book-status.enum';
+import { PdfService } from '../../shared/pdf.service';
 
 @Component({
   selector: 'app-my-books',
@@ -21,7 +22,7 @@ export class MyBooksComponent implements OnDestroy {
   selected: BookStatus = BookStatus.ALL;
   pattern: string = '';
 
-  constructor(private store: Store<AppState>, private router: Router) {
+  constructor(private store: Store<AppState>, private router: Router, private pdf: PdfService) {
     this.dispatcher = new ComponentDispatcher(store, this);
     this.dispatcher.dispatch(booksActions.API_GET);
     let {dataStream, errorStream} = squirrel(store, 'books', this);
@@ -68,6 +69,10 @@ export class MyBooksComponent implements OnDestroy {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+  }
+
+  generatePdf(){
+    this.pdf.generateBooksPdf(this.selected);
   }
 
 }

@@ -8,14 +8,23 @@
         <i class="material-icons clear" [ngClass]="{'visible': pattern.length}" mdSuffix (click)="clearPattern($event)">clear</i>
       </md-input-container>
     </div>
-    <app-dropdown [closeOnClick]="true" [buttonTitle]="selected | bookStatus" class="dropdown">
-      <div class="select-dropdown">
-        <div class="item" *ngFor="let item of [0,1,2,3,4]" (click)="selectNewBooks(item)"
-             [ngClass]="{'selected': selected === item}">
-          <span class="name"> {{ item | bookStatus}}</span>
+    <div class="buttons">
+      <app-dropdown [closeOnClick]="true" [buttonTitle]="selected | bookStatus" class="dropdown">
+        <div class="select-dropdown">
+          <div class="item" *ngFor="let item of [0,1,2,3,4]" (click)="selectNewBooks(item)"
+               [ngClass]="{'selected': selected === item}">
+            <span class="name"> {{ item | bookStatus}}</span>
+          </div>
         </div>
-      </div>
-    </app-dropdown>
+      </app-dropdown>
+      <app-loading-button
+        class="button"
+        (click)="generatePdf()"
+        [title]="'Generate list of books [PDF]'"
+        [color]="'primary'"
+        [loading]="pdf.loading$ | async"
+      ></app-loading-button>
+    </div>
   </div>
   <div class="books-container">
     <app-card noPaddingCard *ngFor="let book of selectedBooks" (click)="goToDetail(book.id)">

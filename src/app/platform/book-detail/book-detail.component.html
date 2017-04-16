@@ -42,6 +42,10 @@
             </div>
           </div>
         </app-dropdown>
+        <app-loading-button [color]="'primary'" class="button action-item" [loading]="pdf.loading$ | async"
+                            [title]="'Generate PDF'"
+                            *ngIf="bookInfo.inBooks"
+                            (click)="generatePdf()"></app-loading-button>
       </div>
     </div>
 

@@ -22,6 +22,7 @@ import { MyInputComponent } from './my-input/my-input.component';
 import { TrackingBarComponent } from './tracking-bar/tracking-bar.component';
 import { NothingComponent } from './nothing/nothing.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PdfService } from './pdf.service';
 
 @NgModule({
   imports: [
@@ -75,6 +76,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MyInputComponent,
     TrackingBarComponent,
     NothingComponent
+  ],
+  providers: [
+    PdfService
   ]
 })
 export class SharedModule {

@@ -23,6 +23,7 @@ import { StoredReading, Interval } from '../../shared/models/tracking.model';
 import * as moment from 'moment';
 import 'moment/locale/cs';
 import { getDurationFormat } from '../../shared/duration-format';
+import { PdfService } from '../../shared/pdf.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -66,7 +67,12 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   selectedReading = -1;
   trackingsLoading = true;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute, private router: Router, private http: Http, private cd: ChangeDetectorRef) {
+  constructor(private store: Store<AppState>,
+              private route: ActivatedRoute,
+              private router: Router,
+              private http: Http,
+              private cd: ChangeDetectorRef,
+              private pdf: PdfService) {
     moment.locale('cs');
     this.dispatcher = new ComponentDispatcher(store, this);
     this.route.params.subscribe(params => {
@@ -400,6 +406,10 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     let duration = moment
       .duration(this.getIntervalHours(this.trackings.readings[this.selectedReading].intervals));
     return getDurationFormat(moment.duration(this.getIntervalHours(this.trackings.readings[this.selectedReading].intervals)));
+  }
+
+  generatePdf(){
+  this.pdf.generateBookDetailPdf(this.id);
   }
 
 }

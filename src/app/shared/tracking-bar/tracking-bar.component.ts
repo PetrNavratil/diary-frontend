@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AppState } from '../models/store-model';
 import { Store } from '@ngrx/store';
 import { ComponentDispatcher, squirrel, SquirrelData } from '@flowup/squirrel';
@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-tracking-bar',
   templateUrl: './tracking-bar.component.html',
-  styleUrls: ['./tracking-bar.component.scss']
+  styleUrls: ['./tracking-bar.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TrackingBarComponent {
 
@@ -21,7 +22,7 @@ export class TrackingBarComponent {
   time: string = '';
   getLast: boolean = true;
 
-  constructor(private store: Store<AppState>, private router: Router) {
+  constructor(private store: Store<AppState>, private router: Router ) {
     this.dispatcher = new ComponentDispatcher(store, this);
     let {dataStream: trackingData, errorStream: trackingError} = squirrel(store, 'tracking', this);
     let {dataStream: userData, errorStream: userError} = squirrel(store, 'users', this);

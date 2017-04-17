@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { AppState } from '../../shared/models/store-model';
 import { Store } from '@ngrx/store';
 import { ComponentDispatcher, squirrel, SquirrelData } from '@flowup/squirrel';
@@ -21,6 +21,7 @@ export class ProfileComponent implements OnDestroy {
   loading: boolean = false;
   passwordLoading: boolean = false;
   errorMessage: string = '';
+  @ViewChild('photoInput') inputElement: ElementRef;
 
   constructor(private store: Store<AppState>, private http: Http) {
     this.dispatcher = new ComponentDispatcher(store, this);
@@ -62,6 +63,24 @@ export class ProfileComponent implements OnDestroy {
   editUser(event) {
     event.stopPropagation();
     this.dispatcher.dispatch(userActions.API_UPDATE, this.user);
+  }
+
+  openFile(){
+    this.inputElement.nativeElement.click();
+  }
+
+  uploadFile(){
+    console.info(this.inputElement.nativeElement.files);
+    if(this.inputElement.nativeElement.files.length > 0){
+      this.dispatcher.dispatch(
+        userActions.ADDITIONAL.UPLOAD_AVATAR,
+        this.inputElement.nativeElement.files[0]
+      );
+    }
+  }
+
+  get avatarUrl() {
+    return `${environment.apiUrl}/${this.user.avatar}`;
   }
 
 

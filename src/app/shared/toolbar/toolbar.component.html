@@ -7,9 +7,9 @@
   </div>
   <div class="user-section">
     <app-tracking-bar></app-tracking-bar>
-    <div class="user">
-      <img src="../../../assets/photo.png" class="avatar" alt="">
-      <span class="name">Petr Navrátil</span>
+    <div class="user" *ngIf="user">
+      <img [src]="avatarUrl" class="avatar" alt="">
+      <span class="name">{{user.userName}}</span>
       <i class="material-icons arrow">keyboard_arrow_down</i>
     </div>
   </div>

@@ -28,4 +28,19 @@ export class UserEffect {
         type: userActions.API_UPDATE_FAIL,
         payload: {origin: action.payload.origin, body: body.json().message}
       })));
+
+  @Effect() uploadAvatar = this.actions.ofType(userActions.ADDITIONAL.UPLOAD_AVATAR)
+    .switchMap(action => {
+      let formData: FormData = new FormData();
+      formData.append('file', action.payload.body, action.payload.body.name);
+      let options = createOptions();
+      options.headers.append('enctype', 'multipart/form-data');
+      return this.http.post(`${environment.apiUrl}${USER_ENDPOINT}/avatar`, formData, options)
+        .map(body => ({type: userActions.UPDATE, payload: {origin: action.payload.origin, body: body.json()}}))
+        .catch(body => Observable.of({
+          type: userActions.API_CREATE_FAIL,
+          payload: {origin: action.payload.origin, body: body.json().message}
+        }))
+    });
+
 }

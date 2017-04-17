@@ -359,6 +359,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
 
   // gets reading interval for currently selected reading
   get readingInterval() {
+    console.log('reading');
     if (this.trackings.readings[this.selectedReading].completed) {
       return `${moment(this.trackings.readings[this.selectedReading].start).format('LLL')}
          - ${moment(this.trackings.readings[this.selectedReading].stop).format('LLL')}`;

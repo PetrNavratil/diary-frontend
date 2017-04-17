@@ -5,7 +5,11 @@ import { Action } from '@ngrx/store';
 const modelName = 'USER';
 const generic = squirrelReducer(modelName);
 
-export const userActions = new SquirrelActions(modelName);
+const userAdditionalActions = {
+  UPLOAD_AVATAR: `${modelName}_UPLOAD_AVATAR`
+};
+
+export const userActions = new SquirrelActions(modelName, userAdditionalActions);
 
 export function usersReducer(state: SquirrelState<User> = {data: [], error: null, loading: false, origin: null},
                              action: Action) {

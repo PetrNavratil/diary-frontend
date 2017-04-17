@@ -75,4 +75,8 @@ export class MyBooksComponent implements OnDestroy {
     this.pdf.generateBooksPdf(this.selected);
   }
 
+  get pdfLoading() {
+    return this.pdf.loading$;
+  }
+
 }

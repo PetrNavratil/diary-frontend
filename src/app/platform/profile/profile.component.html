@@ -3,7 +3,8 @@
     <app-card class="user-info-card">
       <div class="user-info">
         <div class="photo-row">
-          <img class="photo" src="assets/photo.png">
+          <img class="photo" [src]="avatarUrl" (click)="openFile()">
+          <input #photoInput type="file" style="display: none;" (change)="uploadFile()" accept="image/jpeg, image/png">
           <md-input-container class="nickname">
             <input
               mdInput

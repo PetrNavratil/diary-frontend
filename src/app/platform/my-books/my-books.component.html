@@ -22,7 +22,7 @@
         (click)="generatePdf()"
         [title]="'Generate list of books [PDF]'"
         [color]="'primary'"
-        [loading]="pdf.loading$ | async"
+        [loading]="pdfLoading | async"
       ></app-loading-button>
     </div>
   </div>

@@ -19,6 +19,7 @@ $photo-margin: 40px;
           height: $photo-size;
           width: $photo-size;
           border: 2px solid rgba(black, .4);
+          cursor: pointer;
         }
         .nickname {
           bottom: -10px;

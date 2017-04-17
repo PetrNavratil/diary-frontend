@@ -1,49 +1,52 @@
-import { Component, ElementRef, ViewChild, OnDestroy, AfterViewChecked } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { GRSearchBook } from '../models/goodreadsBook.model';
 import { AppState } from '../models/store-model';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import * as Tether from 'tether';
 import { Router } from '@angular/router';
 import { ComponentDispatcher, squirrel, SquirrelData } from '@flowup/squirrel';
 import { searchActions } from '../../reducers/search.reducer';
 import { Http } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { createOptions } from '../createOptions';
+import { animate, style, state, trigger, transition } from '@angular/animations';
 
+const COLLAPSED = 'collapsed';
+const EXPANDED = 'expanded';
 
 @Component({
   selector: 'app-searcher',
   templateUrl: './searcher.component.html',
-  styleUrls: ['./searcher.component.scss']
+  styleUrls: ['./searcher.component.scss'],
+  animations: [
+    trigger('expandable', [
+      state(COLLAPSED, style({'height': '0', 'opacity': '0', 'width': '301px'})),
+      state(EXPANDED, style({'height': '50vh', 'opacity': '1', 'width' :'601px'})),
+      transition('* => *', animate('500ms ease-out'))
+    ])
+  ],
 })
-export class SearcherComponent implements OnDestroy, AfterViewChecked {
+export class SearcherComponent implements OnDestroy {
 
   books: GRSearchBook[] = [];
   key: string = '';
   loading: boolean = false;
   userInputChange: Subject<string> = new Subject<string>();
-  tether: Tether = null;
-
-  showDropdown: boolean = false;
   dispatcher: ComponentDispatcher;
   subscriptions: any[] = [];
+  state: string = COLLAPSED;
 
-  @ViewChild('dropdown') dropdown: ElementRef;
 
-
-  constructor(private store: Store<AppState>, private elRef: ElementRef, private router: Router, private http: Http) {
+  constructor(private store: Store<AppState>,  private router: Router, private http: Http) {
     this.dispatcher = new ComponentDispatcher(store, this);
     let {dataStream, errorStream} = squirrel(store, 'search', this);
     this.subscriptions.push(
       dataStream.subscribe(
         (data: SquirrelData<GRSearchBook>) => {
-          this.books = data.data;
           this.loading = data.loading;
-
-          if (this.books.length && this.tether) {
-            this.tether.enable();
-            this.showDropdown = true;
+          if (!data.loading) {
+            this.state = data.data.length ? EXPANDED : COLLAPSED;
+            this.books = data.data;
           }
         }
       )
@@ -68,31 +71,12 @@ export class SearcherComponent implements OnDestroy, AfterViewChecked {
         this.dispatcher.dispatch(searchActions.API_GET, value);
         return value;
       });
-
-    document.body.addEventListener('click', (event) => {
-      if (!this.elRef.nativeElement.contains(event.target)) {
-        this.showDropdown = false;
-      }
-    });
-
   }
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
-    this.tether.destroy();
-    this.dispatcher.dispatch((<any>searchActions.ADDITIONAL).DESTROY);
-  }
-
-  ngAfterViewChecked() {
-    this.tether = new Tether({
-      element: '.dropdown',
-      target: '.search-input',
-      attachment: 'top left',
-      targetAttachment: 'bottom left',
-      enabled: false
-    });
   }
 
   changed(value: string) {
@@ -102,12 +86,16 @@ export class SearcherComponent implements OnDestroy, AfterViewChecked {
 
   displayDropdown() {
     if (this.books.length) {
-      this.showDropdown = true;
+      this.state = EXPANDED;
     }
   }
 
+  hideDropdown(){
+    this.state = COLLAPSED;
+  }
+
   selected(book: GRSearchBook) {
-    this.showDropdown = false;
+    this.state = COLLAPSED;
     this.http.post(`${environment.apiUrl}/book`, book, createOptions()).subscribe(
       data => {
         this.router.navigate([`platform/detail/${data.json().id}`]);

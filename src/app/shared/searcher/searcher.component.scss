@@ -5,6 +5,7 @@ $margin-icon: 5px;
 .searcher-container {
   display: flex;
   align-items: center;
+  position: relative;
 
   .search-icon {
     z-index: 2;
@@ -17,7 +18,7 @@ $margin-icon: 5px;
     background: transparent;
     height: 40px;
     width: 300px;
-    transition: width 1s, color 1s, outline 1s, ease;
+    transition: all .5s ease-out;
     color: $toolbar-font-color;
     font-size: $toolbar-font-size;
     font-weight: $toolbar-weight;
@@ -31,7 +32,6 @@ $margin-icon: 5px;
       outline: 3px solid #584C43;
       width: 600px;
       color: lighten($toolbar-font-color, 5%);
-
     }
   }
 
@@ -41,41 +41,46 @@ $margin-icon: 5px;
   }
 
   .dropdown {
-    background-color: white;
-    width: 601px;
     overflow: hidden;
-    max-height: 50vh;
     overflow-y: auto;
     z-index: 99;
+    position: absolute;
+    margin-top: 40px;
+    top: 0;
+    left: 0;
 
     .book {
       box-sizing: border-box;
-      padding: 10px 10px 10px 20px;
-      background-color: $loader-background-color;
-      min-height: 30px;
+      background-color: darken($loader-background-color, 30%);
       display: flex;
       justify-content: space-between;
       font-size: 16px;
-      color: darken($loader-spinner-color, 15%);
+      padding: 4px 0;
 
       &:not(:last-child) {
-        border-bottom: 1px solid darken($loader-spinner-color, 30%);
+        border-bottom: 1px solid darken($loader-background-color, 15%);
       }
 
       .summary {
         display: flex;
         flex-direction: column;
-        padding: 20px 0;
-
+        color: $toolbar-font-color;
+        font-size: $toolbar-font-size;
+        font-weight: $toolbar-weight;
+        padding: 20px;
         .title {
-          font-weight: bold;
           padding-bottom: 10px;
         }
 
       }
 
+      .cover{
+        height: 150px;
+        margin: 5px;
+      }
+
       &:hover {
-        background-color: darken($loader-background-color, 5%);
+        background-color: darken($loader-background-color, 32%);
         cursor: pointer;
       }
     }

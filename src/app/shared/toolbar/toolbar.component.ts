@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { SquirrelState } from '@flowup/squirrel';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
@@ -16,6 +17,20 @@ export class ToolbarComponent implements OnDestroy {
 
   subscription: Subscription;
   user: User;
+  menuItems: any[] = [
+    {
+      name: 'Books',
+      link: 'books'
+    },
+    {
+      name: 'Shelves',
+      link: 'shelves'
+    },
+    {
+      name: 'Statistics',
+      link: 'statistics'
+    }
+  ];
   constructor(private store:Store<AppState>, private cd: ChangeDetectorRef) {
     this.subscription = this.store.select('users').subscribe(
       (data: SquirrelState<User>) => {

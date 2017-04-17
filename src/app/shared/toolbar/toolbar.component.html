@@ -1,16 +1,23 @@
 <div class="toolbar-container">
-  <div class="logo">
-    Book Diary
-  </div>
-  <div class="quick-search">
-    <app-searcher></app-searcher>
-  </div>
-  <div class="user-section">
-    <app-tracking-bar></app-tracking-bar>
-    <div class="user" *ngIf="user">
-      <img [src]="avatarUrl" class="avatar" alt="">
-      <span class="name">{{user.userName}}</span>
-      <i class="material-icons arrow">keyboard_arrow_down</i>
+  <div class="router-container">
+    <div class="router-item"
+         *ngFor="let menuItem of menuItems"
+         routerLinkActive="active"
+         routerLink="{{menuItem.link}}">
+      {{menuItem.name}}
     </div>
   </div>
+  <app-searcher></app-searcher>
+  <div class="tracking-user">
+    <app-tracking-bar class="tracking"></app-tracking-bar>
+    <div class="user" *ngIf="user">
+      <img *ngIf="user.avatar.length > 0"
+           [src]="avatarUrl"
+           class="avatar">
+      <i class="material-icons avatar" *ngIf="user.avatar.length === 0">person</i>
+      <div class="name">{{user.userName}}</div>
+      <div class="material-icons arrow">keyboard_arrow_down</div>
+    </div>
+  </div>
+
 </div>

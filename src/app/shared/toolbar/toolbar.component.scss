@@ -1,77 +1,74 @@
 @import '../../theme';
 
-$avatar-size: 40px;
+$avatar-size: 45px;
+$avatar-color: white;
+$user-item-margin: 10px;
 
-.toolbar-container {
+.toolbar-container{
   display: flex;
-  justify-content: space-between;
   align-items: center;
-
+  justify-content: space-between;
   height: $toolbar-height;
-  padding: 10px 0 10px 10px;
-  color: $toolbar-font-color;
+  background-color: black;
+  flex-grow: 1;
   font-size: $toolbar-font-size;
+  color: $toolbar-font-color;
   font-weight: $toolbar-weight;
-  box-sizing: border-box;
+  padding: 0 10px;
 
-  background-image: $toolbar-background-color;
-
-  .logo {
-    font-family: hand-written;
-    font-weight: normal;
-    font-size: 26px;
-  }
-
-  .quick-search {
+  .router-container{
     display: flex;
-    align-items: center;
+    height: 100%;
 
-    .search-icon {
-      padding-right: 5px;
-    }
-
-    input {
-      border: none;
-      background: transparent;
-      height: 40px;
-      width: 300px;
-      transition: width 1s, color 1s, outline 1s, ease;
-      color: $toolbar-font-color;
-      font-size: $toolbar-font-size;
-      font-weight: $toolbar-weight;
-      outline: 1px solid darken(#584C43, 2%);
-      padding-left: 20px;
-
-      &:focus {
-        outline: 3px solid #584C43;
-        width: 600px;
-        color: lighten($toolbar-font-color, 5%);
-
-      }
-    }
-  }
-
-  .user-section {
-    display: flex;
-    align-items: center;
-    .user {
-      margin-left: 20px;
+    .router-item{
+      padding: 0 10px;
       display: flex;
       align-items: center;
-      .avatar {
-        border-radius: 50%;
-        width: $avatar-size;
-        height: $avatar-size;
+      height: 100%;
+      outline: none;
+      cursor: pointer;
+      &.active{
+        background-color: rgba(white, .15);
       }
-
-      .name {
-        margin-left: 10px;
-      }
-
-      .arrow {
-        padding: 0 20px;
+      &:hover{
+        background-color: rgba(white, .2);
       }
     }
-
   }
+  .tracking-user{
+    display: flex;
+    align-items: center;
+
+    .tracking{
+      margin-right: $user-item-margin*3;
+    }
+
+    .user{
+      display: flex;
+      align-items: center;
+      .avatar{
+        width: $avatar-size;
+        height: $avatar-size;
+        border-radius: 50%;
+        border: 2px solid $avatar-color;
+        font-size: $avatar-size;
+        color: darken($avatar-color, 25%);
+        margin-right: $user-item-margin;
+      }
+
+      .name{
+        margin-right: $user-item-margin;
+      }
+
+      .arrow{
+        font-size: 26px;
+        margin-top: 3px;
+      }
+    }
+  }
+
+
+
+
 }
+

@@ -29,11 +29,11 @@ export class AuthEffect {
       })
       .map(body => ({
         type: userActions.GET,
-        payload: {body: [body.json()], origin: action.payload.origin}
+        payload: [body.json()]
       }))
       .catch(body => Observable.of({
         type: authActions.API_GET_FAIL,
-        payload: {origin: action.payload.origin, body: body.json().message}
+        payload: body.json().message
       })));
 
   @Effect() register: Observable<Action> = this.actions
@@ -46,10 +46,10 @@ export class AuthEffect {
       })
       .map(body => ({
         type: userActions.GET,
-        payload: {body: [body.json()], origin: action.payload.origin}
+        payload: [body.json()]
       }))
       .catch(body => Observable.of({
         type: authActions.API_GET_FAIL,
-        payload: {origin: action.payload.origin, body: body.json().message}
+        payload: body.json().message
       })));
 }

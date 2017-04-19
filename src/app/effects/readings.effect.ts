@@ -18,6 +18,6 @@ export class ReadingEffect {
   @Effect() getReadings: Observable<Action> = this.actions
     .ofType(readingsActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT, createOptions())
-      .map(body => ({type: readingsActions.GET, payload: {origin: action.payload.origin, body: body.json()}}))
-      .catch(body => Observable.of({type: readingsActions.API_GET_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
+      .map(body => ({type: readingsActions.GET, payload: body.json()}))
+      .catch(body => Observable.of({type: readingsActions.API_GET_FAIL, payload: body.json()})));
 }

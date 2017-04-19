@@ -18,6 +18,6 @@ export class StatisticEffect {
   @Effect() getStatistic: Observable<Action> = this.actions
     .ofType(statisticActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT, createOptions())
-      .map(body => ({type: statisticActions.GET, payload: {origin: action.payload.origin, body: [body.json()]}}))
-      .catch(body => Observable.of({type: statisticActions.API_GET_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
+      .map(body => ({type: statisticActions.GET, payload: [body.json()]}))
+      .catch(body => Observable.of({type: statisticActions.API_GET_FAIL, payload: body.json()})));
 }

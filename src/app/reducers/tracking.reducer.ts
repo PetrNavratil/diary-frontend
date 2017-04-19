@@ -42,7 +42,7 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
       return Object.assign({}, state, {
         error: null,
         loading: false,
-        data: [action.payload.readings ? action.payload : Object.assign({}, {
+        data: [action.payload.readings ? action.payload.body : Object.assign({}, {
           lastInterval: action.payload,
           readings: state.data[0].readings
         })]
@@ -51,7 +51,7 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
       return Object.assign({}, state, {
         error: null,
         loading: false,
-        data: [action.payload.readings ? action.payload : Object.assign({}, {
+        data: [action.payload.readings ? action.payload.body : Object.assign({}, {
           lastInterval: action.payload,
           readings: state.data[0].readings
         })]

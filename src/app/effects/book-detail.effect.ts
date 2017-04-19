@@ -18,6 +18,6 @@ export class BookDetail {
   @Effect() bookDetail: Observable<Action> = this.actions
     .ofType(detailActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + encodeURI(action.payload), createOptions())
-      .map(body => ({type: detailActions.GET, payload: {origin: action.payload.origin, body: [body.json()]}}))
-      .catch(body => Observable.of({type: detailActions.API_GET_FAIL, payload: {origin: action.payload.origin, body}})));
+      .map(body => ({type: detailActions.GET, payload: [body.json()]}))
+      .catch(body => Observable.of({type: detailActions.API_GET_FAIL, payload: body})));
 }

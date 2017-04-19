@@ -1,10 +1,23 @@
-import { GRSearchBook, GRBook } from './goodreadsBook.model';
-export interface StoreModel<T> {
-  error?: Error,
-  data: T[]
-}
+import { GRSearchBook } from './goodreadsBook.model';
+import { BookInfo, Book } from './book.model';
+import { SquirrelState } from '@flowup/squirrel';
+import { User } from './user.model';
+import { Comment } from '@angular/compiler';
+import { Shelf } from './shelf.model';
+import { Reading, StoredReading } from './tracking.model';
+import { Statistic } from './statistic.model';
+import { StatisticInterval } from './statistic-interval.model';
 
 export interface AppState {
-  search: StoreModel<GRSearchBook>
-  bookDetail: StoreModel<GRBook>
+  search: SquirrelState<GRSearchBook>
+  bookDetail: SquirrelState<BookInfo>
+  auth: SquirrelState<User>
+  books: SquirrelState<Book>
+  comments: SquirrelState<Comment>
+  shelves: SquirrelState<Shelf>
+  tracking: SquirrelState<StoredReading>
+  users: SquirrelState<User>
+  readings: SquirrelState<Reading>
+  statistics: SquirrelState<Statistic>
+  intervals: SquirrelState<StatisticInterval>
 }

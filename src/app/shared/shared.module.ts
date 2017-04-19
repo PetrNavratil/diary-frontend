@@ -7,7 +7,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SearcherComponent } from './searcher/searcher.component';
 import { LoaderComponent } from './loader/loader.component';
-import { SideNavComponent } from './side-nav/side-nav.component';
 import { CardComponent } from './card/card.component';
 import { NoPaddingCard } from './card/no-padding-card.directive';
 import { MaterialModule } from '@angular/material';
@@ -38,7 +37,6 @@ import { PdfService } from './pdf.service';
     ToolbarComponent,
     SearcherComponent,
     LoaderComponent,
-    SideNavComponent,
     CardComponent,
     NoPaddingCard,
     EqualValidator,
@@ -63,7 +61,6 @@ import { PdfService } from './pdf.service';
     ToolbarComponent,
     SearcherComponent,
     LoaderComponent,
-    SideNavComponent,
     CardComponent,
     NoPaddingCard,
     EqualValidator,

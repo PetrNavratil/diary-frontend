@@ -6,7 +6,7 @@ const modelName = 'INTERVALS';
 const generic = squirrelReducer(modelName);
 
 export const intervalsActions = new SquirrelActions(modelName);
-export function intervalsReducer(state: SquirrelState<StatisticInterval> = {data: [], error: null, loading: false, origin: null},
+export function intervalsReducer(state: SquirrelState<StatisticInterval> = {data: [], error: null, loading: false},
                                  action: Action) {
   switch (action.type) {
     default:

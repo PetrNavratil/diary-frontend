@@ -8,7 +8,7 @@ const generic = squirrelReducer(modelName);
 
 export const detailActions = new SquirrelActions(modelName);
 
-export function detailReducer(state: SquirrelState<BookInfo> = {data: [], error: null, loading: false, origin: null},
+export function detailReducer(state: SquirrelState<BookInfo> = {data: [], error: null, loading: false},
                               action: Action) {
   switch(action.type){
     default:

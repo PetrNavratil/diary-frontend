@@ -11,7 +11,7 @@ const userAdditionalActions = {
 
 export const userActions = new SquirrelActions(modelName, userAdditionalActions);
 
-export function usersReducer(state: SquirrelState<User> = {data: [], error: null, loading: false, origin: null},
+export function usersReducer(state: SquirrelState<User> = {data: [], error: null, loading: false},
                              action: Action) {
   switch (action.type) {
     case 'CLEAR':

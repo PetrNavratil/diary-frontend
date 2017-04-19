@@ -6,7 +6,7 @@ const generic = squirrelReducer(modelName);
 
 export const commentActions = new SquirrelActions(modelName);
 
-export function commentReducer(state: SquirrelState<Comment> = {data: [], error: null, loading: false, origin: null},
+export function commentReducer(state: SquirrelState<Comment> = {data: [], error: null, loading: false},
                                action: Action) {
   switch (action.type) {
     default:

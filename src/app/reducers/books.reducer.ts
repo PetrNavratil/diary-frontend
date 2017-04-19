@@ -10,7 +10,7 @@ const booksAdditionalActions = {
 };
 export const booksActions = new SquirrelActions(modelName, booksAdditionalActions);
 
-export function booksReducer(state: SquirrelState<Book> = {data: [], error: null, loading: false, origin: null},
+export function booksReducer(state: SquirrelState<Book> = {data: [], error: null, loading: false},
                             action: Action) {
   switch (action.type) {
     case booksAdditionalActions.GET_SINGLE:

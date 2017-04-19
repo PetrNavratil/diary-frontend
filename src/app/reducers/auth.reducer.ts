@@ -12,7 +12,7 @@ const additionalAuthActions = {
 
 export const authActions = new SquirrelActions(modelName, additionalAuthActions);
 
-export function authReducer(state: SquirrelState<User> = {data: [], error: null, loading: false, origin: null},
+export function authReducer(state: SquirrelState<User> = {data: [], error: null, loading: false},
                             action: Action) {
   switch (action.type) {
     case additionalAuthActions.LOGIN:

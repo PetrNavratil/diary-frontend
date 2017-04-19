@@ -13,7 +13,7 @@ const shelvesAdditionalActions = {
 
 export const shelvesActions = new SquirrelActions(modelName, shelvesAdditionalActions);
 
-export function shelvesReducer(state: SquirrelState<Shelf> = {data: [], error: null, loading: false, origin: null},
+export function shelvesReducer(state: SquirrelState<Shelf> = {data: [], error: null, loading: false},
                                action: Action) {
   switch (action.type) {
     case shelvesAdditionalActions.API_ADD_BOOK:

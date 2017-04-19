@@ -12,11 +12,11 @@ const searchAdditionalActions = {
 
 export const searchActions = new SquirrelActions(modelName, searchAdditionalActions);
 
-export function searchReducer(state: SquirrelState<GRSearchBook> = {data: [], error: null, loading: false, origin: null},
+export function searchReducer(state: SquirrelState<GRSearchBook> = {data: [], error: null, loading: false},
                               action: Action) {
   switch (action.type) {
     case searchAdditionalActions.DESTROY:
-      return {data: [], error: null, loading: false, origin: null};
+      return {data: [], error: null, loading: false};
     case 'CLEAR':
       return state;
     default:

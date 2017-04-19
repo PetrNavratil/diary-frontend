@@ -16,8 +16,7 @@ export const trackingActions = new SquirrelActions(modelName, trackingAdditional
 export function trackingReducer(state: SquirrelState<StoredReading> = {
   data: [{lastInterval: <Reading>{}, readings: []}],
   error: null,
-  loading: false,
-  origin: null
+  loading: false
 },
                                 action: Action) {
   switch (action.type) {
@@ -28,8 +27,7 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
         data: [Object.assign({}, {
           lastInterval: state.data[0].lastInterval,
           readings: action.payload.body
-        })],
-        origin: action.payload.origin
+        })]
       });
     case trackingAdditionalActions.GET_LAST:
       return Object.assign({}, state, {
@@ -38,8 +36,7 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
         data: [Object.assign({}, {
           lastInterval: action.payload.body,
           readings: state.data[0].readings
-        })],
-        origin: action.payload.origin
+        })]
       });
     case trackingAdditionalActions.START:
       return Object.assign({}, state, {
@@ -48,8 +45,7 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
         data: [action.payload.readings ? action.payload.body : Object.assign({}, {
           lastInterval: action.payload.body,
           readings: state.data[0].readings
-        })],
-        origin: action.payload.origin
+        })]
       });
     case trackingAdditionalActions.END:
       return Object.assign({}, state, {
@@ -58,8 +54,7 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
         data: [action.payload.readings ? action.payload.body : Object.assign({}, {
           lastInterval: action.payload.body,
           readings: state.data[0].readings
-        })],
-        origin: action.payload.origin
+        })]
       });
     case 'CLEAR':
       return state;

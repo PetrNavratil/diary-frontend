@@ -1,11 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AppState } from './shared/models/store-model';
 import { Store } from '@ngrx/store';
-import { ComponentDispatcher, squirrel, SquirrelData } from '@flowup/squirrel';
-import { authActions } from './reducers/auth.reducer';
 import { User } from './shared/models/user.model';
 import { Router } from '@angular/router';
-import { usersReducer, userActions } from './reducers/user.reducer';
+import { userActions } from './reducers/user.reducer';
+import { SquirrelState } from '@flowup/squirrel';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,43 +15,31 @@ import { usersReducer, userActions } from './reducers/user.reducer';
   ]
 })
 export class AppComponent implements OnDestroy {
-  dispatcher: ComponentDispatcher;
-  subscriptions: any[] = [];
+  subscription: Subscription;
 
   constructor(private router: Router, private store: Store <AppState>) {
-    this.dispatcher = new ComponentDispatcher(store, this);
-    this.dispatcher.dispatch(userActions.API_GET);
-
-    let {dataStream, errorStream} = squirrel(store, 'users', this);
-    this.subscriptions.push(
-      dataStream.subscribe(
-        (data: SquirrelData<User>) => {
-          if (data.data.length) {
-            if (this.router.url === '/' || this.router.url.indexOf('landing') >= 0) {
-              this.router.navigate(['/platform']);
-            } else {
-              this.router.navigate([this.router.url]);
-            }
-          }
-        }
-      )
-    );
-    this.subscriptions.push(
-      errorStream.subscribe(
-        (error: Error) => {
+    this.store.dispatch({type: userActions.API_GET});
+    this.subscription = this.store.select('users').subscribe(
+      (data: SquirrelState<User>) => {
+        if (data.error) {
           console.log('because of this');
           console.log('url', this.router.url);
           if (this.router.url !== '/landing/register') {
             this.router.navigate(['/landing/login']);
           }
         }
-      )
+        if (data.data.length) {
+          if (this.router.url === '/' || this.router.url.indexOf('landing') >= 0) {
+            this.router.navigate(['/platform']);
+          } else {
+            this.router.navigate([this.router.url]);
+          }
+        }
+      }
     );
   }
 
   ngOnDestroy() {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+    this.subscription.unsubscribe();
   }
 }

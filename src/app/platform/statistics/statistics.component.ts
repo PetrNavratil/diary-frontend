@@ -4,7 +4,7 @@ import 'moment/locale/cs';
 import * as vis from 'vis';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../shared/models/store-model';
-import { ComponentDispatcher, SquirrelState } from '@flowup/squirrel';
+import { SquirrelState } from '@flowup/squirrel';
 import { readingsActions } from '../../reducers/reading.reducer';
 import { Reading } from '../../shared/models/tracking.model';
 import { statisticActions } from '../../reducers/statistic.reducer';
@@ -29,7 +29,6 @@ export class StatisticsComponent implements OnDestroy {
   selectedYear: string;
   yearTimeline: any;
   monthTimeline: any;
-  dispatcher: ComponentDispatcher;
   wholeTimeReading: Reading[] = [];
   intervals: StatisticInterval[] = [];
   intervalsLoading = false;
@@ -55,10 +54,9 @@ export class StatisticsComponent implements OnDestroy {
       this.years.push(now.subtract(1, 'years').format('YYYY'));
     }
     this.years = [this.selectedYear, ...this.years];
-    this.dispatcher = new ComponentDispatcher(store, this);
-    this.dispatcher.dispatch(readingsActions.API_GET);
-    this.dispatcher.dispatch(statisticActions.API_GET);
-    this.dispatcher.dispatch(intervalsActions.API_GET, {month: this.selectedMonth.id + 1, year: this.selectedYear});
+    this.store.dispatch({type:readingsActions.API_GET });
+    this.store.dispatch({type:statisticActions.API_GET });
+    this.store.dispatch({type:intervalsActions.API_GET, payload:{month: this.selectedMonth.id + 1, year: this.selectedYear} });
     this.subscriptions.push(this.store.select('readings').subscribe(
       (data: SquirrelState<Reading>) => {
         this.readingsLoading = data.loading;
@@ -110,24 +108,22 @@ export class StatisticsComponent implements OnDestroy {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
-    this.dispatcher.dispatch('CLEAR');
+    this.store.dispatch({type: 'CLEAR'});
   }
 
   get spentReading() {
-    console.log('sup', this.statistic.timeSpentReading);
-    console.log(getDurationFormat(moment.duration(this.statistic.timeSpentReading)))
     return getDurationFormat(moment.duration(this.statistic.timeSpentReading));
   }
 
   selectMonth(month: Month) {
     this.selectedMonth = month;
-    this.dispatcher.dispatch(intervalsActions.API_GET, {month: this.selectedMonth.id + 1, year: this.selectedYear});
+    this.store.dispatch({type:intervalsActions.API_GET, payload:{month: this.selectedMonth.id + 1, year: this.selectedYear}});
   }
 
   selectYear(year: string) {
     this.selectedYear = year;
     this.yearTimeline.setOptions(this.createOptions(true));
-    this.dispatcher.dispatch(intervalsActions.API_GET, {month: this.selectedMonth.id + 1, year: this.selectedYear});
+    this.store.dispatch({type:intervalsActions.API_GET, payload:{month: this.selectedMonth.id + 1, year: this.selectedYear}});
   }
 
   createYearTimeline() {

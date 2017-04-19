@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../shared/models/store-model';
-import { ComponentDispatcher, squirrel, SquirrelData } from '@flowup/squirrel';
+import {  } from '@flowup/squirrel';
 import { shelvesActions } from '../../reducers/shelves.reducer';
 import { Shelf } from '../../shared/models/shelf.model';
 import { Router } from '@angular/router';
+import { SquirrelState } from '@flowup/squirrel';
 
 @Component({
   selector: 'app-shelves',
@@ -13,38 +14,28 @@ import { Router } from '@angular/router';
 })
 export class ShelvesComponent {
 
-  dispatcher: ComponentDispatcher;
   shelfName = '';
   shelves: Shelf[] = [];
   shelfNames: string[] = [];
   subscriptions = [];
 
   constructor(private store: Store<AppState>, private router: Router) {
-    this.dispatcher = new ComponentDispatcher(store, this);
-    this.dispatcher.dispatch(shelvesActions.API_GET);
-    let {dataStream, errorStream} = squirrel(store, 'shelves', this);
+    this.store.dispatch({type: shelvesActions.API_GET});
     this.subscriptions.push(
-      dataStream.subscribe(
-        (data: SquirrelData<Shelf>) => {
+      this.store.select('shelves').subscribe(
+        (data: SquirrelState<Shelf>) => {
           this.shelves = data.data;
           this.shelfNames = this.shelves.map(shelf => shelf.name);
         }
       ));
-    this.subscriptions.push(
-      errorStream.subscribe(
-        (error: Error) => {
-          console.error(error);
-        }
-      )
-    );
   }
 
   addShelf() {
-    this.dispatcher.dispatch(shelvesActions.API_CREATE, {name: this.shelfName});
+    this.store.dispatch({type: shelvesActions.API_CREATE, payload: {name: this.shelfName}});
   }
 
   deleteShelf(id: number) {
-    this.dispatcher.dispatch(shelvesActions.API_DELETE, {id: id});
+    this.store.dispatch({type: shelvesActions.API_DELETE, payload: {id: id}});
   }
 
   goToDetail(id: number) {
@@ -53,7 +44,7 @@ export class ShelvesComponent {
   }
 
   editShelf(shelf: Shelf){
-    this.dispatcher.dispatch(shelvesActions.API_UPDATE, shelf);
+    this.store.dispatch({type: shelvesActions.API_UPDATE, payload: shelf});
   }
 
   get unique(){

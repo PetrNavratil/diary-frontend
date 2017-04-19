@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
-import { ComponentDispatcher, squirrel, SquirrelData } from '@flowup/squirrel';
+import { Component, OnDestroy } from '@angular/core';
 import { AppState } from '../shared/models/store-model';
 import { Store } from '@ngrx/store';
 import { authActions } from '../reducers/auth.reducer';
 import { User } from '../shared/models/user.model';
 import { ActivatedRoute, Params } from '@angular/router';
+import { SquirrelState } from '@flowup/squirrel';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent {
+export class LandingComponent implements OnDestroy {
 
-  dispatcher: ComponentDispatcher;
-  subscriptions: any[] = [];
+  subscription: Subscription;
   errorMessage: string = '';
   show: string = 'login';
 
@@ -26,34 +26,30 @@ export class LandingComponent {
         }
       }
     );
-
-    this.dispatcher = new ComponentDispatcher(store, this);
-    let {dataStream, errorStream} = squirrel(store, 'auth', this);
-    this.subscriptions.push(
-      dataStream.subscribe(
-        (data: SquirrelData<User>) => {
+    this.subscription = this.store.select('auth').subscribe(
+      (data: SquirrelState<User>) => {
+        if (data.error) {
+          this.errorMessage = data.error.message;
+          console.error(data.error.message);
+        } else {
           this.errorMessage = '';
         }
-      )
-    );
-    this.subscriptions.push(
-      errorStream.subscribe(
-        (error: Error) => {
-          this.errorMessage = error.message;
-          console.error(error.message);
-        }
-      )
+      }
     );
   }
 
   register(form) {
     console.log('register form', form.value);
-    this.dispatcher.dispatch((<any>authActions.ADDITIONAL).REGISTER, form.value);
+    this.store.dispatch({type: authActions.ADDITIONAL.REGISTER, payload: form.value});
   }
 
   login(form) {
     console.log('login form', form.value);
-    this.dispatcher.dispatch((<any>authActions.ADDITIONAL).LOGIN, form.value);
+    this.store.dispatch({type: authActions.ADDITIONAL.LOGIN, payload: form.value});
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 }
 

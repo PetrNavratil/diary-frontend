@@ -1,58 +1,47 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppState } from '../models/store-model';
 import { Store } from '@ngrx/store';
-import { ComponentDispatcher, squirrel, SquirrelData } from '@flowup/squirrel';
 import { StoredReading, Reading } from '../models/tracking.model';
 import { trackingActions } from '../../reducers/tracking.reducer';
 import * as moment from 'moment'
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
+import { SquirrelState } from '@flowup/squirrel';
 
 @Component({
   selector: 'app-tracking-bar',
   templateUrl: './tracking-bar.component.html',
   styleUrls: ['./tracking-bar.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TrackingBarComponent {
-
-  dispatcher: ComponentDispatcher;
   subscriptions: any[] = [];
   reading: Reading;
   time: string = '';
   getLast: boolean = true;
 
   constructor(private store: Store<AppState>, private router: Router ) {
-    this.dispatcher = new ComponentDispatcher(store, this);
-    let {dataStream: trackingData, errorStream: trackingError} = squirrel(store, 'tracking', this);
-    let {dataStream: userData, errorStream: userError} = squirrel(store, 'users', this);
-
     this.subscriptions.push(
-      userData.subscribe(
-        (data: SquirrelData<User>) => {
+      this.store.select('users').subscribe(
+        (data: SquirrelState<User>) => {
           if (this.getLast && data.data.length && !data.loading) {
             this.getLast = false;
-            this.dispatcher.dispatch(trackingActions.ADDITIONAL.API_GET_LAST);
+            this.store.dispatch({type:trackingActions.ADDITIONAL.API_GET_LAST});
           }
         }
       ));
 
-
     this.subscriptions.push(
-      trackingData.subscribe(
-        (data: SquirrelData<StoredReading>) => {
-          if (data.data[0].lastInterval.bookId > 0) {
-            this.reading = data.data[0].lastInterval;
+      this.store.select('tracking').subscribe(
+        (data: SquirrelState<StoredReading>) => {
+          if(data.error){
+            console.error(data.error);
+          } else {
+            if (data.data[0].lastInterval.bookId > 0) {
+              this.reading = data.data[0].lastInterval;
+            }
           }
         }
       ));
-    this.subscriptions.push(
-      trackingError.subscribe(
-        (error: Error) => {
-          console.error(error);
-        }
-      )
-    );
 
     setInterval(() => {
       if (this.reading && !this.reading.completed) {
@@ -65,11 +54,11 @@ export class TrackingBarComponent {
   }
 
   start() {
-    this.dispatcher.dispatch(trackingActions.ADDITIONAL.API_START, {id: this.reading.bookId, readings: true});
+    this.store.dispatch({type:trackingActions.ADDITIONAL.API_START, payload:{id: this.reading.bookId, readings: true}});
   }
 
   stop() {
-    this.dispatcher.dispatch(trackingActions.ADDITIONAL.API_END, {id: this.reading.bookId, readings: true});
+    this.store.dispatch({type:trackingActions.ADDITIONAL.API_END, payload:{id: this.reading.bookId, readings: true}});
   }
 
   redirectToDetail(){

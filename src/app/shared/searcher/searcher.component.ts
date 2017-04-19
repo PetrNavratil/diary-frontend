@@ -2,14 +2,14 @@ import { Component, OnDestroy } from '@angular/core';
 import { GRSearchBook } from '../models/goodreadsBook.model';
 import { AppState } from '../models/store-model';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { ComponentDispatcher, squirrel, SquirrelData } from '@flowup/squirrel';
 import { searchActions } from '../../reducers/search.reducer';
 import { Http } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { createOptions } from '../createOptions';
 import { animate, style, state, trigger, transition } from '@angular/animations';
+import { SquirrelState } from '@flowup/squirrel';
 
 const COLLAPSED = 'collapsed';
 const EXPANDED = 'expanded';
@@ -21,7 +21,7 @@ const EXPANDED = 'expanded';
   animations: [
     trigger('expandable', [
       state(COLLAPSED, style({'height': '0', 'opacity': '0', 'width': '301px'})),
-      state(EXPANDED, style({'height': '50vh', 'opacity': '1', 'width' :'601px'})),
+      state(EXPANDED, style({'height': '50vh', 'opacity': '1', 'width': '601px'})),
       transition('* => *', animate('500ms ease-out'))
     ])
   ],
@@ -32,32 +32,22 @@ export class SearcherComponent implements OnDestroy {
   key: string = '';
   loading: boolean = false;
   userInputChange: Subject<string> = new Subject<string>();
-  dispatcher: ComponentDispatcher;
-  subscriptions: any[] = [];
+  subscription: Subscription;
   state: string = COLLAPSED;
 
 
-  constructor(private store: Store<AppState>,  private router: Router, private http: Http) {
-    this.dispatcher = new ComponentDispatcher(store, this);
-    let {dataStream, errorStream} = squirrel(store, 'search', this);
-    this.subscriptions.push(
-      dataStream.subscribe(
-        (data: SquirrelData<GRSearchBook>) => {
-          this.loading = data.loading;
-          if (!data.loading) {
-            this.state = data.data.length ? EXPANDED : COLLAPSED;
-            this.books = data.data;
-          }
+  constructor(private store: Store<AppState>, private router: Router, private http: Http) {
+    this.subscription = this.store.select('search').subscribe(
+      (data: SquirrelState<GRSearchBook>) => {
+        this.loading = data.loading;
+        if (data.error) {
+          console.error(data.error);
         }
-      )
-    );
-    this.subscriptions.push(
-      errorStream.subscribe(
-        (error: Error) => {
-          console.error(error);
-          this.loading = false;
+        if (!data.loading) {
+          this.state = data.data.length ? EXPANDED : COLLAPSED;
+          this.books = data.data;
         }
-      )
+      }
     );
 
     this.userInputChange
@@ -68,15 +58,13 @@ export class SearcherComponent implements OnDestroy {
           this.loading = false;
           return;
         }
-        this.dispatcher.dispatch(searchActions.API_GET, value);
+        this.store.dispatch({type: searchActions.API_GET, payload: value});
         return value;
       });
   }
 
   ngOnDestroy() {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+    this.subscription.unsubscribe();
   }
 
   changed(value: string) {
@@ -90,7 +78,7 @@ export class SearcherComponent implements OnDestroy {
     }
   }
 
-  hideDropdown(){
+  hideDropdown() {
     this.state = COLLAPSED;
   }
 

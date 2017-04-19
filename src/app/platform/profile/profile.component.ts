@@ -1,12 +1,13 @@
 import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { AppState } from '../../shared/models/store-model';
 import { Store } from '@ngrx/store';
-import { ComponentDispatcher, squirrel, SquirrelData } from '@flowup/squirrel';
+import {} from '@flowup/squirrel';
 import { User } from '../../shared/models/user.model';
 import { userActions } from '../../reducers/user.reducer';
 import { Http } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { createOptions } from '../../shared/createOptions';
+import { SquirrelState } from '@flowup/squirrel';
 
 @Component({
   selector: 'app-profile',
@@ -14,8 +15,6 @@ import { createOptions } from '../../shared/createOptions';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnDestroy {
-
-  dispatcher: ComponentDispatcher;
   user: User;
   subscriptions: any[] = [];
   loading: boolean = false;
@@ -24,11 +23,10 @@ export class ProfileComponent implements OnDestroy {
   @ViewChild('photoInput') inputElement: ElementRef;
 
   constructor(private store: Store<AppState>, private http: Http) {
-    this.dispatcher = new ComponentDispatcher(store, this);
-    let {dataStream, errorStream} = squirrel(store, 'users', this);
+
     this.subscriptions.push(
-      dataStream.subscribe(
-        (data: SquirrelData<User>) => {
+      this.store.select('users').subscribe(
+        (data: SquirrelState<User>) => {
           this.loading = data.loading;
           if (data.data.length && !data.loading) {
             this.user = data.data[0];
@@ -62,20 +60,17 @@ export class ProfileComponent implements OnDestroy {
 
   editUser(event) {
     event.stopPropagation();
-    this.dispatcher.dispatch(userActions.API_UPDATE, this.user);
+    this.store.dispatch({type: userActions.API_UPDATE, payload: this.user});
   }
 
-  openFile(){
+  openFile() {
     this.inputElement.nativeElement.click();
   }
 
-  uploadFile(){
+  uploadFile() {
     console.info(this.inputElement.nativeElement.files);
-    if(this.inputElement.nativeElement.files.length > 0){
-      this.dispatcher.dispatch(
-        userActions.ADDITIONAL.UPLOAD_AVATAR,
-        this.inputElement.nativeElement.files[0]
-      );
+    if (this.inputElement.nativeElement.files.length > 0) {
+      this.store.dispatch({type: userActions.ADDITIONAL.UPLOAD_AVATAR, payload: this.inputElement.nativeElement.files[0]});
     }
   }
 

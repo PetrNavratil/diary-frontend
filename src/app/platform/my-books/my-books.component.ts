@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ComponentDispatcher, squirrel, SquirrelData } from '@flowup/squirrel';
+import { SquirrelState } from '@flowup/squirrel';
 import { AppState } from '../../shared/models/store-model';
 import { Store } from '@ngrx/store';
 import { Book } from '../../shared/models/book.model';
@@ -15,7 +15,6 @@ import { PdfService } from '../../shared/pdf.service';
 })
 export class MyBooksComponent implements OnDestroy {
 
-  dispatcher: ComponentDispatcher;
   subscriptions: any[] = [];
   books: Book[] = [];
   selectedBooks: Book[] = [];
@@ -23,12 +22,10 @@ export class MyBooksComponent implements OnDestroy {
   pattern: string = '';
 
   constructor(private store: Store<AppState>, private router: Router, private pdf: PdfService) {
-    this.dispatcher = new ComponentDispatcher(store, this);
-    this.dispatcher.dispatch(booksActions.API_GET);
-    let {dataStream, errorStream} = squirrel(store, 'books', this);
+    this.store.dispatch({type: booksActions.API_GET});
     this.subscriptions.push(
-      dataStream.subscribe(
-        (data: SquirrelData<Book>) => {
+      this.store.select('books').subscribe(
+        (data: SquirrelState<Book>) => {
           this.books = data.data;
           this.selectedBooks = data.data;
         }
@@ -69,6 +66,7 @@ export class MyBooksComponent implements OnDestroy {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+    this.store.dispatch({type: 'CLEAR'});
   }
 
   generatePdf(){

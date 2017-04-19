@@ -3,7 +3,7 @@ import { AppState } from '../../shared/models/store-model';
 import { Store } from '@ngrx/store';
 import { GRBook, GRSimilarBook } from '../../shared/models/goodreadsBook.model';
 import * as Tether from 'tether';
-import { ComponentDispatcher, foxy, SquirrelState } from '@flowup/squirrel';
+import { SquirrelState } from '@flowup/squirrel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { detailActions } from '../../reducers/book-detail.reducer';
 import { booksActions } from '../../reducers/books.reducer';
@@ -43,7 +43,6 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     'Amazon',
     'Something'
   ];
-  dispatcher: ComponentDispatcher;
   subscriptions: any[] = [];
   loading: boolean = false;
   insertLoading: boolean = false;
@@ -74,19 +73,18 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
               private cd: ChangeDetectorRef,
               private pdf: PdfService) {
     moment.locale('cs');
-    this.dispatcher = new ComponentDispatcher(store, this);
     this.route.params.subscribe(params => {
       this.id = +params['id'];
-      this.dispatcher.dispatch('CLEAR');
+      this.store.dispatch({type: 'CLEAR'});
       if (this.id) {
-        this.dispatcher.dispatch(detailActions.API_GET, this.id);
-        this.dispatcher.dispatch(booksActions.ADDITIONAL.GET_SINGLE, this.id);
-        this.dispatcher.dispatch(shelvesActions.API_GET);
-        this.dispatcher.dispatch(commentActions.API_GET, this.id);
+        this.store.dispatch({type: detailActions.API_GET , payload: this.id });
+        this.store.dispatch({type: booksActions.ADDITIONAL.GET_SINGLE, payload: this.id});
+        this.store.dispatch({type:commentActions.API_GET , payload: this.id});
+        this.store.dispatch({type:shelvesActions.API_GET });
       }
     });
     // user book info
-    this.subscriptions.push(foxy(store, 'books', this)
+    this.subscriptions.push(this.store.select('books')
       .subscribe(
         (data: SquirrelState<Book>) => {
           if (data.error) {
@@ -97,12 +95,12 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
               this.bookInfo = data.data[0];
               if (this.bookInfo.inBooks) {
                 console.log('getting tracking');
-                this.dispatcher.dispatch(trackingActions.API_GET, this.id);
+                this.store.dispatch({type: trackingActions.API_GET, payload: this.id});
               }
 
               if (this.updateLatest) {
                 console.log('updating latest because it was closed by changing status');
-                this.dispatcher.dispatch(trackingActions.ADDITIONAL.API_GET_LAST);
+                this.store.dispatch({type: trackingActions.ADDITIONAL.API_GET_LAST});
                 this.updateLatest = false;
               }
             }
@@ -112,7 +110,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
         })
     );
     // book gr info
-    this.subscriptions.push(foxy(store, 'detail', this)
+    this.subscriptions.push(this.store.select('detail')
       .subscribe(
         (data: SquirrelState<BookInfo>) => {
           if (data.error) {
@@ -140,7 +138,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     );
 
     // comments
-    this.subscriptions.push(foxy(store, 'comments', this)
+    this.subscriptions.push(this.store.select('comments')
       .subscribe(
         (data: SquirrelState<DiaryComment>) => {
           if (data.error) {
@@ -168,7 +166,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     );
 
     // user info
-    this.subscriptions.push(foxy(store, 'users', this)
+    this.subscriptions.push(this.store.select('users')
       .subscribe(
         (data: SquirrelState<User>) => {
           if (data.error) {
@@ -183,7 +181,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     );
 
     // shelves
-    this.subscriptions.push(foxy(store, 'shelves', this)
+    this.subscriptions.push(this.store.select('shelves')
       .subscribe(
         (data: SquirrelState<Shelf>) => {
           if (data.error) {
@@ -197,7 +195,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
         })
     );
 
-    this.subscriptions.push(foxy(store, 'tracking', this)
+    this.subscriptions.push(this.store.select('tracking')
       .subscribe(
         (data: SquirrelState<StoredReading>) => {
           this.trackingsLoading = data.loading;
@@ -216,7 +214,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
                 }
               }
               if (this.updateDetail) {
-                this.dispatcher.dispatch(booksActions.ADDITIONAL.GET_SINGLE, this.id);
+                this.store.dispatch({type:booksActions.ADDITIONAL.GET_SINGLE, payload: this.id });
                 this.updateDetail = false;
               }
             }
@@ -230,7 +228,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
-    this.dispatcher.dispatch('CLEAR');
+    this.store.dispatch({type: 'CLEAR'});
   }
 
   ngOnInit() {
@@ -261,11 +259,11 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   }
 
   addBook() {
-    this.dispatcher.dispatch(booksActions.API_CREATE, this.id);
+    this.store.dispatch({type:booksActions.API_CREATE , payload:this.id});
   }
 
   removeBook() {
-    this.dispatcher.dispatch(booksActions.API_DELETE, this.id);
+    this.store.dispatch({type:booksActions.API_DELETE , payload:this.id});
   }
 
   changeStatus(status: number) {
@@ -279,19 +277,19 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
       this.updateLatest = true;
     }
     this.bookInfo.status = status;
-    this.dispatcher.dispatch(booksActions.API_UPDATE, this.bookInfo);
+    this.store.dispatch({type:booksActions.API_UPDATE , payload:this.bookInfo});
   }
 
   editComment(item: any) {
-    this.dispatcher.dispatch(commentActions.API_UPDATE, item);
+    this.store.dispatch({type:commentActions.API_UPDATE , payload:item});
   }
 
   addComment(item: any) {
-    this.dispatcher.dispatch(commentActions.API_CREATE, item);
+    this.store.dispatch({type:commentActions.API_CREATE , payload:item});
   }
 
   deleteComment(item: any) {
-    this.dispatcher.dispatch(commentActions.API_DELETE, item);
+    this.store.dispatch({type:commentActions.API_DELETE , payload:item});
   }
 
   getSimilarBook(book: GRSimilarBook): Book {
@@ -314,7 +312,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   setEducational(educational: EducationModel) {
     console.log('form', educational);
     this.bookInfo.educational = educational;
-    this.dispatcher.dispatch(booksActions.API_UPDATE, this.bookInfo);
+    this.store.dispatch({type:booksActions.API_UPDATE , payload:this.bookInfo});
   }
 
   isInShelve(id: number): boolean {
@@ -323,21 +321,21 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
 
   toggleShelf(id: number) {
     if (this.isInShelve(id)) {
-      this.dispatcher.dispatch(shelvesActions.ADDITIONAL.API_REMOVE_BOOK, {id: id, book: this.bookInfo});
+      this.store.dispatch({type:shelvesActions.ADDITIONAL.API_REMOVE_BOOK , payload:{id: id, book: this.bookInfo}});
     } else {
-      this.dispatcher.dispatch(shelvesActions.ADDITIONAL.API_ADD_BOOK, {id: id, book: this.bookInfo});
+      this.store.dispatch({type:shelvesActions.ADDITIONAL.API_ADD_BOOK , payload:{id: id, book: this.bookInfo}});
     }
   }
 
   addNewShelf(event) {
     event.stopPropagation();
     if (this.newShelf.length > 0) {
-      this.dispatcher.dispatch(shelvesActions.API_CREATE, {name: this.newShelf});
+      this.store.dispatch({type:shelvesActions.API_CREATE , payload:{name: this.newShelf}});
     }
   }
 
   startTracking() {
-    this.dispatcher.dispatch(trackingActions.ADDITIONAL.API_START, {id: this.id, readings: true});
+    this.store.dispatch({type:trackingActions.ADDITIONAL.API_START , payload:{id: this.id, readings: true}});
     // update only if book wasnt reading
     if (this.bookInfo.status !== BookStatus.READING) {
       this.updateDetail = true;
@@ -345,7 +343,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   }
 
   stopTracking() {
-    this.dispatcher.dispatch(trackingActions.ADDITIONAL.API_END, {id: this.id, readings: true});
+    this.store.dispatch({type:trackingActions.ADDITIONAL.API_END , payload:{id: this.id, readings: true}});
   }
 
 

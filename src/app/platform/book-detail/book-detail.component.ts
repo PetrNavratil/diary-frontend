@@ -7,7 +7,7 @@ import { ComponentDispatcher, foxy, SquirrelState } from '@flowup/squirrel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { detailActions } from '../../reducers/book-detail.reducer';
 import { booksActions } from '../../reducers/books.reducer';
-import { Book } from '../../shared/models/book.model';
+import { Book, BookInfo } from '../../shared/models/book.model';
 import { BookStatus } from '../../shared/models/book-status.enum';
 import { DiaryComment } from '../../shared/models/comment.model';
 import { User } from '../../shared/models/user.model';
@@ -114,17 +114,17 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     // book gr info
     this.subscriptions.push(foxy(store, 'detail', this)
       .subscribe(
-        (data: SquirrelState<GRBook>) => {
+        (data: SquirrelState<BookInfo>) => {
           if (data.error) {
             console.error(data.error);
           } else {
             if (data.data.length) {
-              this.book = Object.assign({}, data.data[0]);
+              this.book = Object.assign({}, data.data[0].goodReadsBook);
               let div = document.createElement('div');
               div.innerHTML = this.book.description;
               this.book.description = div.textContent || div.innerText || '';
-              if (data.data[0].similarBooks) {
-                this.similarBooks = data.data[0].similarBooks.map(book => this.getSimilarBook(book));
+              if (this.book.similarBooks) {
+                this.similarBooks = this.book.similarBooks.map(book => this.getSimilarBook(book));
               } else {
                 this.similarBooks = [];
               }

@@ -19,7 +19,7 @@ import { EducationModel } from '../../shared/models/education.model';
 import { Shelf } from '../../shared/models/shelf.model';
 import { shelvesActions } from '../../reducers/shelves.reducer';
 import { trackingActions } from '../../reducers/tracking.reducer';
-import { StoredReading, Interval } from '../../shared/models/tracking.model';
+import { StoredReading, Interval, Reading } from '../../shared/models/tracking.model';
 import * as moment from 'moment';
 import 'moment/locale/cs';
 import { getDurationFormat } from '../../shared/duration-format';
@@ -34,17 +34,19 @@ import { PdfService } from '../../shared/pdf.service';
 export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   book: GRBook;
+  /**
+   * Holds information about book from different resources
+   */
+  bookRes: BookInfo;
   bookInfo: Book;
   tether: Tether;
-  selectedTab: number = 0;
   tabs: string[] = [
-    'Good Reads',
+    'GoodReads',
     'Google Books',
-    'Amazon',
-    'Something'
   ];
+  bookResLoading = false;
+  selectedTab: string = this.tabs[0];
   subscriptions: any[] = [];
-  loading: boolean = false;
   insertLoading: boolean = false;
   id: number;
   BookStatus = BookStatus;
@@ -65,6 +67,14 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   updateLatest = false;
   selectedReading = -1;
   trackingsLoading = true;
+
+  // whole reading time  ... sum of all intervals
+  wholeTimeReading = '';
+  intervalsTableData: {start: string; stop: string; duration: string;}[] = [];
+  // duration of selected reading
+  readingDuration = '';
+  // timestamps of start and stop of reading
+  readingStartStop = '';
 
   constructor(private store: Store<AppState>,
               private route: ActivatedRoute,
@@ -113,16 +123,20 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     this.subscriptions.push(this.store.select('detail')
       .subscribe(
         (data: SquirrelState<BookInfo>) => {
+          this.bookResLoading = data.loading;
           if (data.error) {
             console.error(data.error);
           } else {
             if (data.data.length) {
+              this.bookRes = data.data[0];
               this.book = Object.assign({}, data.data[0].goodReadsBook);
-              let div = document.createElement('div');
-              div.innerHTML = this.book.description;
-              this.book.description = div.textContent || div.innerText || '';
               if (this.book.similarBooks) {
-                this.similarBooks = this.book.similarBooks.map(book => this.getSimilarBook(book));
+                this.similarBooks = this.book.similarBooks.map((book: GRSimilarBook) => ({
+                  id: book.id,
+                  title: book.title,
+                  author: book.authors[0].name,
+                  imageUrl: book.imageUrl
+                }));
               } else {
                 this.similarBooks = [];
               }
@@ -217,11 +231,84 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
                 this.store.dispatch({type:booksActions.ADDITIONAL.GET_SINGLE, payload: this.id });
                 this.updateDetail = false;
               }
+              if(this.trackings.readings.length){
+                this.wholeTimeReading = getDurationFormat(moment.duration(this.trackings.readings.map(reading => this.getReadingDuration(reading.intervals)).reduce(
+                  (acc, val) => acc.add(val), moment.duration(0)
+                )));
+                this.intervalsTableData = this.createIntervalsTableData(this.trackings.readings[this.selectedReading].intervals);
+                this.readingDuration = this.getTimeStampsDurationFormatted(
+                  this.getReadingDuration(this.trackings.readings[this.selectedReading].intervals)
+                );
+                this.readingStartStop = this.getReadingStartStop(this.trackings.readings[this.selectedReading]);
+              }
             }
           }
           this.cd.markForCheck();
         })
     );
+  }
+
+  /**
+   * Returns reading FROM - TO or FROM
+   * @param reading
+   * @returns {string}
+   */
+  getReadingStartStop(reading: Reading): string{
+    if (reading.completed) {
+      return `${this.getFormattedTimeStamp(reading.start)} - ${this.getFormattedTimeStamp(reading.stop)}`;
+    } else {
+      return this.getFormattedTimeStamp(reading.start);
+    }
+  }
+
+  /**
+   * Returns formatted timestamp in LLL format
+   * @param timestamp
+   * @returns {string}
+   */
+  getFormattedTimeStamp(timestamp: string): string {
+    return timestamp !== '0001-01-01T00:00:00Z' ? moment(timestamp).format('LLL') : '-';
+  }
+
+  /**
+   * Returns duration of two timestamps
+   * @param start
+   * @param stop
+   * @returns {Duration}
+   */
+  getTimeStampsDuration(start: string, stop: string): moment.Duration {
+    if (stop === '0001-01-01T00:00:00Z') {
+      return moment.duration(0)
+    } else {
+      return moment.duration(moment(stop).diff(moment(start)));
+    }
+  }
+
+  /**
+   * Returns formatted duration
+   * @param duration
+   * @returns {string}
+   */
+  getTimeStampsDurationFormatted(duration: moment.Duration): string {
+    if (duration.as('milliseconds') > 0) {
+      return getDurationFormat(duration);
+    } else {
+      return '-';
+    }
+  }
+
+  getReadingDuration(intervals: Interval[]) {
+    return intervals.reduce(
+      (acc: moment.Duration,interval: Interval) => acc.add(this.getTimeStampsDuration(interval.start, interval.stop)), moment.duration(0))
+  }
+
+  createIntervalsTableData(intervals: Interval[]) {
+    return intervals
+      .map(interval => ({
+        start: this.getFormattedTimeStamp(interval.start),
+        stop: this.getFormattedTimeStamp(interval.stop),
+        duration: this.getTimeStampsDurationFormatted(this.getTimeStampsDuration(interval.start, interval.stop))
+      }));
   }
 
   ngOnDestroy() {
@@ -246,9 +333,9 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     this.tether.position();
   }
 
-  selectTab(index: number) {
+  selectTab(index: string) {
     this.selectedTab = index;
-    let offset = index * 40;
+    let offset = this.tabs.indexOf(index) * 40;
     this.tether.setOptions({
       element: '.triangle',
       target: '.tabs-container',
@@ -290,15 +377,6 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
 
   deleteComment(item: any) {
     this.store.dispatch({type:commentActions.API_DELETE , payload:item});
-  }
-
-  getSimilarBook(book: GRSimilarBook): Book {
-    let newBook = {};
-    newBook['title'] = book.title;
-    newBook['author'] = book.authors[0].name;
-    newBook['imageUrl'] = book.imageUrl;
-    newBook['id'] = +book.id;
-    return <Book>newBook;
   }
 
   goToBook(book: Book) {
@@ -349,62 +427,15 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
 
   selectReading(index: number) {
     this.selectedReading = index;
+    this.intervalsTableData = this.createIntervalsTableData(this.trackings.readings[this.selectedReading].intervals);
+    this.readingDuration = this.getTimeStampsDurationFormatted(
+      this.getReadingDuration(this.trackings.readings[this.selectedReading].intervals)
+    );
+    this.readingStartStop = this.getReadingStartStop(this.trackings.readings[this.selectedReading]);
   }
 
   get existThisShelf() {
     return this.shelves.filter(shelf => shelf.name === this.newShelf).length === 1;
-  }
-
-  // gets reading interval for currently selected reading
-  get readingInterval() {
-    console.log('reading');
-    if (this.trackings.readings[this.selectedReading].completed) {
-      return `${moment(this.trackings.readings[this.selectedReading].start).format('LLL')}
-         - ${moment(this.trackings.readings[this.selectedReading].stop).format('LLL')}`;
-    } else {
-      return moment(this.trackings.readings[this.selectedReading].start).format('LLL');
-    }
-  }
-
-  // gets reading interval through all readings
-  get wholeReadingTime() {
-    let time = 0;
-    for (let reading of this.trackings.readings) {
-      time = time + this.getIntervalHours(reading.intervals);
-    }
-    return getDurationFormat(moment.duration(time));
-  }
-
-
-  // gets formatted time
-  getTime(timestamp: string) {
-    return timestamp !== '0001-01-01T00:00:00Z' ? moment(timestamp).format('LLL') : '-';
-  }
-
-  // gets interval duration
-  getDuration(start: string, stop: string) {
-    if (stop === '0001-01-01T00:00:00Z') {
-      return '-';
-    }
-    let duration = moment.duration(moment(stop).diff(moment(start)));
-    return getDurationFormat(duration);
-  }
-
-  // gets time of reading intervals
-  getIntervalHours(intervals: Interval[]): number {
-    let time = 0;
-    for (let interval of intervals) {
-      if (interval.stop !== '0001-01-01T00:00:00Z') {
-        time = time + moment(interval.stop).diff(interval.start);
-      }
-    }
-    return time;
-  }
-
-  get readingTime() {
-    let duration = moment
-      .duration(this.getIntervalHours(this.trackings.readings[this.selectedReading].intervals));
-    return getDurationFormat(moment.duration(this.getIntervalHours(this.trackings.readings[this.selectedReading].intervals)));
   }
 
   generatePdf(){

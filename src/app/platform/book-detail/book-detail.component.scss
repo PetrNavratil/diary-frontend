@@ -93,7 +93,6 @@ $arrow-size: 40px;
     display: flex;
 
     .source {
-
       .triangle {
         width: 0;
         height: 0;
@@ -136,30 +135,46 @@ $arrow-size: 40px;
     .info {
       flex-grow: 1;
       margin-left: $space-between;
-
-      .info-container {
+      .info-obal{
         display: flex;
-        flex-grow: 1;
-        flex-wrap: wrap;
-
-        .cover {
-
-        }
-
-        .details {
-          margin-left: 20px;
+        flex-direction: column;
+        .origin{
+          align-self: flex-end;
           display: flex;
-          flex-direction: column;
-          flex-grow: 1;
-          flex-basis: 0;
+          align-items: center;
+          .text{
+            font-size: 12px;
+            font-style: italic;
+            margin-right: 5px;
+            text-decoration: none;
+          }
+          .logo{
+            width: 100px;
+          }
         }
+        .info-container {
+          display: flex;
+          flex-grow: 1;
 
-        .description {
-          margin-left: 30px;
-          margin-right: 20px;
-          text-align: justify;
-          flex-grow: 4;
-          flex-basis: 0;
+          .cover {
+
+          }
+
+          .details {
+            margin-left: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            flex-basis: 0;
+          }
+
+          .description {
+            margin-left: 30px;
+            margin-right: 20px;
+            text-align: justify;
+            flex-grow: 4;
+            flex-basis: 0;
+          }
         }
       }
       .label {
@@ -263,6 +278,32 @@ $arrow-size: 40px;
   }
 
   .buy {
+    app-card{
+      width: 100%;
+    }
+    display: flex;
+    flex-grow: 1;
+    &.column{
+      flex-direction: column;
+      .image-link{
+        margin-right:0;
+        &:not(:last-child){
+          margin-bottom: 30px
+        }
+      }
+    }
+    .image-link {
+      img {
+        width: 150px;
+        height: 30px;
+        transition: transform .3s;
+        &:hover{
+          transform: scale(1.15);
+        }
+      }
+      text-decoration: none;
+      margin-right: 30px;
+    }
 
   }
 

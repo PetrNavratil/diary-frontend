@@ -57,7 +57,12 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
         })]
       });
     case 'CLEAR':
-      return state;
+      return Object.assign({}, state, {
+        data: [{
+          lastInterval: state.data[0].lastInterval,
+          readings: []
+        }]
+      });
     default:
       return generic(state, action);
   }

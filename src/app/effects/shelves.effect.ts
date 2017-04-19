@@ -24,31 +24,31 @@ export class ShelvesEffect {
 
   @Effect() addShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.API_CREATE)
-    .switchMap((action) => this.http.post(environment.apiUrl + API_ENDPOINT, action.payload.body, createOptions())
+    .switchMap((action) => this.http.post(environment.apiUrl + API_ENDPOINT, action.payload, createOptions())
       .map(body => ({type: shelvesActions.CREATE, payload: {origin: action.payload.origin, body: body.json()}}))
       .catch(body => Observable.of({type: shelvesActions.API_CREATE_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 
   @Effect() addBookToShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.ADDITIONAL.API_ADD_BOOK)
-    .switchMap((action) => this.http.post(environment.apiUrl + API_ENDPOINT + '/' + action.payload.body.id, action.payload.body.book, createOptions())
+    .switchMap((action) => this.http.post(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, action.payload.book, createOptions())
       .map(body => ({type: shelvesActions.UPDATE, payload: {origin: action.payload.origin, body: body.json()}}))
       .catch(body => Observable.of({type: shelvesActions.API_UPDATE_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 
   @Effect() removeBookFromShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.ADDITIONAL.API_REMOVE_BOOK)
-    .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/' + action.payload.body.id + '/' + action.payload.body.book.id, createOptions())
+    .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id + '/' + action.payload.book.id, createOptions())
       .map(body => ({type: shelvesActions.UPDATE, payload: {origin: action.payload.origin, body: body.json()}}))
       .catch(body => Observable.of({type: shelvesActions.API_UPDATE_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 
   @Effect() removeShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.API_DELETE)
-    .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/' + action.payload.body.id, createOptions())
+    .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, createOptions())
       .map(body => ({type: shelvesActions.DELETE, payload: {origin: action.payload.origin, body: body.json()}}))
       .catch(body => Observable.of({type: shelvesActions.API_DELETE_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 
   @Effect() updateShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.API_UPDATE)
-    .switchMap((action) => this.http.put(environment.apiUrl + API_ENDPOINT + '/' + action.payload.body.id, action.payload.body, createOptions())
+    .switchMap((action) => this.http.put(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, action.payload, createOptions())
       .map(body => ({type: shelvesActions.UPDATE, payload: {origin: action.payload.origin, body: body.json()}}))
       .catch(body => Observable.of({type: shelvesActions.API_UPDATE_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 }

@@ -21,7 +21,7 @@ export class AuthEffect {
 
   @Effect() login: Observable<Action> = this.actions
     .ofType((<any>authActions.ADDITIONAL).LOGIN)
-    .switchMap((action) => this.http.post(environment.apiUrl + LOGIN_ENDPOINT, action.payload.body)
+    .switchMap((action) => this.http.post(environment.apiUrl + LOGIN_ENDPOINT, action.payload)
       .flatMap(res => {
         res = res.json();
         localStorage.setItem('id_token', (<any>res).token);
@@ -38,7 +38,7 @@ export class AuthEffect {
 
   @Effect() register: Observable<Action> = this.actions
     .ofType((<any>authActions.ADDITIONAL).REGISTER)
-    .switchMap((action) => this.http.post(environment.apiUrl + REGISTER_ENDPOINT, action.payload.body)
+    .switchMap((action) => this.http.post(environment.apiUrl + REGISTER_ENDPOINT, action.payload)
       .flatMap(res => {
         res = res.json();
         localStorage.setItem('id_token', (<any>res).token);

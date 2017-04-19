@@ -17,7 +17,7 @@ export class TrackingEffect {
 
   @Effect() getTracking: Observable<Action> = this.actions
     .ofType(trackingActions.API_GET)
-    .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + '/book/' + action.payload.body, createOptions())
+    .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + '/book/' + action.payload, createOptions())
       .map(body => ({type: trackingActions.GET, payload: {origin: action.payload.origin, body: body.json()}}))
       .catch(body => Observable.of({type: trackingActions.API_GET_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 
@@ -29,19 +29,19 @@ export class TrackingEffect {
 
   @Effect() startTracking: Observable<Action> = this.actions
     .ofType(trackingActions.ADDITIONAL.API_START)
-    .switchMap((action) => this.http.put(`${environment.apiUrl}${API_ENDPOINT}/start/${action.payload.body.id}?getReadings=${action.payload.body.readings}`, {}, createOptions())
+    .switchMap((action) => this.http.put(`${environment.apiUrl}${API_ENDPOINT}/start/${action.payload.id}?getReadings=${action.payload.readings}`, {}, createOptions())
       .map(body => ({
         type: trackingActions.ADDITIONAL.START,
-        payload: {origin: action.payload.origin, readings: action.payload.body.readings, body: body.json()}
+        payload: {origin: action.payload.origin, readings: action.payload.readings, body: body.json()}
       }))
       .catch(body => Observable.of({type: trackingActions.API_GET_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 
   @Effect() stopTracking: Observable<Action> = this.actions
     .ofType(trackingActions.ADDITIONAL.API_END)
-    .switchMap((action) => this.http.put(`${environment.apiUrl}${API_ENDPOINT}/stop/${action.payload.body.id}?getReadings=${action.payload.body.readings}`, {}, createOptions())
+    .switchMap((action) => this.http.put(`${environment.apiUrl}${API_ENDPOINT}/stop/${action.payload.id}?getReadings=${action.payload.readings}`, {}, createOptions())
       .map(body => ({
         type: trackingActions.ADDITIONAL.END,
-        payload: {origin: action.payload.origin, readings: action.payload.body.readings, body: body.json()}
+        payload: {origin: action.payload.origin, readings: action.payload.readings, body: body.json()}
       }))
       .catch(body => Observable.of({type: trackingActions.API_GET_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 }

@@ -26,25 +26,25 @@ export class BookEffect {
 
   @Effect() getBook: Observable<Action> = this.actions
     .ofType(booksActions.ADDITIONAL.GET_SINGLE)
-    .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + '/' + action.payload.body, createOptions())
+    .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + '/' + action.payload, createOptions())
       .map(body => ({type: booksActions.GET, payload: {origin: action.payload.origin, body: [body.json()]}}))
       .catch(body => Observable.of({type: booksActions.API_GET_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 
   @Effect() insertBook: Observable<Action> = this.actions
     .ofType(booksActions.API_CREATE)
-    .switchMap((action) => this.http.post(environment.apiUrl + API_ENDPOINT + '/'+ action.payload.body, {}, createOptions())
+    .switchMap((action) => this.http.post(environment.apiUrl + API_ENDPOINT + '/'+ action.payload, {}, createOptions())
       .map(body => ({type: booksActions.GET, payload: {origin: action.payload.origin, body: [body.json()]}}))
       .catch(body => Observable.of({type: booksActions.API_CREATE_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 
   @Effect() removeBook: Observable<Action> = this.actions
     .ofType(booksActions.API_DELETE)
-    .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/'+ action.payload.body, createOptions())
+    .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/'+ action.payload, createOptions())
       .map(body => ({type: booksActions.GET, payload: {origin: action.payload.origin, body: [body.json()]}}))
       .catch(body => Observable.of({type: booksActions.API_DELETE_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 
   @Effect() updateBook: Observable<Action> = this.actions
     .ofType(booksActions.API_UPDATE)
-    .switchMap((action) => this.http.put(environment.apiUrl + API_ENDPOINT + '/' + action.payload.body.id, action.payload.body, createOptions())
+    .switchMap((action) => this.http.put(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, action.payload, createOptions())
       .map(body => ({type: booksActions.UPDATE, payload: {origin: action.payload.origin, body: body.json()}}))
       .catch(body => Observable.of({type: booksActions.API_UPDATE_FAIL, payload: {origin: action.payload.origin, body: body.json()}})));
 }

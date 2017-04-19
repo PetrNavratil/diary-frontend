@@ -22,7 +22,7 @@ export class UserEffect {
       })));
 
   @Effect() editUser = this.actions.ofType(userActions.API_UPDATE)
-    .switchMap(action => this.http.put(`${environment.apiUrl}${USER_ENDPOINT}/${action.payload.body.id}`, action.payload.body, createOptions())
+    .switchMap(action => this.http.put(`${environment.apiUrl}${USER_ENDPOINT}/${action.payload.id}`, action.payload, createOptions())
       .map(body => ({type: userActions.UPDATE, payload: {origin: action.payload.origin, body: body.json()}}))
       .catch(body => Observable.of({
         type: userActions.API_UPDATE_FAIL,
@@ -32,7 +32,7 @@ export class UserEffect {
   @Effect() uploadAvatar = this.actions.ofType(userActions.ADDITIONAL.UPLOAD_AVATAR)
     .switchMap(action => {
       let formData: FormData = new FormData();
-      formData.append('file', action.payload.body, action.payload.body.name);
+      formData.append('file', action.payload, action.payload.name);
       let options = createOptions();
       options.headers.append('enctype', 'multipart/form-data');
       return this.http.post(`${environment.apiUrl}${USER_ENDPOINT}/avatar`, formData, options)

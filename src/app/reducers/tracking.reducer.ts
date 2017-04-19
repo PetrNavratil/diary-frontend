@@ -26,7 +26,7 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
         loading: false,
         data: [Object.assign({}, {
           lastInterval: state.data[0].lastInterval,
-          readings: action.payload.body
+          readings: action.payload
         })]
       });
     case trackingAdditionalActions.GET_LAST:
@@ -34,7 +34,7 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
         error: null,
         loading: false,
         data: [Object.assign({}, {
-          lastInterval: action.payload.body,
+          lastInterval: action.payload,
           readings: state.data[0].readings
         })]
       });
@@ -42,8 +42,8 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
       return Object.assign({}, state, {
         error: null,
         loading: false,
-        data: [action.payload.readings ? action.payload.body : Object.assign({}, {
-          lastInterval: action.payload.body,
+        data: [action.payload.readings ? action.payload : Object.assign({}, {
+          lastInterval: action.payload,
           readings: state.data[0].readings
         })]
       });
@@ -51,8 +51,8 @@ export function trackingReducer(state: SquirrelState<StoredReading> = {
       return Object.assign({}, state, {
         error: null,
         loading: false,
-        data: [action.payload.readings ? action.payload.body : Object.assign({}, {
-          lastInterval: action.payload.body,
+        data: [action.payload.readings ? action.payload : Object.assign({}, {
+          lastInterval: action.payload,
           readings: state.data[0].readings
         })]
       });

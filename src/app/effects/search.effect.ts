@@ -18,7 +18,7 @@ export class SearchEffect {
 
   @Effect() search: Observable<Action> = this.actions
     .ofType(searchActions.API_GET)
-    .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + encodeURI(action.payload.body), createOptions())
+    .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + encodeURI(action.payload), createOptions())
       .map(body => ({type: searchActions.GET, payload: {origin: action.payload.origin, body: body.json()}}))
       .catch(body => Observable.of({type: searchActions.API_GET_FAIL, payload: {origin: action.payload.origin, body}})));
 }

@@ -5,41 +5,43 @@ $latest-width: 250px;
   flex-direction: column;
   min-height: 100vh;
 
-  .content {
+  .toolbar{
+    width: 100%;
+    position: fixed;
+    z-index: 99;
+  }
+
+  .latest{
+    right: 0;
+    top: $toolbar-height;
+    position: fixed;
+    height: calc(100vh - #{$toolbar-height});
+    overflow: auto;
+    width: $latest-width;
     display: flex;
-    flex-grow: 1;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(black, .15);
 
-    .router {
-      overflow: hidden;
-      width: calc(100% - #{$latest-width});
-
-    }
-
-    .latest{
-      right: 0;
-      top: $toolbar-height;
-      position: fixed;
-      height: calc(100vh - #{$toolbar-height});
-      overflow: auto;
-      width: $latest-width;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      background-color: rgba(black, .15);
-
-      .book{
-        width: $book-width;
-        height: $book-height;
-        margin-top: 30px;
-        opacity: .85;
-        transition: opacity .3s;
-        &:hover{
-          opacity: 1;
-        }
-        &:last-child{
-          margin-bottom: 30px;
-        }
+    .book{
+      width: $book-width;
+      height: $book-height;
+      margin-top: 30px;
+      opacity: .85;
+      transition: opacity .3s;
+      &:hover{
+        opacity: 1;
+      }
+      &:last-child{
+        margin-bottom: 30px;
       }
     }
+  }
+
+  .content {
+    margin-top: $toolbar-height;
+    overflow: hidden;
+    width: calc(100% - #{$latest-width});
+
   }
 }

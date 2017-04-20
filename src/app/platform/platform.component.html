@@ -1,15 +1,13 @@
 <div class="container">
   <app-toolbar class="toolbar"></app-toolbar>
   <div class="content">
-    <div class="router">
       <router-outlet></router-outlet>
-    </div>
-    <div class="latest">
-      <app-book-preview
-        *ngFor="let book of books"
-        [book]="book"
+  </div>
+  <div class="latest">
+    <app-book-preview
+      *ngFor="let book of books"
+      [book]="book"
       class="book"
       (click)="redirectToDetail(book.id)"></app-book-preview>
-    </div>
   </div>
 </div>

@@ -35,6 +35,15 @@ import { intervalsReducer } from './reducers/statistic-intervals.reducer';
 import { IntervalsEffect } from './effects/statistic-intervals.effect';
 import { latestBooksReducer } from './reducers/latestBooks.reducer';
 import { LatestBooksEffect } from './effects/latestBooks.effect';
+import { ToastModule, ToastOptions } from 'ng2-toastr';
+
+export class CustomOption extends ToastOptions {
+  animate = 'flyRight';
+  newestOnTop = true;
+  toastLife = 3000;
+  positionClass = 'toast-bottom-right';
+}
+
 
 @NgModule({
   declarations: [
@@ -46,6 +55,7 @@ import { LatestBooksEffect } from './effects/latestBooks.effect';
     HttpModule,
     LandingModule,
     PlatformModule,
+    ToastModule.forRoot(),
 
     AppRoutes,
 
@@ -79,7 +89,9 @@ import { LatestBooksEffect } from './effects/latestBooks.effect';
 
 
   ],
-  providers: [],
+  providers: [
+    {provide: ToastOptions, useClass: CustomOption}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -22,6 +22,7 @@ import { TrackingBarComponent } from './tracking-bar/tracking-bar.component';
 import { NothingComponent } from './nothing/nothing.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PdfService } from './pdf.service';
+import { ToastrService } from './toastr.service';
 
 @NgModule({
   imports: [
@@ -75,7 +76,8 @@ import { PdfService } from './pdf.service';
     NothingComponent
   ],
   providers: [
-    PdfService
+    PdfService,
+    ToastrService
   ]
 })
 export class SharedModule {

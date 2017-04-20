@@ -8,6 +8,7 @@ import { Http } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { createOptions } from '../../shared/createOptions';
 import { SquirrelState } from '@flowup/squirrel';
+import { ToastrService } from '../../shared/toastr.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +23,7 @@ export class ProfileComponent implements OnDestroy {
   errorMessage: string = '';
   @ViewChild('photoInput') inputElement: ElementRef;
 
-  constructor(private store: Store<AppState>, private http: Http) {
+  constructor(private store: Store<AppState>, private http: Http, private toastr: ToastrService) {
 
     this.subscriptions.push(
       this.store.select('users').subscribe(
@@ -48,12 +49,14 @@ export class ProfileComponent implements OnDestroy {
     this.http.post(`${environment.apiUrl}/password`,
       {oldPassword: form.oldPassword, newPassword: form.password},
       createOptions()).subscribe(
-      data => {
+      () => {
         this.passwordLoading = false;
+        this.toastr.showSuccess('Heslo bylo úspěšně změněno.', 'Uživatel');
       },
       err => {
         this.errorMessage = err.json().message;
         this.passwordLoading = false;
+        this.toastr.showError('Heslo se nepodařilo změnit.', 'Uživatel');
       }
     )
   }

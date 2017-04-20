@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { createOptions } from './createOptions';
 import { ReplaySubject, Observable } from 'rxjs';
 import { BookStatus } from './models/book-status.enum';
+import { ToastrService } from './toastr.service';
 
 declare function saveAs(data: Blob | File, filename?: string, disableAutoBom?: boolean);
 
@@ -13,7 +14,7 @@ export class PdfService {
   loading: ReplaySubject<boolean> = new ReplaySubject<boolean>();
   loading$: Observable<boolean> = this.loading.asObservable();
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private toastr: ToastrService) {
     this.loading.next(false);
   }
 
@@ -26,6 +27,11 @@ export class PdfService {
         let file = new Blob([data.blob()], {type: 'application/pdf'});
         saveAs(file, `book-detail-${id}.pdf`);
         this.loading.next(false);
+        this.toastr.showSuccess('Detail knihy byl úspěšně vygenerován.', 'PDF');
+      },
+      () => {
+        this.loading.next(false);
+        this.toastr.showError('Detail knihy se nepodařilo vygenerovat.', 'PDF');
       }
     )
   }
@@ -39,6 +45,11 @@ export class PdfService {
         let file = new Blob([data.blob()], {type: 'application/pdf'});
         saveAs(file, `books-${BookStatus[status]}.pdf`);
         this.loading.next(false);
+        this.toastr.showSuccess('Seznam knih byl úspěšně vygenerován.', 'PDF');
+      },
+      () => {
+        this.loading.next(false);
+        this.toastr.showError('Seznam knih se nepodařilo vygenerovat.', 'PDF');
       }
     )
   }

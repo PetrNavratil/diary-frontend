@@ -6,6 +6,7 @@ import { Action } from '@ngrx/store';
 import { searchActions } from '../reducers/search.reducer';
 import { environment } from '../../environments/environment';
 import { createOptions } from '../shared/createOptions';
+import { ToastrService } from '../shared/toastr.service';
 
 const API_ENDPOINT = '/search?key=';
 
@@ -13,12 +14,15 @@ const API_ENDPOINT = '/search?key=';
 @Injectable()
 export class SearchEffect {
 
-  constructor(private actions: Actions, private http: Http) {
+  constructor(private actions: Actions, private http: Http, private toastr: ToastrService) {
   }
 
   @Effect() search: Observable<Action> = this.actions
     .ofType(searchActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + encodeURI(action.payload), createOptions())
       .map(body => ({type: searchActions.GET, payload: body.json()}))
-      .catch(body => Observable.of({type: searchActions.API_GET_FAIL, payload: body.json()})));
+      .catch(body =>{
+        this.toastr.showError('Během vyhledávání došlo k chybě. Zkuste to znovu', 'Vyhledávání');
+        return Observable.of({type: searchActions.API_GET_FAIL, payload: body.json()})
+      }));
 }

@@ -6,18 +6,22 @@ import { Action } from '@ngrx/store';
 import { detailActions } from '../reducers/book-detail.reducer';
 import { environment } from '../../environments/environment';
 import { createOptions } from '../shared/createOptions';
+import { ToastrService } from '../shared/toastr.service';
 
 const API_ENDPOINT = '/book-detail/';
 
 
 @Injectable()
 export class BookDetail {
-  constructor(private actions: Actions, private http: Http) {
+  constructor(private actions: Actions, private http: Http, private toastr: ToastrService) {
   }
 
   @Effect() bookDetail: Observable<Action> = this.actions
     .ofType(detailActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + encodeURI(action.payload), createOptions())
       .map(body => ({type: detailActions.GET, payload: [body.json()]}))
-      .catch(body => Observable.of({type: detailActions.API_GET_FAIL, payload: body})));
+      .catch(body => {
+        this.toastr.showError('Nepodařilo se načíst informace o knize. Kliknutím aktualizujete stránku.', 'Kniha');
+        return Observable.of({type: detailActions.API_GET_FAIL, payload: body})
+      }));
 }

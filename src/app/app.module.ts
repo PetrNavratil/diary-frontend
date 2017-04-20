@@ -33,6 +33,8 @@ import { statisticReducer } from './reducers/statistic.reducer';
 import { StatisticEffect } from './effects/statistic.effect';
 import { intervalsReducer } from './reducers/statistic-intervals.reducer';
 import { IntervalsEffect } from './effects/statistic-intervals.effect';
+import { latestBooksReducer } from './reducers/latestBooks.reducer';
+import { LatestBooksEffect } from './effects/latestBooks.effect';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import { IntervalsEffect } from './effects/statistic-intervals.effect';
       users: usersReducer,
       readings: readingReducer,
       statistics: statisticReducer,
-      intervals: intervalsReducer
+      intervals: intervalsReducer,
+      latestBooks: latestBooksReducer
     }),
     EffectsModule.runAfterBootstrap(SearchEffect),
     EffectsModule.runAfterBootstrap(BookDetail),
@@ -71,6 +74,7 @@ import { IntervalsEffect } from './effects/statistic-intervals.effect';
     EffectsModule.runAfterBootstrap(ReadingEffect),
     EffectsModule.runAfterBootstrap(StatisticEffect),
     EffectsModule.runAfterBootstrap(IntervalsEffect),
+    EffectsModule.runAfterBootstrap(LatestBooksEffect),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
 
 

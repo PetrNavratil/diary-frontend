@@ -1,16 +1,45 @@
+@import "../theme";
+$latest-width: 250px;
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 
-  .menu-content {
+  .content {
     display: flex;
     flex-grow: 1;
 
     .router {
-      flex-grow: 1;
-      flex-basis: 0;
       overflow: hidden;
+      width: calc(100% - #{$latest-width});
+
+    }
+
+    .latest{
+      right: 0;
+      top: $toolbar-height;
+      position: fixed;
+      height: calc(100vh - #{$toolbar-height});
+      overflow: auto;
+      width: $latest-width;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      background-color: rgba(black, .15);
+
+      .book{
+        width: $book-width;
+        height: $book-height;
+        margin-top: 30px;
+        opacity: .85;
+        transition: opacity .3s;
+        &:hover{
+          opacity: 1;
+        }
+        &:last-child{
+          margin-bottom: 30px;
+        }
+      }
     }
   }
 }

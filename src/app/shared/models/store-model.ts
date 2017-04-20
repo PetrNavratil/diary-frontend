@@ -20,4 +20,5 @@ export interface AppState {
   readings: SquirrelState<Reading>
   statistics: SquirrelState<Statistic>
   intervals: SquirrelState<StatisticInterval>
+  latestBooks: SquirrelState<Book>
 }

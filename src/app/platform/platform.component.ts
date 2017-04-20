@@ -16,12 +16,14 @@ export class PlatformComponent implements OnDestroy{
 
   books: Book[] = [];
   subscription: Subscription;
+  loading = false;
 
   constructor(private store: Store<AppState>, private router: Router) {
     this.store.dispatch({type: latestBooksActions.API_GET});
     setInterval(() => this.store.dispatch({type: latestBooksActions.API_GET}), 60000*2);
     this.subscription = this.store.select('latestBooks').subscribe(
       (data: SquirrelState<Book>) => {
+        this.loading = data.loading;
         if(!data.loading) {
           this.books = data.data;
         }

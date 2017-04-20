@@ -22,6 +22,11 @@ $latest-width: 250px;
     align-items: center;
     flex-direction: column;
     background-color: rgba(black, .15);
+    opacity: 1;
+    transition: opacity .5s;
+    &.loading {
+      opacity: 0;
+    }
 
     .book{
       width: $book-width;

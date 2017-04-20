@@ -3,7 +3,7 @@
   <div class="content">
       <router-outlet></router-outlet>
   </div>
-  <div class="latest">
+  <div class="latest" [ngClass]="{'loading': loading}">
     <div class="book">
       Recently added books
     </div>

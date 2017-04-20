@@ -103,11 +103,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
           } else {
             if (data.data.length && !data.loading) {
               this.bookInfo = data.data[0];
-              if (this.bookInfo.inBooks) {
-                console.log('getting tracking');
-                this.store.dispatch({type: trackingActions.API_GET, payload: this.id});
-              }
-
+              this.store.dispatch({type: trackingActions.API_GET, payload: this.id});
               if (this.updateLatest) {
                 console.log('updating latest because it was closed by changing status');
                 this.store.dispatch({type: trackingActions.ADDITIONAL.API_GET_LAST});

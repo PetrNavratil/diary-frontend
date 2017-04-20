@@ -136,7 +136,7 @@
                 [closeOnClick]="true"
                 [disabled]="trackings.readings.length === 0">
                 <div class="action-dropdown">
-                  <div class="item" *ngFor="let reading of trackings.readings; let i = index" (click)="selectReading(i)">
+                  <div class="item" [ngClass]="{'selected': selectedReading === i}" *ngFor="let reading of trackings.readings; let i = index" (click)="selectReading(i)">
                     <span class="name">Reading {{i+1}}.</span>
                   </div>
                 </div>

@@ -209,8 +209,9 @@
       </app-dropdown-row>
     </app-card>
     <ng-template #buy>
+      <div [style.margin-top.px]="trackings.readings.length > 0 ? 40 : 0">
         <app-card>
-          <div class="buy" [ngClass]="{'column': trackings.readings.length }">
+          <div class="buy" [ngClass]="{'column': trackings.readings.length > 0 }">
             <a class="image-link" [href]="'https://play.google.com/store/search?c=books&q=' + bookInfo.title + bookInfo.author" target="_blank">
               <img  src="https://www.gstatic.com/android/market_images/web/play_prism_hlock_2x.png">
             </a>
@@ -228,6 +229,7 @@
             </a>
           </div>
         </app-card>
+      </div>
     </ng-template>
   </div>
 </app-card>

@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy, OnChanges
 } from '@angular/core';
 import { DiaryComment } from '../models/comment.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-comment',
@@ -109,5 +110,9 @@ export class CommentComponent implements OnChanges {
     } else if (!this.newComment) {
       this.switchMode();
     }
+  }
+
+  get avatarUrl() {
+    return `${environment.apiUrl}/${this.commentData.userAvatar}`;
   }
 }

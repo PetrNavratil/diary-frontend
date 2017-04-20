@@ -1,5 +1,5 @@
 <div class="comment-container" [ngClass]="{'editable': editable}">
-  <img src="https://talks.golang.org/2012/splash/appenginegophercolor.jpg" class="avatar" *ngIf="commentData?.userAvatar">
+  <img [src]="avatarUrl" class="avatar" *ngIf="commentData?.userAvatar">
   <i class="material-icons avatar" *ngIf="!commentData?.userAvatar">person</i>
   <div class="content">
     <div class="title-row">

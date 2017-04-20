@@ -19,7 +19,7 @@ export class PlatformComponent implements OnDestroy{
 
   constructor(private store: Store<AppState>, private router: Router) {
     this.store.dispatch({type: latestBooksActions.API_GET});
-    setInterval(this.store.dispatch({type: latestBooksActions.API_GET}), 60000*2);
+    setInterval(() => this.store.dispatch({type: latestBooksActions.API_GET}), 60000*2);
     this.subscription = this.store.select('latestBooks').subscribe(
       (data: SquirrelState<Book>) => {
         if(!data.loading) {

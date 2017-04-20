@@ -4,6 +4,9 @@
       <router-outlet></router-outlet>
   </div>
   <div class="latest">
+    <div class="book">
+      Recently added books
+    </div>
     <app-book-preview
       *ngFor="let book of books"
       [book]="book"

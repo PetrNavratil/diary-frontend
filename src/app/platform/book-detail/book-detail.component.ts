@@ -166,6 +166,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
                   date: 'date',
                   userName: this.user.userName,
                   text: '',
+                  userAvatar: this.user.avatar,
                   bookId: this.id,
                   userId: this.user.id
                 };

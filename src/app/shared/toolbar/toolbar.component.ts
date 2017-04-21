@@ -6,6 +6,7 @@ import { User } from '../models/user.model';
 import { SquirrelState } from '@flowup/squirrel';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { getImageUrl } from '../getImageUrl';
 
 @Component({
   selector: 'app-toolbar',
@@ -43,10 +44,15 @@ export class ToolbarComponent implements OnDestroy {
   }
 
   get avatarUrl() {
-    return `${environment.apiUrl}/${this.user.avatar}`;
+    return getImageUrl(this.user.avatar);
   }
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
+  }
+
+  logout(){
+    localStorage.clear();
+    location.reload();
   }
 }

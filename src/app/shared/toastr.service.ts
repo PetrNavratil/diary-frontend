@@ -7,12 +7,15 @@ export class ToastrService {
   }
 
   showSuccess(content: string, title: string): void{
-    console.log('fck?');
-    this.toastr.success(content, title);
+   if(localStorage.getItem('id_token')){
+     this.toastr.success(content, title);
+   }
   }
 
   showError(content: string, title: string): void {
-    this.toastr.error(content, title);
+    if(localStorage.getItem('id_token')){
+      this.toastr.error(content, title);
+    }
   }
 
 }

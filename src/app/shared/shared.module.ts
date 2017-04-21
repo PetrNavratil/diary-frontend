@@ -23,6 +23,7 @@ import { NothingComponent } from './nothing/nothing.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PdfService } from './pdf.service';
 import { ToastrService } from './toastr.service';
+import { AuthService } from './auth.service';
 
 @NgModule({
   imports: [
@@ -77,7 +78,8 @@ import { ToastrService } from './toastr.service';
   ],
   providers: [
     PdfService,
-    ToastrService
+    ToastrService,
+    AuthService
   ]
 })
 export class SharedModule {

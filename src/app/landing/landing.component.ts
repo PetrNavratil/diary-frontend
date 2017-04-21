@@ -6,6 +6,7 @@ import { User } from '../shared/models/user.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SquirrelState } from '@flowup/squirrel';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-landing',
@@ -18,7 +19,7 @@ export class LandingComponent implements OnDestroy {
   errorMessage: string = '';
   show: string = 'login';
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+  constructor(private store: Store<AppState>, private route: ActivatedRoute, private auth: AuthService) {
     this.route.params.subscribe(
       (params: Params) => {
         if (params['action']) {
@@ -50,6 +51,22 @@ export class LandingComponent implements OnDestroy {
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
+  }
+
+
+  aLogin(){
+    this.auth.login('petrlaila.n@seznam.cz', '123456');
+  }
+
+  aReg(){
+    this.auth.signup('petrlaila.n@seznam.cz', '123456');
+  }
+
+  fb(){
+    this.auth.loginWithFacebook();
+  }
+  google(){
+    this.auth.loginWithGoogle();
   }
 }
 

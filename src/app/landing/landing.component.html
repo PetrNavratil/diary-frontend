@@ -1,6 +1,10 @@
 <div class="landing-container">
   <app-card>
     <div class="action" *ngIf="show === 'login'" autocomplete="new-password">
+      <button md-raised-button (click)="aLogin()">Login</button>
+      <button md-raised-button (click)="aReg()">Reg</button>
+      <button md-raised-button (click)="fb()"> FB</button>
+      <button md-raised-button (click)="google()">G</button>
       <form novalidate #f="ngForm" (ngSubmit)="login(f)">
         <md-input-container [dividerColor]="userName.invalid && userName.touched ? 'warn' : 'primary'">
           <input mdInput placeholder="Username"

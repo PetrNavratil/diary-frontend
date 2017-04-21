@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { DiaryComment } from '../models/comment.model';
 import { environment } from '../../../environments/environment';
+import { getImageUrl } from '../getImageUrl';
 
 @Component({
   selector: 'app-comment',
@@ -113,6 +114,6 @@ export class CommentComponent implements OnChanges {
   }
 
   get avatarUrl() {
-    return `${environment.apiUrl}/${this.commentData.userAvatar}`;
+    return getImageUrl(this.commentData.userAvatar);
   }
 }

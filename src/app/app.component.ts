@@ -7,6 +7,7 @@ import { userActions } from './reducers/user.reducer';
 import { SquirrelState } from '@flowup/squirrel';
 import { Subscription } from 'rxjs';
 import { ToastsManager } from 'ng2-toastr';
+import { AuthService } from './shared/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ import { ToastsManager } from 'ng2-toastr';
 export class AppComponent implements OnDestroy {
   subscription: Subscription;
 
-  constructor(private router: Router, private store: Store <AppState>, private toastr: ToastsManager, private vcr: ViewContainerRef) {
+  constructor(private router: Router, private store: Store <AppState>, private toastr: ToastsManager, private vcr: ViewContainerRef, private auth: AuthService) {
+    this.auth.handleAuthentication();
     this.toastr.setRootViewContainerRef(vcr);
     this.store.dispatch({type: userActions.API_GET});
     this.subscription = this.store.select('users').subscribe(

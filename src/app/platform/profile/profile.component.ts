@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment';
 import { createOptions } from '../../shared/createOptions';
 import { SquirrelState } from '@flowup/squirrel';
 import { ToastrService } from '../../shared/toastr.service';
+import { getImageUrl } from '../../shared/getImageUrl';
 
 @Component({
   selector: 'app-profile',
@@ -78,7 +79,8 @@ export class ProfileComponent implements OnDestroy {
   }
 
   get avatarUrl() {
-    return `${environment.apiUrl}/${this.user.avatar}`;
+    console.log()
+    return getImageUrl(this.user.avatar);
   }
 
 

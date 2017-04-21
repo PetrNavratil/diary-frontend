@@ -67,15 +67,20 @@ export class AuthService {
     });
   }
 
-  public isAuthenticated(): boolean {
+  public isValid(): boolean {
     // Check whether the id_token is expired or not
-    return tokenNotExpired();
+    if(localStorage.getItem('id_token')){
+      return !tokenNotExpired();
+    } else {
+      return false;
+    }
   }
 
   public logout(): void {
     // Remove token from localStorage
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
+    location.reload();
   }
 
 }

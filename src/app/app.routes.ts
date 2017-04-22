@@ -12,4 +12,4 @@ export const routes: Routes = [{
   ]
 }];
 
-export const AppRoutes = RouterModule.forRoot(routes);
+export const AppRoutes = RouterModule.forRoot(routes, {useHash:true});

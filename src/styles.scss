@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~ng2-toastr/bundles/ng2-toastr.min.css';
+@import '~vis/dist/vis.css';
 
 body {
   padding: 0;
@@ -26,5 +28,26 @@ body {
   .vis-label, .vis-time-axis.vis-foreground{
     background-color: rgba(goldenrod, .1);
   }
+}
+
+/* A font by Jos Buivenga (exljbris) -> www.exljbris.com */
+@font-face {
+  font-family: Diavlo;
+  src: url('assets/font/Diavlo_BOLD_II_37.woff') format('woff');
+}
+
+@font-face {
+  font-family: Diavlo-MEDIUM;
+  src: url('assets/font/Diavlo_MEDIUM_II_37.woff') format('woff');
+}
+
+@font-face {
+  font-family: Diavlo-LIGHT;
+  src: url('assets/font/Diavlo_LIGHT_II_37.woff') format('woff');
+}
+
+@font-face {
+  font-family: Diavlo-BOOK;
+  src: url('assets/font/Diavlo_BOOK_II_37.woff') format('woff');
 }
 

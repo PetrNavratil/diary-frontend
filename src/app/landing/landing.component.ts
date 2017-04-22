@@ -1,65 +1,85 @@
 import { Component, OnDestroy } from '@angular/core';
-import { AppState } from '../shared/models/store-model';
-import { Store } from '@ngrx/store';
-import { authActions } from '../reducers/auth.reducer';
-import { User } from '../shared/models/user.model';
 import { ActivatedRoute, Params } from '@angular/router';
-import { SquirrelState } from '@flowup/squirrel';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../shared/auth.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss']
+  styleUrls: ['./landing.component.scss'],
+  animations: [
+    trigger('login', [
+      state('inactive', style({
+        opacity: '0',
+        height: '0'
+      })),
+      state('active', style({
+        opacity: '1',
+
+      })),
+      transition('inactive => active', animate('500ms ease-in')),
+      transition('active => inactive', animate('500ms ease-out'))
+    ]),
+    trigger('register', [
+      state('inactive', style({
+        opacity: '0',
+        height: '0'
+      })),
+      state('active', style({
+        opacity: '1',
+      })),
+      transition('inactive => active', animate('500ms ease-in')),
+      transition('active => inactive', animate('500ms ease-out'))
+    ])
+  ],
 })
 export class LandingComponent implements OnDestroy {
 
   subscription: Subscription;
   errorMessage: string = '';
   show: string = 'login';
+  registerState = 'inactive';
+  loginState = 'active';
+  showReset = false;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute, private auth: AuthService) {
+  constructor(private route: ActivatedRoute, private auth: AuthService) {
     this.route.params.subscribe(
       (params: Params) => {
         if (params['action']) {
           this.show = params['action'];
+          if(this.show === 'register'){
+            this.registerState =  'active';
+            this.loginState = 'inactive';
+          } else {
+            this.registerState = 'inactive';
+            this.loginState = 'active';
+          }
         }
       }
     );
-    this.subscription = this.store.select('auth').subscribe(
-      (data: SquirrelState<User>) => {
-        if (data.error) {
-          this.errorMessage = data.error.message;
-          console.error(data.error.message);
+    this.subscription = this.auth.errorMessage$.subscribe(
+      (message: string) => {
+        console.log('error message', message);
+        if(message){
+          this.errorMessage = 'Uživatel s tímto emailem již existuje!'
         } else {
-          this.errorMessage = '';
+          this.errorMessage = 'Špatné heslo nebo email!'
         }
       }
-    );
+    )
   }
 
   register(form) {
-    console.log('register form', form.value);
-    this.store.dispatch({type: authActions.ADDITIONAL.REGISTER, payload: form.value});
+    this.auth.signup(form.email, form.password, form.userName);
   }
 
   login(form) {
-    console.log('login form', form.value);
-    this.store.dispatch({type: authActions.ADDITIONAL.LOGIN, payload: form.value});
+    this.auth.login(form.userName, form.password);
   }
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
-  }
-
-
-  aLogin(){
-    this.auth.login('petrlaila.n@seznam.cz', '123456');
-  }
-
-  aReg(){
-    this.auth.signup('petrlaila.n@seznam.cz', '123456');
   }
 
   fb(){
@@ -68,12 +88,13 @@ export class LandingComponent implements OnDestroy {
   google(){
     this.auth.loginWithGoogle();
   }
-}
 
+  resetPassword(form){
+    this.auth.changePassword(form.email);
+  }
 
-interface Register {
-  userName: string,
-  email: string,
-  password: string,
-  confirmPassword: string
+  loginDone(){
+    this.showReset = this.loginState === 'active';
+    console.log('login done');
+  }
 }

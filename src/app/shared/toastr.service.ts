@@ -6,14 +6,14 @@ export class ToastrService {
   constructor(private toastr: ToastsManager){
   }
 
-  showSuccess(content: string, title: string): void{
-   if(localStorage.getItem('id_token')){
+  showSuccess(content: string, title: string, show?: boolean): void{
+   if(localStorage.getItem('id_token') || show){
      this.toastr.success(content, title);
    }
   }
 
-  showError(content: string, title: string): void {
-    if(localStorage.getItem('id_token')){
+  showError(content: string, title: string, show?: boolean): void {
+    if(localStorage.getItem('id_token') || show){
       this.toastr.error(content, title);
     }
   }

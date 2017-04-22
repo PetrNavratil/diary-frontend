@@ -1,7 +1,8 @@
+@import '../../theme';
+
 .card-container {
   padding: 20px;
-  background-color: #fff;
-  //background-color: rgba(white, .1);
+  background-color: rgba($card-background, .9);
   margin: 10px;
   border-radius: 2px;
 

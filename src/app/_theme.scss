@@ -1,4 +1,3 @@
-$toolbar-background-color: linear-gradient(to right, rgba(#272522, .8), rgba(#272522, 1));
 $toolbar-font-size: 20px;
 $toolbar-weight: bold;
 $toolbar-font-color: #917865;
@@ -16,7 +15,36 @@ $book-height: 250px;
 $book-width: 200px;
 $book-background: linear-gradient(150deg, rgba(#f44336, .9) 40%, rgba(#f44336, .05));
 
+
+/* A font by Jos Buivenga (exljbris) -> www.exljbris.com */
 @font-face {
-  font-family: 'hand-written';
-  src: url('/../assets/font/CAROBTN_.TTF') format('truetype');
+  font-family: Diavlo;
+  src: url('/../assets/font/Diavlo_BOLD_II_37.woff') format('woff');
 }
+
+@font-face {
+  font-family: Diavlo-MEDIUM;
+  src: url('/../assets/font/Diavlo_MEDIUM_II_37.woff') format('woff');
+}
+
+@font-face {
+  font-family: Diavlo-LIGHT;
+  src: url('/../assets/font/Diavlo_LIGHT_II_37.woff') format('woff');
+}
+
+@font-face {
+  font-family: Diavlo-BOOK;
+  src: url('/../assets/font/Diavlo_BOOK_II_37.woff') format('woff');
+}
+
+
+$font-bold: Diavlo;
+$font-medium: Diavlo-MEDIUM;
+$font-light: Diavlo-LIGHT;
+$font-book: Diavlo-BOOK;
+
+$card-background: rgba(#40352B, .7);
+$card-background-color: #40352B;
+$card-background-opacity: .7;
+
+

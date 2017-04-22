@@ -24,7 +24,10 @@ export class AppComponent {
     if(auth.isValid()){
       this.store.dispatch({type: userActions.API_GET});
     } else {
-      this.router.navigateByUrl('/landing/login');
+      if(this.router.url.indexOf('register') === -1){
+        console.log('url', this.router.url);
+        this.router.navigateByUrl('/landing/login');
+      }
     }
     this.subscription = this.store.select('users').subscribe(
       (data: SquirrelState<User>) => {

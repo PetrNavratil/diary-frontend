@@ -3,18 +3,21 @@
 $avatar-size: 40px;
 $avatar-color: white;
 $user-item-margin: 10px;
+$toolbar-font: $font-medium;
+$toolbar-background-color: $card-background-color;
+
 
 .toolbar-container{
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: $toolbar-height;
-  background-color: black;
+  background-color: rgba($toolbar-background-color, .9);
+  color: rgba(white, .75);
   flex-grow: 1;
   font-size: $toolbar-font-size;
-  color: $toolbar-font-color;
-  font-weight: $toolbar-weight;
   padding: 0 10px;
+  font-family: $toolbar-font;
 
   .router-container{
     display: flex;

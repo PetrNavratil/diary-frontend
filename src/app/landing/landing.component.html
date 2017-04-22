@@ -1,24 +1,26 @@
 <div class="landing-container">
-  <app-card>
-    <div class="action" *ngIf="show === 'login'" autocomplete="new-password">
-      <button md-raised-button (click)="aLogin()">Login</button>
-      <button md-raised-button (click)="aReg()">Reg</button>
-      <button md-raised-button (click)="fb()"> FB</button>
-      <button md-raised-button (click)="google()">G</button>
-      <form novalidate #f="ngForm" (ngSubmit)="login(f)">
-        <md-input-container [dividerColor]="userName.invalid && userName.touched ? 'warn' : 'primary'">
+  <div class="auth-section">
+    <div class="logo-container">
+      <img src="assets/1009-200.png" alt="" class="logo">
+    </div>
+    <div class="name">Electronic Book Diary</div>
+    <div class="forms-container">
+
+      <form novalidate #f="ngForm" (ngSubmit)="login(f)" [@login]="loginState" (@login.done)="loginDone()">
+        <md-input-container class="input-container" [dividerColor]="userName.invalid && userName.touched ? 'yellow' : 'primary'">
           <input mdInput placeholder="Username"
                  type="text"
                  name="userName"
                  ngModel
                  required
                  #userName="ngModel"
+                 class="input"
           >
           <md-hint *ngIf="userName.invalid && userName.touched" class="alert" align="start">
             Username needs to be filled
           </md-hint>
         </md-input-container>
-        <md-input-container [dividerColor]="userPassword.invalid && userPassword.touched ? 'warn' : 'primary'">
+        <md-input-container class="input-container" [dividerColor]="userPassword.invalid && userPassword.touched ? 'warn' : 'primary'">
           <input mdInput placeholder="Password"
                  type="password"
                  name="password"
@@ -27,31 +29,30 @@
                  minlength="6"
                  #userPassword="ngModel"
                  autocomplete="new-password"
+                 class="input"
           >
           <md-hint *ngIf="userPassword.invalid && userPassword.touched" class="alert" align="start">
             Password has to be at least 6 characters long
           </md-hint>
         </md-input-container>
         <span class="error" [ngClass]="{'visible': errorMessage.length}">{{errorMessage}}</span>
-        <button type="submit" md-raised-button color="primary" [disabled]="f.invalid">Login</button>
+        <button class="button login" type="submit" md-raised-button color="primary" [disabled]="f.invalid">Login</button>
       </form>
-    </div>
-
-    <div class="action" *ngIf="show === 'register'" autocomplete="new-password">
-      <form novalidate #reg="ngForm" (ngSubmit)="register(reg)">
-        <md-input-container [dividerColor]="regUserName.invalid && regUserName.touched ? 'warn' : 'primary'">
+      <form novalidate #reg="ngForm" (ngSubmit)="register(reg.value)" [@register]="registerState">
+        <md-input-container class="input-container" [dividerColor]="regUserName.invalid && regUserName.touched ? 'warn' : 'primary'">
           <input mdInput placeholder="Username"
                  type="text"
                  name="userName"
                  ngModel
                  required
                  #regUserName="ngModel"
+                 class="input"
           >
           <md-hint *ngIf="regUserName.invalid && regUserName.touched" class="alert" align="start">
             Username has to be filled
           </md-hint>
         </md-input-container>
-        <md-input-container [dividerColor]="regEmail.invalid && regEmail.touched ? 'warn' : 'primary'">
+        <md-input-container class="input-container" [dividerColor]="regEmail.invalid && regEmail.touched ? 'warn' : 'primary'">
           <input mdInput placeholder="Email Address"
                  type="email"
                  name="email"
@@ -59,12 +60,13 @@
                  required
                  pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
                  #regEmail="ngModel"
+                 class="input"
           >
           <md-hint *ngIf="regEmail.invalid && regEmail.touched" class="alert" align="start">
             Email address is NOT valid
           </md-hint>
         </md-input-container>
-        <md-input-container [dividerColor]="regUserPass.invalid && regUserPass.touched ? 'warn' : 'primary'">
+        <md-input-container class="input-container" [dividerColor]="regUserPass.invalid && regUserPass.touched ? 'warn' : 'primary'">
           <input mdInput placeholder="Password"
                  type="password"
                  name="password"
@@ -74,12 +76,13 @@
                  #regUserPass="ngModel"
                  validateEqual="confirmPassword" reverse="true"
                  autocomplete="new-password"
+                 class="input"
           >
           <md-hint *ngIf="regUserPass.invalid && regUserPass.touched" class="alert" align="start">
             Password has to be at least 6 characters long
           </md-hint>
         </md-input-container>
-        <md-input-container [dividerColor]="regUserConfirm.invalid && regUserConfirm.touched ? 'warn' : 'primary'">
+        <md-input-container class="input-container" [dividerColor]="regUserConfirm.invalid && regUserConfirm.touched ? 'warn' : 'primary'">
           <input mdInput placeholder="Confirm password"
                  type="password"
                  name="confirmPassword"
@@ -89,14 +92,69 @@
                  #regUserConfirm="ngModel"
                  validateEqual="password"
                  autocomplete="new-password"
+                 class="input"
           >
           <md-hint *ngIf="regUserConfirm.invalid && regUserConfirm.touched" class="alert" align="start">
             Confirm password has to be same as password above
           </md-hint>
         </md-input-container>
         <span class="error" [ngClass]="{'visible': errorMessage.length}">{{errorMessage}}</span>
-        <button type="submit" md-raised-button color="primary" [disabled]="reg.invalid">Register</button>
+        <button type="submit" class="button login" md-raised-button color="primary" [disabled]="reg.invalid">Register</button>
       </form>
     </div>
-  </app-card>
+
+    <div class="forgot-pass" [style.display]="show === 'login' && showReset ? 'block' : 'none'">
+      <app-dropdown-row>
+        <div class="header" row-header>Zapomenuté heslo / Změna hesla</div>
+        <div class="change-form" dropdown-content>
+          <div class="header">Zadejte email účtu, pro který chcete provést změnu hesla. Na tento email vám bude zaslán resetovací link.</div>
+          <form novalidate #reset="ngForm" (ngSubmit)="resetPassword(reset.value)">
+            <md-input-container class="input-container" [dividerColor]="changeEmail.invalid && changeEmail.touched ? 'warn' : 'primary'">
+              <input mdInput placeholder="Email Address"
+                     type="email"
+                     name="email"
+                     ngModel
+                     required
+                     pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
+                     #changeEmail="ngModel"
+                     class="input"
+              >
+              <md-hint *ngIf="changeEmail.invalid && changeEmail.touched" class="alert" align="start">
+                Email address is NOT valid
+              </md-hint>
+            </md-input-container>
+            <span class="error" [ngClass]="{'visible': errorMessage.length}">{{errorMessage}}</span>
+            <button class="button login" type="submit" md-raised-button color="primary" [disabled]="reset.invalid">Poslat email</button>
+          </form>
+        </div>
+      </app-dropdown-row>
+    </div>
+    <div class="socials">
+      <button class="button facebook" md-raised-button color="primary" (click)="fb()">
+        <img src="assets/fb.png">
+        Login via Facebook
+      </button>
+      <button class="button google" md-raised-button color="primary" (click)="google()">
+        <img src="assets/google-plus.svg">
+        Login via Google+
+      </button>
+    </div>
+    <div class="signup" *ngIf="show === 'login'">Ještě nemáte účet?
+      <span class="reg" routerLink="/landing/register">Registrujte se</span>
+    </div>
+    <div class="signup" *ngIf="show === 'register'"> Zpět na
+      <span class="reg" routerLink="/landing/login">login</span>
+    </div>
+  </div>
+  <div class="title">
+    <div class="text-container">
+      <div class="title-text">
+        Elektronický čtenářský deník
+      </div>
+      <div class="info">
+        <div class="text">Vyhledávejte, rozřazujte a trackujte</div>
+        <div class="text">Vaše oblíbené knihy.</div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,10 +1,13 @@
 $height: 40px;
+@import '../../theme';
+$tracker-font: $font-book;
 
 .tracking-container {
   display: flex;
   width: 350px;
   height: $height;
   font-size: 15px;
+  font-family: $tracker-font;
   .info {
     display: flex;
     flex-direction: column;

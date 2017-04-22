@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
+import { ToastrService } from './toastr.service';
+import { ReplaySubject } from 'rxjs';
 
 declare const require: any;
 const auth0 = require('auth0-js');
@@ -15,8 +17,12 @@ export class AuthService {
     responseType: 'token id_token'
   });
 
+  errorMessage: ReplaySubject<string> = new ReplaySubject<string>();
+  errorMessage$ = this.errorMessage.asObservable();
 
-  constructor() {}
+
+  constructor(private toastr: ToastrService) {
+  }
 
   public handleAuthentication(): void {
     this.auth0.parseHash({_idTokenVerification: false}, (err, authResult) => {
@@ -38,21 +44,25 @@ export class AuthService {
       password
     }, err => {
       if (err) {
+        this.errorMessage.next(err.description);
         return console.error(err.description);
       }
     });
   }
 
-  public signup(email, password): void {
-    this.auth0.redirect.signupAndLogin({
+  public signup(email, password, username): void {
+    console.log('asdasdas', this.auth0.redirect.signupAndLogin({
       connection: 'Username-Password-Authentication',
       email,
       password,
+      username
     }, err => {
       if (err) {
-        return console.error(err.description);
+        this.errorMessage.next(err.description);
+        console.error(err.description);
+        return err.description;
       }
-    });
+    }));
   }
 
   public loginWithGoogle(): void {
@@ -69,7 +79,7 @@ export class AuthService {
 
   public isValid(): boolean {
     // Check whether the id_token is expired or not
-    if(localStorage.getItem('id_token')){
+    if (localStorage.getItem('id_token')) {
       return !tokenNotExpired();
     } else {
       return false;
@@ -81,6 +91,20 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     location.reload();
+  }
+
+  changePassword(email: string) {
+    console.log('email', email);
+    this.auth0.changePassword({
+      email: email,
+      connection: 'Username-Password-Authentication'
+    }, (err, resp) => {
+      if(err){
+        this.toastr.showError('Email se nepodařilo odeslat. Zkuste akci opakovat.', 'Změna hesla', true);
+      }else{
+        this.toastr.showSuccess('Email byl úspěšně odeslán.', 'Změna hesla', true);
+      }
+    });
   }
 
 }

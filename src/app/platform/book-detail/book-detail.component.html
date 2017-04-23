@@ -1,8 +1,8 @@
 <ng-template #spinner>
   <md-spinner style="margin: 0 auto"></md-spinner>
 </ng-template>
-<app-card>
   <div class="book-detail-container">
+    <app-card>
     <div class="actions-row">
       <div class="source-name" *ngIf="bookInfo">
         {{bookInfo.title}} - {{bookInfo.author}}
@@ -49,7 +49,7 @@
                             (click)="generatePdf()"></app-loading-button>
       </div>
     </div>
-
+</app-card>
     <div class="book-info">
       <div class="source">
         <div class="triangle"></div>
@@ -232,4 +232,3 @@
       </div>
     </ng-template>
   </div>
-</app-card>

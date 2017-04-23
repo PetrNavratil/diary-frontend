@@ -67,7 +67,6 @@ $arrow-size: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
     .actions {
       display: flex;
       align-items: center;
@@ -83,9 +82,9 @@ $arrow-size: 40px;
     }
 
     .source-name {
-      font-weight: bolder;
-      color: black;
+      font-family: $font-medium;
       font-size: 20px;
+      margin-right: 15px;
     }
   }
 
@@ -179,14 +178,13 @@ $arrow-size: 40px;
       }
       .label {
         font-size: $label-size;
-        color: $label-color;
+        color: rgba($font-color, $label-color-opacity);
         text-transform: uppercase;
         font-weight: bold;
       }
 
       .content {
         font-size: $content-size;
-        color: $content-color;
         padding-left: 10px;
 
         &:not(:first-child) {
@@ -283,6 +281,7 @@ $arrow-size: 40px;
     }
     display: flex;
     flex-grow: 1;
+    flex-wrap: wrap;
     &.column{
       flex-direction: column;
       .image-link{

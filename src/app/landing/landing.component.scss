@@ -102,35 +102,6 @@ $google-color: #DC4A38;
       overflow: hidden;
       .input-container {
         margin-bottom: 20px;
-        /deep/ span.mat-placeholder-required {
-          display: none;
-        }
-
-        /deep/ .mat-input-placeholder {
-          color: white;
-          &.mat-warn {
-            color: goldenrod;
-          }
-        }
-
-        /deep/ .mat-input-underline {
-          border-color: white;
-          .mat-input-ripple {
-            background-color: white;
-          }
-        }
-
-        /deep/ &.mat-input-invalid {
-          .mat-input-underline {
-            border-color: goldenrod !important;
-            .mat-input-ripple {
-              background-color: goldenrod !important;
-            }
-          }
-          .mat-input-placeholder {
-            color: goldenrod !important;
-          }
-        }
         .input {
           color: white !important;
         }

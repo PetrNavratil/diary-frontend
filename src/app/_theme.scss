@@ -24,8 +24,10 @@ $font-medium: Diavlo-MEDIUM;
 $font-light: Diavlo-LIGHT;
 $font-book: Diavlo-BOOK;
 
-$card-background: rgba(#40352B, .7);
 $card-background-color: #40352B;
-$card-background-opacity: .7;
+$card-background: rgba($card-background-color, .7);
+$card-background-opacity: .8;
+$font-color: #D9D9D9;
+$label-color-opacity: .5;
 
 

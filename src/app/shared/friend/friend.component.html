@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="friend" *ngFor="let friend of friends" (click)="detail(friend,$event)">
+    <div class="user">
+      <div class="avatar-container">
+        <img [src]="avatar(friend.avatar)" class="avatar">
+      </div>
+      <div class="info">
+        <div class="item">{{friend.username}}</div>
+        <div class="item">{{friend.firstName}} {{friend.lastName}}</div>
+      </div>
+      <div class="info">
+        <div class="item">Přátelé od:</div>
+        <div class="item shift">{{getDate(friend.since)}}</div>
+      </div>
+      <div class="info">
+        <div class="item">Knih:</div>
+        <div class="item shift">{{friend.books}}</div>
+      </div>
+      <div class="info">
+        <div class="item">Poliček:</div>
+        <div class="item shift">{{friend.shelves}}</div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button md-raised-button color="warn" (click)="remove(friend)">Odebrat</button>
+    </div>
+  </div>
+</div>

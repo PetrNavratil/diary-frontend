@@ -9,7 +9,7 @@ $divider-color: rgba($font-color, .6);
   font-size: 14px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.23);
 
-  .request{
+  .friend{
     display: flex;
     padding: 5px 10px;
     justify-content: space-between;
@@ -19,7 +19,6 @@ $divider-color: rgba($font-color, .6);
     .user{
       display: flex;
       padding: 5px 10px 0 0;
-      border-right: 1px solid $divider-color;
       .avatar-container{
         .avatar{
           border-radius: 50%;
@@ -30,12 +29,19 @@ $divider-color: rgba($font-color, .6);
       }
       .info{
         margin-left: 15px;
+        padding-right: 15px;
         display: flex;
         flex-direction: column;
         flex-grow: 1;
         justify-content: space-around;
+        border-right: 1px solid $divider-color;
         .item{
-          min-width: $item-width;
+          &.shift{
+            padding-left: 5px;
+          }
+          &:first-child{
+            font-size: 15px;
+          }
           &:last-child{
             margin-top: -15px;
           }
@@ -48,9 +54,6 @@ $divider-color: rgba($font-color, .6);
       align-items: center;
       button{
         height: 36px;
-        &:first-child{
-          margin-right: 10px;
-        }
       }
     }
   }

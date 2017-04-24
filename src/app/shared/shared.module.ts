@@ -25,6 +25,7 @@ import { PdfService } from './pdf.service';
 import { ToastrService } from './toastr.service';
 import { AuthService } from './auth.service';
 import { FriendRequestComponent } from './friend-request/friend-request.component';
+import { FriendComponent } from './friend/friend.component';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { FriendRequestComponent } from './friend-request/friend-request.componen
     MyInputComponent,
     TrackingBarComponent,
     NothingComponent,
-    FriendRequestComponent
+    FriendRequestComponent,
+    FriendComponent
   ],
   exports: [
     BrowserModule,
@@ -77,7 +79,8 @@ import { FriendRequestComponent } from './friend-request/friend-request.componen
     MyInputComponent,
     TrackingBarComponent,
     NothingComponent,
-    FriendRequestComponent
+    FriendRequestComponent,
+    FriendComponent
   ],
   providers: [
     PdfService,

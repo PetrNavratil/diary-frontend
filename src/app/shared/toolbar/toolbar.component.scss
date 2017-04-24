@@ -73,6 +73,7 @@ $toolbar-background-color: $card-background-color;
           top: 100%;
           right: 0;
           overflow: hidden;
+          background-color: lighten(brown, 6%);
         }
 
         .friend-counter{

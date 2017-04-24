@@ -1,5 +1,4 @@
-<app-card>
-  <div class="profile-container" *ngIf="user">
+<div class="profile-container" *ngIf="user">
     <app-card class="user-info-card">
       <div class="user-info">
         <div class="photo-row">
@@ -40,98 +39,31 @@
               Email address is NOT valid
             </md-hint>
           </md-input-container>
+          <app-loading-button
+            class="button"
+            [color]="'primary'"
+            [loading]="loading"
+            [title]="'Submit changes'"
+            [disabled]="email.invalid"
+            (click)="editUser($event)">
+          </app-loading-button>
         </div>
-        <app-dropdown-row class="dropdown">
-          <div class="buttons" row-header>
-            <button class="button" md-raised-button color="primary">Change password</button>
-            <app-loading-button
-              class="button"
-              [color]="'primary'"
-              [loading]="loading"
-              [title]="'Submit changes'"
-              [disabled]="email.invalid"
-              (click)="editUser($event)">
-            </app-loading-button>
-          </div>
-          <div class="password-change" dropdown-content>
-            <form novalidate #f="ngForm" (ngSubmit)="editPassword(f.value)" class="password-form">
-              <div class="password-inputs">
-                <md-input-container class="password-input"
-                                    [dividerColor]="oldPassword.invalid && oldPassword.touched ? 'warn' : 'primary'">
-                  <input
-                    mdInput type="password"
-                    name="oldPassword"
-                    ngModel
-                    required
-                    minlength="6"
-                    #oldPassword="ngModel"
-                    placeholder="Current password"
-                    autocomplete="new-password">
-                  <md-hint *ngIf="oldPassword.invalid && oldPassword.touched" class="alert" align="start">
-                    Password is not valid
-                  </md-hint>
-                </md-input-container>
-                <md-input-container class="password-input"
-                                    [dividerColor]="newPassword.invalid && newPassword.touched ? 'warn' : 'primary'">
-                  <input
-                    mdInput
-                    type="password"
-                    name="password"
-                    ngModel
-                    required
-                    minlength="6"
-                    #newPassword="ngModel"
-                    validateEqual="confirmPassword" reverse="true"
-                    placeholder="New password"
-                    autocomplete="new-password">
-                  <md-hint *ngIf="newPassword.invalid && newPassword.touched" class="alert" align="start">
-                    Password has to be at least 6 characters long
-                  </md-hint>
-                </md-input-container>
-                <md-input-container class="password-input"
-                                    [dividerColor]="confirmPassword.invalid && confirmPassword.touched ? 'warn' : 'primary'">
-                  <input
-                    mdInput
-                    type="password"
-                    name="confirmPassword"
-                    ngModel
-                    required
-                    minlength="6"
-                    #confirmPassword="ngModel"
-                    validateEqual="password"
-                    placeholder="Confirm password"
-                    autocomplete="new-password">
-                  <md-hint *ngIf="confirmPassword.invalid && confirmPassword.touched" class="alert" align="start">
-                    Confirm password has to be same as password above
-                  </md-hint>
-                </md-input-container>
-              </div>
-              <div class="right">
-                <div class="error" *ngIf="errorMessage.length">
-                  {{errorMessage}}
-                </div>
-                <div class="submit">
-                  <app-loading-button
-                    class="button"
-                    [color]="'primary'"
-                    [loading]="passwordLoading"
-                    [title]="'Save new password'"
-                    [disabled]="f.invalid"
-                  >
-                  </app-loading-button>
-                </div>
-              </div>
-
-            </form>
-          </div>
-        </app-dropdown-row>
       </div>
     </app-card>
 
-    <app-card class="friends-card">
-      <div class="friends">
-        FRIENDS SECTION
+  <div class="friends-section">
+    <app-card class="friend-card">
+      SEARCH FRIENDS
+    </app-card>
+    <app-card class="friend-card" noPaddingCard="">
+      <div class="title">
+        Žádosti o přátelství
       </div>
+      <app-friend-request [requests]="friendRequests"></app-friend-request>
+    </app-card>
+    <app-card class="friend-card" noPaddingCard>
+      <div class="title">Vaši přátelé</div>
+      <app-friend [friends]="friends"></app-friend>
     </app-card>
   </div>
-</app-card>
+  </div>

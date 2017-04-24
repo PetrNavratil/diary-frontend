@@ -1,0 +1,57 @@
+@import '../../theme';
+$avatar-size: 40px;
+$item-width: 100px;
+$divider-color: rgba($font-color, .6);
+.container{
+  font-family: $font-book;
+  display: flex;
+  flex-direction: column;
+  background-color: lighten(brown, 6%);
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.23);
+
+  .request{
+    display: flex;
+    padding: 5px 10px;
+    &:not(:last-child){
+      border-bottom: 1px solid $divider-color;
+    }
+    .user{
+      display: flex;
+      padding: 5px 10px 0 0;
+      border-right: 1px solid $divider-color;
+      .avatar-container{
+        .avatar{
+          border-radius: 50%;
+          border: 2px solid $font-color;
+          height: $avatar-size;
+          width: $avatar-size;
+        }
+      }
+      .info{
+        margin-left: 15px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: space-around;
+        .item{
+          min-width: $item-width;
+          &:last-child{
+            margin-top: -15px;
+          }
+        }
+      }
+    }
+    .buttons{
+      padding-left: 20px;
+      display: flex;
+      align-items: center;
+      button{
+        height: 36px;
+        &:first-child{
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PdfService } from './pdf.service';
 import { ToastrService } from './toastr.service';
 import { AuthService } from './auth.service';
+import { FriendRequestComponent } from './friend-request/friend-request.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { AuthService } from './auth.service';
     TruncatePipe,
     MyInputComponent,
     TrackingBarComponent,
-    NothingComponent
+    NothingComponent,
+    FriendRequestComponent
   ],
   exports: [
     BrowserModule,
@@ -74,7 +76,8 @@ import { AuthService } from './auth.service';
     TruncatePipe,
     MyInputComponent,
     TrackingBarComponent,
-    NothingComponent
+    NothingComponent,
+    FriendRequestComponent
   ],
   providers: [
     PdfService,

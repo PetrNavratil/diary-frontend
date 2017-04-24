@@ -6,20 +6,26 @@
          routerLink="{{menuItem.link}}">
       {{menuItem.name}}
     </div>
-    <div class="router-item" (click)="logout()">
-      logout
-    </div>
   </div>
   <app-searcher></app-searcher>
   <div class="tracking-user">
     <app-tracking-bar class="tracking"></app-tracking-bar>
-    <div class="user" *ngIf="user">
+    <div class="user" *ngIf="user" routerLink="profile">
       <img *ngIf="user.avatar.length > 0"
            [src]="avatarUrl"
            class="avatar">
       <i class="material-icons avatar" *ngIf="user.avatar.length === 0">person</i>
       <div class="name">{{user.userName}}</div>
-      <div class="material-icons arrow">keyboard_arrow_down</div>
+      <div class="friends" *ngIf="friendRequests.length > 0" (click)="toggle($event)">
+        <div class="friend-counter">
+          <i class="material-icons friend">supervisor_account</i>
+          <div class="count">{{friendRequests.length}}</div>
+        </div>
+        <div class="dropdown" [@expandable]="state">
+        <app-friend-request [requests]="friendRequests"></app-friend-request>
+        </div>
+      </div>
+      <div class="material-icons arrow" (click)="logout()"> power_settings_new</div>
     </div>
   </div>
 

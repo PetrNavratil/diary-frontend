@@ -1,0 +1,17 @@
+<div class="container" (click)="$event.stopPropagation()">
+  <div class="request" *ngFor="let request of requests">
+    <div class="user">
+      <div class="avatar-container">
+        <img [src]="avatar(request.avatar)" class="avatar">
+      </div>
+      <div class="info">
+        <div class="item">{{request.username}}</div>
+        <div class="item">{{request.firstName}} {{request.lastName}}</div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button md-raised-button color="primary" (click)="acceptRequest(request)">Příjmout</button>
+      <button md-raised-button color="warn" (click)="declineRequest(request)">Odmítnout</button>
+    </div>
+  </div>
+</div>

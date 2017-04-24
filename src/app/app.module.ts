@@ -36,6 +36,8 @@ import { IntervalsEffect } from './effects/statistic-intervals.effect';
 import { latestBooksReducer } from './reducers/latestBooks.reducer';
 import { LatestBooksEffect } from './effects/latestBooks.effect';
 import { ToastModule, ToastOptions } from 'ng2-toastr';
+import { RequestEffect } from './effects/friend-request.effect';
+import { requestReducer } from './reducers/friend-request.reducer';
 
 export class CustomOption extends ToastOptions {
   animate = 'flyRight';
@@ -71,7 +73,8 @@ export class CustomOption extends ToastOptions {
       readings: readingReducer,
       statistics: statisticReducer,
       intervals: intervalsReducer,
-      latestBooks: latestBooksReducer
+      latestBooks: latestBooksReducer,
+      requests: requestReducer
     }),
     EffectsModule.runAfterBootstrap(SearchEffect),
     EffectsModule.runAfterBootstrap(BookDetail),
@@ -85,6 +88,8 @@ export class CustomOption extends ToastOptions {
     EffectsModule.runAfterBootstrap(StatisticEffect),
     EffectsModule.runAfterBootstrap(IntervalsEffect),
     EffectsModule.runAfterBootstrap(LatestBooksEffect),
+
+    EffectsModule.runAfterBootstrap(RequestEffect),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
 
 

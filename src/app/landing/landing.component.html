@@ -6,7 +6,7 @@
     <div class="name">Electronic Book Diary</div>
     <div class="forms-container">
 
-      <form novalidate #f="ngForm" (ngSubmit)="login(f)" [@login]="loginState" (@login.done)="loginDone()">
+      <form novalidate #f="ngForm" (ngSubmit)="login(f.value)" [@login]="loginState" (@login.done)="loginDone()">
         <md-input-container class="input-container" [dividerColor]="userName.invalid && userName.touched ? 'yellow' : 'primary'">
           <input mdInput placeholder="Username"
                  type="text"

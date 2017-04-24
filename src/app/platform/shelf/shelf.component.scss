@@ -13,12 +13,12 @@ $padding: 15px;
   &:hover {
     cursor: pointer;
     .dropdown-icon {
-      width: 20px !important;
+      width: 24px !important;
       opacity: 1 !important;
-      padding-right: 5px;
+      margin-left: 15px;
     }
   }
-  padding: $padding;
+  padding: $padding 0;
   .name-container {
     display: flex;
     align-items: center;
@@ -50,7 +50,7 @@ $padding: 15px;
     align-items: center;
 
     .button {
-      margin-right: 15px;
+      margin-left: 15px;
     }
     .dropdown-icon {
       width: 0;
@@ -59,9 +59,10 @@ $padding: 15px;
       transition: all .5s;
       &.expanded {
         transform: rotate(180deg);
-        width: 20px !important;
+        width: 24px !important;
         opacity: 1 !important;
-        padding-right: 5px;
+        margin-left: 15px;
+
       }
     }
   }

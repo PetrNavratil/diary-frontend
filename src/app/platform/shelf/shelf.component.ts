@@ -9,10 +9,12 @@ import { Shelf } from '../../shared/models/shelf.model';
 })
 export class ShelfComponent {
   @Input() shelf: Shelf;
+  @Input() editable = true;
   @Input() shelfNames: string[] = [];
   @Output() removeShelf: EventEmitter<number> = new EventEmitter<number>();
   @Output() updateShelf: EventEmitter<Shelf> = new EventEmitter<Shelf>();
   @Output() goToDetail: EventEmitter<number> = new EventEmitter<number>();
+  @Output() copy: EventEmitter<number> = new EventEmitter<number>();
   status: string = 'collapsed';
   @ViewChild('shelfName') shelfElement: ElementRef;
 
@@ -49,6 +51,11 @@ export class ShelfComponent {
 
   getName(){
     this.cd.markForCheck();
+  }
+
+  copyShelf(id: number, event){
+    event.stopPropagation();
+    this.copy.emit(id);
   }
 
 }

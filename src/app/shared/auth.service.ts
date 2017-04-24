@@ -38,6 +38,7 @@ export class AuthService {
   }
 
   public login(username: string, password: string): void {
+    console.log('username', username, password);
     this.auth0.redirect.loginWithCredentials({
       connection: 'Username-Password-Authentication',
       username,

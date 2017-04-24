@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="friend" *ngFor="let friend of friends" (click)="detail(friend,$event)">
+  <div class="friend" *ngFor="let friend of friends" (click)="detail(friend)" [ngClass]="{'clickable': clickable}">
     <div class="user">
       <div class="avatar-container">
         <img [src]="avatar(friend.avatar)" class="avatar">
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="buttons">
-      <button md-raised-button color="warn" (click)="remove(friend)">Odebrat</button>
+      <button md-raised-button color="warn" (click)="remove(friend,$event)">Odebrat</button>
     </div>
   </div>
 </div>

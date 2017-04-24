@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="books-container">
-    <app-card noPaddingCard *ngFor="let book of selectedBooks" (click)="goToDetail(book.id)">
+    <app-card [padded]="false" *ngFor="let book of selectedBooks" (click)="goToDetail(book.id)">
       <div class="book">
         <app-book-preview [book]="book"></app-book-preview>
       </div>

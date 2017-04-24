@@ -7,6 +7,7 @@ import { SquirrelState } from '@flowup/squirrel';
 import { getImageUrl } from '../getImageUrl';
 import { FriendRequest } from '../models/friendRequest.model';
 import { animate, style, state, trigger, transition } from '@angular/animations';
+import { requestActions } from '../../reducers/friend-request.reducer';
 
 const COLLAPSED = 'collapsed';
 const EXPANDED = 'expanded';
@@ -27,32 +28,7 @@ export class ToolbarComponent implements OnDestroy {
 
   subscriptions: Subscription[] = [];
   user: User;
-  friendRequests: FriendRequest[] = [
-    {
-      id: 1,
-      userId: 1,
-      avatar: 'https://scontent.xx.fbcdn.net/v/t1.0-1/c0.14.50.50/p50x50/13895226_1070492593039496_7069195752827529506_n.jpg?oh=f9e858c7dcb1faeebd679bc7541d25d6&oe=5988C374',
-      username: 'pnik',
-      firstName: 'Petr',
-      lastName: 'Navratil'
-    },
-    {
-      id: 1,
-      userId: 1,
-      avatar: 'https://scontent.xx.fbcdn.net/v/t1.0-1/c0.14.50.50/p50x50/13895226_1070492593039496_7069195752827529506_n.jpg?oh=f9e858c7dcb1faeebd679bc7541d25d6&oe=5988C374',
-      username: 'pnik',
-      firstName: 'Petr',
-      lastName: 'Navratil'
-    },
-    {
-      id: 1,
-      userId: 1,
-      avatar: 'https://scontent.xx.fbcdn.net/v/t1.0-1/c0.14.50.50/p50x50/13895226_1070492593039496_7069195752827529506_n.jpg?oh=f9e858c7dcb1faeebd679bc7541d25d6&oe=5988C374',
-      username: 'pnik',
-      firstName: 'Petr',
-      lastName: 'Navratil'
-    }
-  ];
+  friendRequests: FriendRequest[] = [];
   menuItems: any[] = [
     {
       name: 'Books',
@@ -78,6 +54,15 @@ export class ToolbarComponent implements OnDestroy {
         }
       }
     ));
+    this.store.dispatch({type: requestActions.API_GET});
+    this.subscriptions.push(this.store.select('requests').subscribe(
+      (data: SquirrelState<FriendRequest>) => {
+        if (!data.loading) {
+          this.friendRequests = data.data;
+        }
+      }
+    ));
+
 
     document.body.addEventListener('click', (event) => {
       if (!this.el.nativeElement.contains(event.target)) {
@@ -97,7 +82,8 @@ export class ToolbarComponent implements OnDestroy {
     }
   }
 
-  logout() {
+  logout(event) {
+    event.stopPropagation();
     localStorage.clear();
     location.reload();
   }
@@ -105,5 +91,13 @@ export class ToolbarComponent implements OnDestroy {
   toggle(event){
     event.stopPropagation();
     this.state = this.state === COLLAPSED ? EXPANDED : COLLAPSED;
+  }
+
+  acceptRequest(request: FriendRequest): void{
+    this.store.dispatch({type: requestActions.ADDITIONAL.ACCEPT, payload: request.id});
+  }
+
+  declineRequest(request: FriendRequest): void {
+    this.store.dispatch({type: requestActions.ADDITIONAL.DECLINE, payload: request.id});
   }
 }

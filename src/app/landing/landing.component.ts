@@ -62,7 +62,7 @@ export class LandingComponent implements OnDestroy {
       (message: string) => {
         console.log('error message', message);
         if(message){
-          this.errorMessage = 'Uživatel s tímto emailem již existuje!'
+          this.errorMessage = message;
         } else {
           this.errorMessage = 'Špatné heslo nebo email!'
         }
@@ -75,6 +75,7 @@ export class LandingComponent implements OnDestroy {
   }
 
   login(form) {
+    console.log('form', form);
     this.auth.login(form.userName, form.password);
   }
 

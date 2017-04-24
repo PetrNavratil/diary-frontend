@@ -11,6 +11,7 @@ import 'moment/locale/cs';
 })
 export class FriendComponent {
   @Input() friends: Friend[] = [];
+  @Input() clickable = true;
   @Output() removeFriend: EventEmitter<Friend> = new EventEmitter<Friend>();
   @Output() goToDetail: EventEmitter<number> = new EventEmitter<number>();
 
@@ -22,13 +23,15 @@ export class FriendComponent {
     return getImageUrl(url);
   }
 
-  remove(friend: Friend){
+  remove(friend: Friend, event){
+    event.stopPropagation();
     this.removeFriend.emit(friend);
   }
 
-  detail(friend: Friend, event){
-    event.stopPropagation();
-    this.goToDetail.emit(friend.id);
+  detail(friend: Friend){
+    if(this.clickable){
+      this.goToDetail.emit(friend.id);
+    }
   }
 
   getDate(date: string){

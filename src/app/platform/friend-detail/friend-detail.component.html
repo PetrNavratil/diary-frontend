@@ -1,3 +1,28 @@
-<p>
-  friend-detail works!
-</p>
+<div class="friend-detail-container">
+  <app-card [padded]="false">
+    <div title>
+      Detail uživatele
+    </div>
+    <app-friend [friends]="friends" [clickable]="false"></app-friend>
+  </app-card>
+  <div class="books-shelves">
+    <div class="column">
+      <app-card [padded]="false">
+       <div title>Poličky uživatele</div>
+        <app-shelf [editable]="false" *ngIf="shelves.length > 0" [shelf]="shelves[0]" class="shelf"></app-shelf>
+      </app-card>
+    </div>
+    <div class="column">
+      <app-card [padded]="false">
+        <div title>Knihy uživatele</div>
+        <div class="books-holder">
+          <app-card [padded]="false">
+            <div class="book">
+              <app-book-preview [book]="book"></app-book-preview>
+            </div>
+          </app-card>
+        </div>
+      </app-card>
+    </div>
+  </div>
+</div>

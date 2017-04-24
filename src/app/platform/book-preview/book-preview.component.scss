@@ -6,6 +6,7 @@
   cursor: pointer;
   position: relative;
   background: $book-background;
+  border-radius: 2px;
   &:hover {
     .photo-title {
       opacity: 0 !important;
@@ -18,6 +19,7 @@
     align-items: center;
     background-position: center center;
     position: absolute;
+    border-radius: 2px;
 
     .photo-title {
       width: 100%;

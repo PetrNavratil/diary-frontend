@@ -63,7 +63,7 @@
     </app-card>
     <app-card class="friend-card" noPaddingCard>
       <div class="title">Vaši přátelé</div>
-      <app-friend [friends]="friends"></app-friend>
+      <app-friend [friends]="friends" (goToDetail)="goToDetail($event)"></app-friend>
     </app-card>
   </div>
   </div>

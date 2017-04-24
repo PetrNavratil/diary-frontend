@@ -1,11 +1,13 @@
 @import '../../theme';
 
 .card-container {
-  padding: 20px;
   background-color: rgba($card-background, $card-background-opacity);
   margin: 10px;
   border-radius: 2px;
   color: $font-color;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.23);
   font-family: $font-book;
+  .title{
+    padding: 20px;
+  }
 }

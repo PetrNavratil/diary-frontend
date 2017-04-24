@@ -1,0 +1,27 @@
+@import '../../theme';
+$divider-color: rgba($font-color, .6);
+.friend-detail-container{
+  display: flex;
+  flex-direction: column;
+  .books-shelves{
+    display: flex;
+    flex-direction: column;
+    .column{
+      flex-grow: 1;
+      flex-basis: 0;
+      .shelf{
+        border-bottom: 1px solid $divider-color;
+        margin-bottom: 10px;
+      }
+
+      .books-holder{
+        display: flex;
+        flex-wrap: wrap;
+        .book{
+          height: $book-height;
+          width: $book-width;
+        }
+      }
+    }
+  }
+}

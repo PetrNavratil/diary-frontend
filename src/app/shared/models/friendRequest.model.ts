@@ -1,8 +1,7 @@
 export interface FriendRequest {
   id: number;
-  userId: number;
   avatar: string;
-  username: string;
+  userName: string;
   firstName: string;
   lastName: string;
 }

@@ -5,7 +5,6 @@
   width: 100%;
   cursor: pointer;
   position: relative;
-  background: $book-background;
   border-radius: 2px;
   &:hover {
     .photo-title {
@@ -15,17 +14,15 @@
 
   .photo {
     background-size: cover;
-    display: flex;
-    align-items: center;
     background-position: center center;
     position: absolute;
     border-radius: 2px;
 
     .photo-title {
-      width: 100%;
       text-align: center;
       padding: 20px 10px;
-      background: linear-gradient(to right, rgba(black, 0) 0%, rgba(black, .9) 25%, rgba(black, .9) 75%, rgba(black, 0) 100%);
+      margin-top: 60px;
+      background-color: rgba($card-background-color, .9);
       color: white;
       opacity: 1;
       transition: opacity .2s;
@@ -47,13 +44,14 @@
       }
 
       .label {
-        font-size: 14px;
-        color: rgba(black, .54);
+        font-size: 16px;
+        color: rgba($font-color, $label-color-opacity);
         margin-bottom: 5px;
+        text-transform: uppercase;
+        font-weight: bold;
       }
       .value {
-        font-size: 16px;
-        color: rgba(black, .87);
+        font-size: 14px;
         word-wrap: break-word;
       }
     }

@@ -2,9 +2,7 @@
 
 .sort-row {
   display: flex;
-  padding: 0 10px;
   align-items: center;
-  margin-bottom: 10px;
   width: 100%;
   app-card {
     &:not(:last-child) {
@@ -13,8 +11,8 @@
   }
 
   .input-holder {
-    width: 50%;
-    margin-right: 30px;
+    width: 30%;
+    margin-right: 20px;
     .input-container {
       width: 100%;
       .input {
@@ -22,7 +20,7 @@
       }
       .clear {
         font-size: 18px;
-        color: #673AB7;
+        color: white;
         opacity: 0;
         transition: opacity .3s;
         cursor: pointer;
@@ -41,23 +39,22 @@
       .select-dropdown {
         display: flex;
         flex-direction: column;
-        background-color: white;
-
+        background-color: $dropdown-color;
         .item {
           padding: 15px 10px;
-          transition: background-color .7s, color .7s;
+          transition: background-color .5s, color .5s;
           display: flex;
           justify-content: space-between;
           &.selected {
-            background-color: #f44336 !important;
+            background-color: $dropdown-selected-color !important;
             color: white !important;
           }
           &:not(:last-child) {
-            border-bottom: 1px solid rgba(black, .1);
+            border-bottom: 1px solid $divider-color;
           }
           &:hover {
             cursor: pointer;
-            background-color: #f44336;
+            background-color: $dropdown-hover-color;
             color: white;
           }
         }

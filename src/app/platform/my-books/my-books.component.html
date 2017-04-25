@@ -1,39 +1,40 @@
 <app-card>
-  <h2>My Books</h2>
-  <div class="sort-row">
-    <div class="input-holder">
-      <md-input-container class="input-container">
-        <input mdInput type="text" class="input" [(ngModel)]="pattern" (ngModelChange)="search()"
-               placeholder="Search in books by author or title">
-        <i class="material-icons clear" [ngClass]="{'visible': pattern.length}" mdSuffix (click)="clearPattern($event)">clear</i>
-      </md-input-container>
-    </div>
-    <div class="buttons">
-      <app-dropdown [closeOnClick]="true" [buttonTitle]="selected | bookStatus" class="dropdown">
-        <div class="select-dropdown">
-          <div class="item" *ngFor="let item of [0,1,2,3,4]" (click)="selectNewBooks(item)"
-               [ngClass]="{'selected': selected === item}">
-            <span class="name"> {{ item | bookStatus}}</span>
-          </div>
-        </div>
-      </app-dropdown>
-      <app-loading-button
-        class="button"
-        (click)="generatePdf()"
-        [title]="'Generate list of books [PDF]'"
-        [color]="'primary'"
-        [loading]="pdfLoading | async"
-      ></app-loading-button>
-    </div>
-  </div>
-  <div class="books-container">
-    <app-card [padded]="false" *ngFor="let book of selectedBooks" (click)="goToDetail(book.id)">
-      <div class="book">
-        <app-book-preview [book]="book"></app-book-preview>
+  <div title>Vaše knihy</div>
+    <div class="sort-row">
+      <div class="input-holder">
+        <md-input-container class="input-container">
+          <input mdInput type="text" class="input" [(ngModel)]="pattern" (ngModelChange)="search()"
+                 placeholder="Vyhledávejte mezi vašemi knihami podle názvu či autora">
+          <i class="material-icons clear" [ngClass]="{'visible': pattern.length}" mdSuffix (click)="clearPattern($event)">clear</i>
+        </md-input-container>
       </div>
-    </app-card>
-    <app-nothing *ngIf="!selectedBooks.length" class="nothing">
-      sorry fella no books!
-    </app-nothing>
+      <div class="buttons">
+        <app-dropdown [closeOnClick]="true" [buttonTitle]="selected | bookStatus" class="dropdown">
+          <div class="select-dropdown">
+            <div class="item" *ngFor="let item of [0,1,2,3,4]" (click)="selectNewBooks(item)"
+                 [ngClass]="{'selected': selected === item}">
+              <span class="name"> {{ item | bookStatus}}</span>
+            </div>
+          </div>
+        </app-dropdown>
+        <app-loading-button
+          class="button"
+          (click)="generatePdf()"
+          [title]="'Generovat seznam zvolenych knih [PDF]'"
+          [color]="'primary'"
+          [loading]="pdfLoading | async"
+        ></app-loading-button>
+      </div>
   </div>
 </app-card>
+
+<div class="books-container">
+  <app-card [padded]="false" *ngFor="let book of selectedBooks" (click)="goToDetail(book.id)">
+    <div class="book">
+      <app-book-preview [book]="book"></app-book-preview>
+    </div>
+  </app-card>
+  <app-nothing *ngIf="!selectedBooks.length" class="nothing">
+    sorry fella no books!
+  </app-nothing>
+</div>

@@ -7,17 +7,17 @@ export class BookStatusPipe {
   transform(value: number): string {
     switch (value) {
       case BookStatus.NOT_READ:
-        return 'Not read';
+        return 'Nepřečteno';
       case BookStatus.TO_READ:
-        return 'To read';
+        return 'Chci přečíst';
       case BookStatus.READING:
-        return 'Reading';
+        return 'Čtu';
       case BookStatus.READ:
-        return 'Read';
+        return 'Přečteno';
       case BookStatus.ALL:
-        return 'All';
+        return 'Vše';
       default:
-        return 'Not read';
+        return 'Nepřečteno';
     }
   }
 }

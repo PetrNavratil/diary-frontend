@@ -7,10 +7,11 @@
           <md-input-container class="nickname">
             <input
               mdInput
+              minlength="1"
+              maxlength="25"
               type="text"
               placeholder="Nickname"
-              [disabled]="true"
-              [ngModel]="user.userName">
+              [(ngModel)]="user.userName">
           </md-input-container>
         </div>
         <div class="details">
@@ -28,23 +29,11 @@
               placeholder="Last Name"
               [(ngModel)]="user.lastName">
           </md-input-container>
-          <md-input-container class="detail-input" [dividerColor]="email.invalid && email.touched ? 'warn' : 'primary'">
-            <input
-              mdInput type="text"
-              placeholder="Email"
-              pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
-              #email="ngModel"
-              [(ngModel)]="user.email">
-            <md-hint *ngIf="email.invalid && email.touched" class="alert" align="start">
-              Email address is NOT valid
-            </md-hint>
-          </md-input-container>
           <app-loading-button
             class="button"
             [color]="'primary'"
             [loading]="loading"
             [title]="'Submit changes'"
-            [disabled]="email.invalid"
             (click)="editUser($event)">
           </app-loading-button>
         </div>
@@ -78,22 +67,37 @@
                 </div>
               </div>
               <div class="buttons">
-                <button md-raised-button color="primary" (click)="sendRequest(person.id)">Poslat žádost</button>
+                <button class="button" md-raised-button color="primary" *ngIf="shouldAddRequest(person.id)" (click)="sendRequest(person.id)">Poslat žádost</button>
+                <button class="button" md-raised-button color="warn" *ngIf="shouldRemoveRequest(person.id)" (click)="removeRequestFromSearcher(person.id)">Zrušit žádost</button>
+                <button class="button" md-raised-button color="warn" *ngIf="shouldRemoveFromFriends(person.id)" (click)="removeFriend(person.id)" >Odebrat z přátel</button>
+                <div class="tmp" *ngIf="shouldDeclineOrAccept(person.id)" style="display: flex;">
+                  <button class="button" md-raised-button color="primary" (click)="acceptRequestFromSearcher(person.id)" >Příjmout</button>
+                  <button class="button" md-raised-button color="warn" (click)="declineRequestFromSearcher(person.id)" >Odmítnout</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </app-card>
-    <app-card class="friend-card" [padded]="false">
-      <div title>
-        Žádosti o přátelství
-      </div>
-      <app-friend-request (decline)="declineRequest($event)" (accept)="acceptRequest($event)" [requests]="friendRequests"></app-friend-request>
-    </app-card>
+    <div class="requests">
+      <app-card class="friend-card" [padded]="false">
+        <div title>
+          Příchozí žádosti o přátelství
+        </div>
+        <app-friend-request (decline)="declineRequest($event)" (accept)="acceptRequest($event)" [requests]="incomingFriendRequests"></app-friend-request>
+      </app-card>
+      <app-card class="friend-card" [padded]="false">
+        <div title>
+         Odeslané žádosti o přátelství
+        </div>
+        <app-friend-request [outgoing]="true" [requests]="outgoingFriendRequests" (remove)="removeRequest($event)" ></app-friend-request>
+      </app-card>
+    </div>
+
     <app-card class="friend-card" [padded]="false">
       <div title>Vaši přátelé</div>
-      <app-friend [friends]="friends" (goToDetail)="goToDetail($event)"></app-friend>
+      <app-friend [friends]="friends" (goToDetail)="goToDetail($event)" (removeFriend)="removeFriend($event)" ></app-friend>
     </app-card>
   </div>
   </div>

@@ -11,8 +11,9 @@
       </div>
     </div>
     <div class="buttons">
-      <button md-raised-button color="primary" (click)="acceptRequest(request)">Příjmout</button>
-      <button md-raised-button color="warn" (click)="declineRequest(request)">Odmítnout</button>
+      <button md-raised-button color="primary" *ngIf="!outgoing" (click)="acceptRequest(request)">Příjmout žádost</button>
+      <button md-raised-button color="warn" *ngIf="!outgoing" (click)="declineRequest(request)">Odmítnout žádost</button>
+      <button md-raised-button color="warn" *ngIf="outgoing"(click)="removeRequest(request)">Zrušit žádost</button>
     </div>
   </div>
 </div>

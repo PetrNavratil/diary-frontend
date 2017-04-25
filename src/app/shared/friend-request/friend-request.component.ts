@@ -12,8 +12,10 @@ import { getImageUrl } from '../getImageUrl';
 export class FriendRequestComponent{
 
   @Input() requests: FriendRequest[] = [];
+  @Input() outgoing: boolean = false;
   @Output() accept: EventEmitter<number> = new EventEmitter<number>();
   @Output() decline: EventEmitter<number> = new EventEmitter<number>();
+  @Output() remove: EventEmitter<number> = new EventEmitter<number>();
 
   acceptRequest(request: FriendRequest): void{
     this.accept.emit(request.id);
@@ -21,6 +23,10 @@ export class FriendRequestComponent{
 
   declineRequest(request: FriendRequest){
     this.decline.emit(request.id);
+  }
+
+  removeRequest(request: FriendRequest){
+    this.remove.emit(request.id);
   }
 
   avatar(url: string): string{

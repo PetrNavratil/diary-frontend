@@ -58,7 +58,7 @@ export class ToolbarComponent implements OnDestroy {
     this.subscriptions.push(this.store.select('requests').subscribe(
       (data: SquirrelState<FriendRequest>) => {
         if (!data.loading) {
-          this.friendRequests = data.data;
+          this.friendRequests = data.data.filter(request => request.requesterId !== this.user.id);
         }
       }
     ));

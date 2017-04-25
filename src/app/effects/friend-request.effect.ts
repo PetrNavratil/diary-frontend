@@ -3,10 +3,12 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Http } from '@angular/http';
 import { ToastrService } from '../shared/toastr.service';
 import { Observable } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { requestActions } from '../reducers/friend-request.reducer';
 import { environment } from '../../environments/environment';
 import { createOptions } from '../shared/createOptions';
+import { AppState } from '../shared/models/store-model';
+import { friendsActions } from '../reducers/friends.reducer';
 
 const API_ENDPOINT = '/friends/requests';
 const ACCEPT = 'accept';
@@ -16,7 +18,7 @@ const REQUEST = 'Žádost o přátelství';
 @Injectable()
 export class RequestEffect {
 
-  constructor(private actions: Actions, private http: Http, private toastr: ToastrService) {
+  constructor(private actions: Actions, private http: Http, private toastr: ToastrService, private store: Store<AppState>) {
 
   }
 
@@ -34,7 +36,7 @@ export class RequestEffect {
     .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`,{}, createOptions())
       .map(body => {
         this.toastr.showSuccess('Žádost byla úspěšně odeslána.', REQUEST);
-        return {type: 'NOOP', payload: {}}
+        return {type: requestActions.CREATE, payload: body.json()}
       })
       .catch(body => {
         this.toastr.showError('Žádost se nepodařilo odeslat. Kliknutím aktualizujete stránku.', REQUEST);
@@ -58,6 +60,7 @@ export class RequestEffect {
     .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}/${ACCEPT}`,{}, createOptions())
       .map(body => {
         this.toastr.showSuccess('Žádost byla přijata.', REQUEST);
+        this.store.dispatch({type: friendsActions.API_GET});
         return {type: requestActions.DELETE, payload: body.json()}
       })
       .catch(body => {
@@ -65,16 +68,16 @@ export class RequestEffect {
         return Observable.of({type: requestActions.API_DELETE_FAIL, payload: body.json()})
       }));
 
-  // @Effect() removeReques: Observable<Action> = this.actions
-  //   .ofType(requestActions.API_DELETE)
-  //   .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, createOptions())
-  //     .map(body => {
-  //       this.toastr.showSuccess('Komentář byl úspěšně odebrán.', REQUEST);
-  //       return {type: requestActions.DELETE, payload: body.json()}
-  //     })
-  //     .catch(body => {
-  //       this.toastr.showError('Nepodařilo se smazat komentář. Kliknutím aktualizujete stránku.', REQUEST);
-  //       return Observable.of({type: requestActions.API_DELETE_FAIL, payload: body.json()})
-  //     }));
+  @Effect() removeRequest: Observable<Action> = this.actions
+    .ofType(requestActions.API_DELETE)
+    .switchMap((action) => this.http.delete(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`, createOptions())
+      .map(body => {
+        this.toastr.showSuccess('Žádost byla úspěšně odebrána.', REQUEST);
+        return {type: requestActions.DELETE, payload: body.json()}
+      })
+      .catch(body => {
+        this.toastr.showError('Nepodařilo se odebrat žádost. Kliknutím aktualizujete stránku.', REQUEST);
+        return Observable.of({type: requestActions.API_DELETE_FAIL, payload: body.json()})
+      }));
 
 }

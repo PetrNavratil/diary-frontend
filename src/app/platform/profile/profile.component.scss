@@ -1,10 +1,11 @@
 @import '../../theme';
 
 $photo-size: 70px;
-$photo-margin: 40px;
+$photo-margin: 20px;
 $margin-icon: 5px;
 $divider-color: rgba($font-color, .6);
 $avatar-size: 40px;
+$input-margin: 10px;
 
 .profile-container {
   display: flex;
@@ -17,27 +18,25 @@ $avatar-size: 40px;
         margin-bottom: 20px;
         display: flex;
         align-items: center;
-        position: relative;
         .photo {
           border-radius: 50%;
           height: $photo-size;
           width: $photo-size;
-          border: 2px solid rgba(black, .4);
+          border: 2px solid white;
           cursor: pointer;
         }
         .nickname {
           bottom: -10px;
-          position: absolute;
-          margin-left: $photo-margin + $photo-size;
-          width: 50%;
-          input {
-            width: 100%;
-          }
+          margin-left: $photo-margin;
+          width: 100%;
         }
       }
       .details {
         display: flex;
         flex-direction: column;
+        .detail-input{
+          margin-bottom: $input-margin;
+        }
         .button {
           align-self: flex-end;
         }
@@ -50,6 +49,8 @@ $avatar-size: 40px;
     display: flex;
     flex-direction: column;
     .friend-card {
+      flex-grow: 1;
+      flex-basis: 0;
       .searcher-container {
         display: flex;
         align-items: center;
@@ -144,8 +145,9 @@ $avatar-size: 40px;
                 padding-left: 20px;
                 display: flex;
                 align-items: center;
-                button {
+                .button {
                   height: 36px;
+                  margin-left: 10px;
                 }
               }
             }
@@ -164,6 +166,9 @@ $avatar-size: 40px;
       ::-webkit-scrollbar-thumb {
         background-color: darken($loader-background-color, 15%);
       }
+    }
+    .requests{
+      display: flex;
     }
   }
 }

@@ -39,11 +39,11 @@ export class ProfileComponent implements OnDestroy, AfterViewInit {
   @ViewChild('dropdown') dropdownElement: ElementRef;
   userInputChange: Subject<string> = new Subject<string>();
   state: string = COLLAPSED;
-  friendRequests: FriendRequest[] = [];
+  incomingFriendRequests: FriendRequest[] = [];
+  outgoingFriendRequests: FriendRequest[] = [];
   searcherLoading = false;
   people: User[] = [];
   friends: Friend[] = [];
-  updateFriends = false;
 
   constructor(private store: Store<AppState>, private router: Router) {
 
@@ -53,9 +53,8 @@ export class ProfileComponent implements OnDestroy, AfterViewInit {
       this.store.select('users').subscribe(
         (data: SquirrelState<User>) => {
           this.loading = data.loading;
-          if (data.data.length && !data.loading) {
-            this.user = data.data[0];
-            console.log('user', this.user);
+          if (!data.loading && data.data.length) {
+            this.user = Object.assign({}, data.data[0]);
           }
         }
       )
@@ -64,11 +63,8 @@ export class ProfileComponent implements OnDestroy, AfterViewInit {
     this.subscriptions.push(this.store.select('requests').subscribe(
       (data: SquirrelState<FriendRequest>) => {
         if (!data.loading) {
-          this.friendRequests = data.data;
-          if(this.updateFriends){
-            this.updateFriends = false;
-            this.store.dispatch({type: requestActions.API_GET});
-          }
+          this.incomingFriendRequests = data.data.filter(request => request.requesterId !== this.user.id);
+          this.outgoingFriendRequests = data.data.filter(request => request.requesterId === this.user.id);
         }
       }
     ));
@@ -166,9 +162,45 @@ export class ProfileComponent implements OnDestroy, AfterViewInit {
   }
 
   acceptRequest(id: number){
-    this.updateFriends = true;
     this.store.dispatch({type: requestActions.ADDITIONAL.ACCEPT, payload:id})
   }
 
+  removeRequest(id: number){
+    this.store.dispatch({type: requestActions.API_DELETE, payload:id})
+  }
+
+  removeRequestFromSearcher(userId: number){
+    this.removeRequest(this.outgoingFriendRequests.filter(request => request.userId === userId)[0].id);
+  }
+
+  declineRequestFromSearcher(requesterId: number){
+    this.declineRequest(this.incomingFriendRequests.filter(request => request.requesterId === requesterId)[0].id);
+  }
+
+  acceptRequestFromSearcher(requesterId: number){
+    this.acceptRequest(this.incomingFriendRequests.filter(request => request.requesterId === requesterId)[0].id);
+  }
+
+
+  removeFriend(id: number){
+    this.store.dispatch({type: friendsActions.API_DELETE, payload: id});
+  }
+
+
+  shouldRemoveRequest(userId: number){
+    return this.outgoingFriendRequests.findIndex(request => request.userId === userId) > -1;
+  }
+
+  shouldRemoveFromFriends(userId: number){
+    return this.friends.findIndex(friend => friend.id === userId) > -1;
+  }
+
+  shouldDeclineOrAccept(userId: number){
+    return this.incomingFriendRequests.findIndex(request => request.requesterId === userId) > -1  ;
+  }
+
+  shouldAddRequest(userId: number){
+    return !this.shouldRemoveRequest(userId) && !this.shouldDeclineOrAccept(userId) && !this.shouldRemoveFromFriends(userId);
+  }
 
 }

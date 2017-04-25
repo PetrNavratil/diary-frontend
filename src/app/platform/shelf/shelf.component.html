@@ -19,10 +19,8 @@
       </div>
     </div>
     <div class="content" dropdown-content>
-      <app-card [padded]="false" *ngFor="let book of shelf.books" (click)="goToBook(book.id)">
-        <div class="book">
+        <div class="book" *ngFor="let book of shelf.books" (click)="goToBook(book.id)">
           <app-book-preview [book]="book"></app-book-preview>
         </div>
-      </app-card>
     </div>
   </app-dropdown-row>

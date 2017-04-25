@@ -1,8 +1,9 @@
 <ng-template #spinner>
   <md-spinner style="margin: 0 auto"></md-spinner>
 </ng-template>
-  <div class="book-detail-container">
-    <app-card>
+<div class="book-detail-container">
+  <app-card>
+    <div title>Kniha</div>
     <div class="actions-row">
       <div class="source-name" *ngIf="bookInfo">
         {{bookInfo.title}} - {{bookInfo.author}}
@@ -38,7 +39,7 @@
               <md-input-container>
                 <input mdInput placeholder="Add new shelf" type="text" [(ngModel)]="newShelf">
               </md-input-container>
-              <button class="button" md-raised-button color="primary" [disabled]="!newShelf.length || existThisShelf"
+              <button class="button" md-raised-button color="warn" [disabled]="!newShelf.length || existThisShelf"
                       (click)="addNewShelf($event)">Add <i class="material-icons">add</i></button>
             </div>
           </div>
@@ -49,186 +50,195 @@
                             (click)="generatePdf()"></app-loading-button>
       </div>
     </div>
-</app-card>
-    <div class="book-info">
-      <div class="source">
-        <div class="triangle"></div>
-        <app-card noPaddingCard>
-          <div class="tabs-container">
-            <div class="item" *ngFor="let tab of tabs; let i = index" [ngClass]="{'selected-tab': selectedTab === tab}"
-                 (click)="selectTab(tab)">
-              {{tab}}
-            </div>
+  </app-card>
+  <div class="book-info">
+    <div class="source">
+      <div class="triangle"></div>
+      <app-card [padded]="false">
+        <div class="tabs-container">
+          <div class="item" *ngFor="let tab of tabs; let i = index" [ngClass]="{'selected-tab': selectedTab === tab}"
+               (click)="selectTab(tab)">
+            {{tab}}
           </div>
-        </app-card>
-       <div *ngIf="bookInfo && trackings.readings.length > 0; then buy"></div>
-      </div>
+        </div>
+      </app-card>
+      <div *ngIf="bookInfo && trackings.readings.length > 0; then buy"></div>
+    </div>
 
-      <div class="info">
-        <app-card>
-          <div class="info-obal" *ngIf="bookRes && !bookResLoading; else spinner">
-            <div class="info-container" *ngIf="selectedTab === tabs[0]">
-              <div class="cover">
-                <img src="{{bookRes.goodReadsBook.imageUrl}}">
-              </div>
-              <div class="details">
-                <div class="label">title</div>
-                <div class="content">{{bookRes.goodReadsBook.title}}</div>
-                <div class="label">author</div>
-                <div class="content">{{bookRes.goodReadsBook.authors[0].name}}</div>
-                <div class="label">publisher</div>
-                <div class="content">{{bookRes.goodReadsBook.publisher}}</div>
-                <div class="label">pages</div>
-                <div class="content">{{bookRes.goodReadsBook.pages}}</div>
-              </div>
-              <div class="description">
-                {{bookRes.goodReadsBook.description}}
-              </div>
+    <div class="info">
+      <app-card>
+        <div title>Informace o knize</div>
+        <div class="info-obal" *ngIf="bookRes && !bookResLoading; else spinner">
+          <div class="info-container" *ngIf="selectedTab === tabs[0]">
+            <div class="cover">
+              <img src="{{bookRes.goodReadsBook.imageUrl}}">
             </div>
-            <div class="info-container" *ngIf="selectedTab === tabs[1]">
-              <div class="cover">
-                <img src="{{bookRes.googleBook.imageUrl}}">
-              </div>
-              <div class="details">
-                <div class="label">title</div>
-                <div class="content">{{bookRes.googleBook.title}}</div>
-                <div class="label">author</div>
-                <div class="content">{{bookRes.googleBook.author}}</div>
-                <div class="label">publisher</div>
-                <div class="content">{{bookRes.googleBook.publisher}}</div>
-                <div class="label">pages</div>
-                <div class="content">{{bookRes.googleBook.pageCount}}</div>
-              </div>
-              <div class="description">
-                {{bookRes.googleBook.description}}
-              </div>
+            <div class="details">
+              <div class="label">title</div>
+              <div class="content">{{bookRes.goodReadsBook.title}}</div>
+              <div class="label">author</div>
+              <div class="content">{{bookRes.goodReadsBook.authors[0].name}}</div>
+              <div class="label">publisher</div>
+              <div class="content">{{bookRes.goodReadsBook.publisher}}</div>
+              <div class="label">pages</div>
+              <div class="content">{{bookRes.goodReadsBook.pages}}</div>
             </div>
-            <div class="origin">
-              <div class="text">
-                Zobrazovaná data pocházejí ze serveru
-              </div>
-                <a [href]="bookRes.goodReadsBook.originUrl" target="_blank" *ngIf="selectedTab === tabs[0]">
-                  <img src="https://s.gr-assets.com/assets/layout/header/goodreads_logo.svg" class="logo">
-                </a>
-              <a [href]="bookRes.googleBook.preview" target="_blank" *ngIf="selectedTab === tabs[1]">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Google_Book_Search_Beta_logo.png" class="logo">
-              </a>
+            <div class="description">
+              {{bookRes.goodReadsBook.description}}
             </div>
           </div>
-        </app-card>
-        <!--Buy section-->
-        <div *ngIf="bookInfo  && trackings.readings.length === 0; then buy"></div>
-        <app-card *ngIf="bookInfo?.inBooks && (bookInfo.status === BookStatus.READING ||bookInfo.status === BookStatus.READ)">
-          <div class="reading" *ngIf="!trackingsLoading && trackings.readings.length; else spinner">
-            <div class="title-row">
-              <div class="reading-item">
-                <div class="label">období čtení</div>
-                <div class="content">{{readingStartStop}}</div>
-              </div>
-              <div class="reading-item">
-                <div class="label">status</div>
-                <div class="content">{{trackings.readings[selectedReading].completed ? (BookStatus.READ | bookStatus) : (BookStatus.READING
-                  | bookStatus) }}
-                </div>
-              </div>
-              <app-dropdown
-                [buttonTitle]="selectedReading === -1 ? 'Vyberte obdobi' : (selectedReading+1) + '. Čtení'"
-                [closeOnClick]="true"
-                [disabled]="trackings.readings.length === 0">
-                <div class="action-dropdown">
-                  <div class="item" [ngClass]="{'selected': selectedReading === i}" *ngFor="let reading of trackings.readings; let i = index" (click)="selectReading(i)">
-                    <span class="name">Reading {{i+1}}.</span>
-                  </div>
-                </div>
-              </app-dropdown>
+          <div class="info-container" *ngIf="selectedTab === tabs[1]">
+            <div class="cover">
+              <img src="{{bookRes.googleBook.imageUrl}}">
             </div>
-            <div class="reading-info-row">
-              <div class="reading-left-column">
-                <div class="label">přečteno</div>
-                <div class="content">{{trackings.readings[selectedReading].completed ? trackings.readings.length : trackings.readings.length
-                  -1}}x
-                </div>
-                <div class="label">celková doba čtení</div>
-                <div class="content">{{wholeTimeReading}}</div>
+            <div class="details">
+              <div class="label">title</div>
+              <div class="content">{{bookRes.googleBook.title}}</div>
+              <div class="label">author</div>
+              <div class="content">{{bookRes.googleBook.author}}</div>
+              <div class="label">publisher</div>
+              <div class="content">{{bookRes.googleBook.publisher}}</div>
+              <div class="label">pages</div>
+              <div class="content">{{bookRes.googleBook.pageCount}}</div>
+            </div>
+            <div class="description">
+              {{bookRes.googleBook.description}}
+            </div>
+          </div>
+          <div class="origin">
+            <div class="text">
+              Zobrazovaná data pocházejí ze serveru
+            </div>
+            <a [href]="bookRes.goodReadsBook.originUrl" target="_blank" *ngIf="selectedTab === tabs[0]">
+              <img src="https://s.gr-assets.com/assets/layout/header/goodreads_logo.svg" class="logo">
+            </a>
+            <a [href]="bookRes.googleBook.preview" target="_blank" *ngIf="selectedTab === tabs[1]">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Google_Book_Search_Beta_logo.png" class="logo">
+            </a>
+          </div>
+        </div>
+      </app-card>
+      <!--Buy section-->
+      <div *ngIf="bookInfo  && trackings.readings.length === 0; then buy"></div>
+      <app-card *ngIf="bookInfo?.inBooks && (bookInfo.status === BookStatus.READING ||bookInfo.status === BookStatus.READ)">
+       <div title>Přehled čtení knihy</div>
+        <div class="reading" *ngIf="!trackingsLoading && trackings.readings.length; else spinner">
+          <div class="title-row">
+            <div class="reading-item">
+              <div class="label">přečteno</div>
+              <div class="content">{{trackings.readings[selectedReading].completed ? trackings.readings.length : trackings.readings.length
+                -1}}x
               </div>
-              <div class="reading-table-column">
-                <div class="reading-table" *ngIf="selectedReading > -1">
-                  <div class="table-row header-row">
-                    <div class="table-item header">OD</div>
-                    <div class="table-item header">DO</div>
-                    <div class="table-item header">CAS</div>
-                  </div>
-                  <div class="table-row" *ngFor="let interval of intervalsTableData">
-                    <div class="table-item">{{interval.start}}</div>
-                    <div class="table-item">{{interval.stop}}</div>
-                    <div class="table-item">{{interval.duration}}</div>
-                  </div>
-                  <div class="table-row footer">
-                    <div class="table-item footer-item">Celkový čas</div>
-                    <div class="table-item footer-item"></div>
-                    <div class="table-item footer-item">{{readingDuration}}</div>
-                  </div>
+            </div>
+            <div class="reading-item">
+              <div class="label">celková doba čtení</div>
+              <div class="content">{{wholeTimeReading}}</div>
+            </div>
+            <app-dropdown
+              [buttonTitle]="selectedReading === -1 ? 'Vyberte obdobi' : (selectedReading+1) + '. Čtení'"
+              [closeOnClick]="true"
+              [disabled]="trackings.readings.length === 0">
+              <div class="action-dropdown">
+                <div class="item" [ngClass]="{'selected': selectedReading === i}" *ngFor="let reading of trackings.readings; let i = index"
+                     (click)="selectReading(i)">
+                  <span class="name">Reading {{i+1}}.</span>
+                </div>
+              </div>
+            </app-dropdown>
+          </div>
+          <div class="reading-info-row">
+            <div class="reading-left-column">
+              <div class="label">období čtení</div>
+              <div class="content" style="max-width: 158px;width: 158px;">{{readingStartStop}}</div>
+              <div class="label">status</div>
+              <div class="content">{{trackings.readings[selectedReading].completed ? (BookStatus.READ | bookStatus) : (BookStatus.READING
+                | bookStatus) }}
+              </div>
+            </div>
+            <div class="reading-table-column">
+              <div class="reading-table" *ngIf="selectedReading > -1">
+                <div class="table-row header-row">
+                  <div class="table-item header">OD</div>
+                  <div class="table-item header">DO</div>
+                  <div class="table-item header">CAS</div>
+                </div>
+                <div class="table-row" *ngFor="let interval of intervalsTableData">
+                  <div class="table-item">{{interval.start}}</div>
+                  <div class="table-item">{{interval.stop}}</div>
+                  <div class="table-item">{{interval.duration}}</div>
+                </div>
+                <div class="table-row footer">
+                  <div class="table-item footer-item">Celkový čas</div>
+                  <div class="table-item footer-item"></div>
+                  <div class="table-item footer-item">{{readingDuration}}</div>
                 </div>
               </div>
             </div>
           </div>
-        </app-card>
+        </div>
+      </app-card>
+    </div>
+  </div>
+
+  <app-card>
+    <div title>Doporučené knihy dle GoodReads</div>
+    <div class="similar-books-container">
+      <app-book-preview class="book" *ngFor="let simBook of similarBooks" [book]="simBook" (click)="goToBook(simBook)"></app-book-preview>
+    </div>
+  </app-card>
+
+  <app-card>
+    <div title>Komentáře ke knize</div>
+    <div class="comments">
+      <div class="my-comment">
+        <app-comment
+          [editable]="bookInfo?.inBooks"
+          [commentData]="userComment"
+          [newComment]="newComment"
+          *ngIf="userComment"
+          (addComment)="addComment($event)"
+          (deleteComment)="deleteComment($event)"
+          (editComment)="editComment($event)"></app-comment>
+      </div>
+      <div class="other-comments">
+        <app-comment *ngFor="let item of comments" [editable]="false" [commentData]="item"></app-comment>
       </div>
     </div>
 
-    <app-card>
-      <div class="similar-books-container">
-        <app-book-preview class="book" *ngFor="let simBook of similarBooks" [book]="simBook" (click)="goToBook(simBook)"></app-book-preview>
+  </app-card>
+  <app-card *ngIf="bookInfo?.inBooks">
+    <app-dropdown-row>
+      <div class="header" row-header>SHOW EDUCATIONAL</div>
+      <div class="education-content" dropdown-content>
+        <app-education [data]="bookInfo.educational" (dataUpdate)="setEducational($event)"></app-education>
       </div>
-    </app-card>
-
-    <app-card>
-      <div class="comments">
-        <div class="my-comment">
-          <app-comment
-            [editable]="bookInfo?.inBooks"
-            [commentData]="userComment"
-            [newComment]="newComment"
-            *ngIf="userComment"
-            (addComment)="addComment($event)"
-            (deleteComment)="deleteComment($event)"
-            (editComment)="editComment($event)"></app-comment>
+    </app-dropdown-row>
+  </app-card>
+  <ng-template #buy>
+    <div [style.margin-top.px]="trackings.readings.length > 0 ? 40 : 0">
+      <app-card>
+        <div title>Kupte knihu</div>
+        <div class="buy" [ngClass]="{'column': trackings.readings.length > 0 }">
+          <a class="image-link" [href]="'https://play.google.com/store/search?c=books&q=' + bookInfo.title + bookInfo.author"
+             target="_blank">
+            <img src="https://www.gstatic.com/android/market_images/web/play_prism_hlock_2x.png">
+          </a>
+          <a class="image-link" [href]="'https://www.knihydobrovsky.cz/vyhledavani?search=' + bookInfo.title" target="_blank">
+            <img src="assets/dobrovsky.png">
+          </a>
+          <a class="image-link" [href]="'https://www.martinus.cz/?uMod=list&uTyp=search&uQ='+ bookInfo.title +'&type%5B0%5D=kniha'"
+             target="_blank">
+            <img src="assets/martinus.png">
+          </a>
+          <a class="image-link" [href]="'https://knihy.heureka.cz/f:q:'+ bookInfo.title" target="_blank">
+            <img src="assets/logo_heureka.png">
+          </a>
+          <a class="image-link" [href]="'https://www.amazon.com/s/?url=search-alias%3Dstripbooks&field-keywords='+ bookInfo.title"
+             target="_blank">
+            <img src="assets/amazon.jpg">
+          </a>
         </div>
-        <div class="other-comments">
-          <app-comment *ngFor="let item of comments" [editable]="false" [commentData]="item"></app-comment>
-        </div>
-      </div>
-
-    </app-card>
-    <app-card *ngIf="bookInfo?.inBooks">
-      <app-dropdown-row>
-        <div class="header" row-header>SHOW EDUCATIONAL</div>
-        <div class="education-content" dropdown-content>
-          <app-education [data]="bookInfo.educational" (dataUpdate)="setEducational($event)"></app-education>
-        </div>
-      </app-dropdown-row>
-    </app-card>
-    <ng-template #buy>
-      <div [style.margin-top.px]="trackings.readings.length > 0 ? 40 : 0">
-        <app-card>
-          <div class="buy" [ngClass]="{'column': trackings.readings.length > 0 }">
-            <a class="image-link" [href]="'https://play.google.com/store/search?c=books&q=' + bookInfo.title + bookInfo.author" target="_blank">
-              <img  src="https://www.gstatic.com/android/market_images/web/play_prism_hlock_2x.png">
-            </a>
-            <a class="image-link" [href]="'https://www.knihydobrovsky.cz/vyhledavani?search=' + bookInfo.title" target="_blank">
-              <img  src="assets/dobrovsky.png">
-            </a>
-            <a class="image-link" [href]="'https://www.martinus.cz/?uMod=list&uTyp=search&uQ='+ bookInfo.title +'&type%5B0%5D=kniha'" target="_blank">
-              <img  src="assets/martinus.png">
-            </a>
-            <a class="image-link" [href]="'https://knihy.heureka.cz/f:q:'+ bookInfo.title" target="_blank">
-              <img  src="assets/logo_heureka.png">
-            </a>
-            <a class="image-link" [href]="'https://www.amazon.com/s/?url=search-alias%3Dstripbooks&field-keywords='+ bookInfo.title" target="_blank">
-              <img  src="assets/amazon.jpg">
-            </a>
-          </div>
-        </app-card>
-      </div>
-    </ng-template>
-  </div>
+      </app-card>
+    </div>
+  </ng-template>
+</div>

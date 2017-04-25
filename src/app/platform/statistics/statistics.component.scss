@@ -1,3 +1,5 @@
+@import '../../theme';
+
 $label-color: black;
 $label-size: 16px;
 
@@ -7,6 +9,7 @@ $content-size: 15px;
 .statistics-container{
   display: flex;
   flex-direction: column;
+  color: $font-color;
   .summary{
     display: flex;
     margin-top: 20px;
@@ -21,14 +24,12 @@ $content-size: 15px;
 
       .label {
         font-size: $label-size;
-        color: $label-color;
         text-transform: uppercase;
         font-weight: bold;
       }
 
       .content {
         font-size: $content-size;
-        color: $content-color;
         padding-left: 10px;
         padding-bottom: 10px;
 

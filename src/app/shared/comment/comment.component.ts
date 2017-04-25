@@ -3,8 +3,9 @@ import {
   ChangeDetectionStrategy, OnChanges
 } from '@angular/core';
 import { DiaryComment } from '../models/comment.model';
-import { environment } from '../../../environments/environment';
 import { getImageUrl } from '../getImageUrl';
+import * as moment from 'moment';
+import 'moment/locale/cs';
 
 @Component({
   selector: 'app-comment',
@@ -48,6 +49,10 @@ export class CommentComponent implements OnChanges {
   displayState = 'active';
   editState = 'inactive';
   displayed = 'display';
+
+  constructor(){
+    moment.locale('cs');
+  }
 
   switchMode() {
     if (!this.editable) {
@@ -115,5 +120,9 @@ export class CommentComponent implements OnChanges {
 
   get avatarUrl() {
     return getImageUrl(this.commentData.userAvatar);
+  }
+
+  get time(){
+    return this.commentData.date.length > 0 ? moment(this.commentData.date).format('LLL') : moment().format('LLL');
   }
 }

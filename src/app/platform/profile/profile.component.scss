@@ -1,5 +1,10 @@
+@import '../../theme';
+
 $photo-size: 70px;
 $photo-margin: 40px;
+$margin-icon: 5px;
+$divider-color: rgba($font-color, .6);
+$avatar-size: 40px;
 
 .profile-container {
   display: flex;
@@ -33,7 +38,7 @@ $photo-margin: 40px;
       .details {
         display: flex;
         flex-direction: column;
-        .button{
+        .button {
           align-self: flex-end;
         }
       }
@@ -44,9 +49,120 @@ $photo-margin: 40px;
     flex-grow: 3;
     display: flex;
     flex-direction: column;
-    .friend-card{
-      .title{
-        padding: 20px;
+    .friend-card {
+      .searcher-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        .search-icon {
+          z-index: 2;
+          padding-left: $margin-icon;
+          color: $loader-background-color;
+        }
+
+        .search-input {
+          border: none;
+          background: transparent;
+          height: 40px;
+          width: 100%;
+          transition: all .5s ease-out;
+          font-size: $toolbar-font-size;
+          font-weight: $toolbar-weight;
+          outline: 1px solid darken(#584C43, 2%);
+          color: $font-color;
+          padding-left: 40px;
+          padding-right: 45px;
+          margin-left: -24px - $margin-icon;
+          box-sizing: border-box;
+
+          &:focus {
+            outline: 3px solid #584C43;
+          }
+        }
+
+        md-spinner {
+          margin-left: -40px;
+          height: 36px !important;
+          width: 36px;
+        }
+
+        .dropdown {
+          overflow: hidden;
+          overflow-y: auto;
+          z-index: 99;
+          position: absolute;
+          margin-top: 45px;
+          top: 0;
+          left: 0;
+          background-color: lighten(brown, 6%);
+          .container {
+            .friend {
+              display: flex;
+              padding: 5px 10px;
+              justify-content: space-between;
+              &:hover {
+                background-color: rgba(black, .1);
+              }
+              &:not(:last-child) {
+                border-bottom: 1px solid $divider-color;
+              }
+              .user {
+                display: flex;
+                padding: 5px 10px 0 0;
+                .avatar-container {
+                  .avatar {
+                    border-radius: 50%;
+                    border: 2px solid $font-color;
+                    height: $avatar-size;
+                    width: $avatar-size;
+                    font-size: $avatar-size
+                  }
+                }
+                .info {
+                  margin-left: 15px;
+                  padding-right: 15px;
+                  display: flex;
+                  flex-direction: column;
+                  flex-grow: 1;
+                  justify-content: space-around;
+                  border-right: 1px solid $divider-color;
+                  .item {
+                    &.shift {
+                      padding-left: 5px;
+                    }
+                    &:first-child {
+                      font-size: 15px;
+                    }
+                    &:last-child {
+                      margin-top: -15px;
+                    }
+                  }
+                }
+              }
+              .buttons {
+                padding-left: 20px;
+                display: flex;
+                align-items: center;
+                button {
+                  height: 36px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: darken($loader-background-color, 15%);
       }
     }
   }

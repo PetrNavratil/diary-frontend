@@ -93,11 +93,11 @@ export class ToolbarComponent implements OnDestroy {
     this.state = this.state === COLLAPSED ? EXPANDED : COLLAPSED;
   }
 
-  acceptRequest(request: FriendRequest): void{
-    this.store.dispatch({type: requestActions.ADDITIONAL.ACCEPT, payload: request.id});
+  acceptRequest(id: number): void{
+    this.store.dispatch({type: requestActions.ADDITIONAL.ACCEPT, payload: id});
   }
 
-  declineRequest(request: FriendRequest): void {
-    this.store.dispatch({type: requestActions.ADDITIONAL.DECLINE, payload: request.id});
+  declineRequest(id: number): void {
+    this.store.dispatch({type: requestActions.ADDITIONAL.DECLINE, payload: id});
   }
 }

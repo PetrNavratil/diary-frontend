@@ -2,10 +2,11 @@
   <div class="friend" *ngFor="let friend of friends" (click)="detail(friend)" [ngClass]="{'clickable': clickable}">
     <div class="user">
       <div class="avatar-container">
-        <img [src]="avatar(friend.avatar)" class="avatar">
+        <img [src]="avatar(friend.avatar)" *ngIf="friend.avatar.length > 0" class="avatar">
+        <i class="material-icons avatar" *ngIf="friend.avatar.length === 0">person</i>
       </div>
       <div class="info">
-        <div class="item">{{friend.username}}</div>
+        <div class="item">{{friend.userName}}</div>
         <div class="item">{{friend.firstName}} {{friend.lastName}}</div>
       </div>
       <div class="info">
@@ -14,11 +15,11 @@
       </div>
       <div class="info">
         <div class="item">Knih:</div>
-        <div class="item shift">{{friend.books}}</div>
+        <div class="item shift">{{friend.booksCount}}</div>
       </div>
       <div class="info">
         <div class="item">Poliček:</div>
-        <div class="item shift">{{friend.shelves}}</div>
+        <div class="item shift">{{friend.shelvesCount}}</div>
       </div>
     </div>
     <div class="buttons">

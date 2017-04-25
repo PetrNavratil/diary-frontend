@@ -2,7 +2,8 @@
   <div class="request" *ngFor="let request of requests">
     <div class="user">
       <div class="avatar-container">
-        <img [src]="avatar(request.avatar)" class="avatar">
+        <img [src]="avatar(request.avatar)" *ngIf="request.avatar.length > 0" class="avatar">
+        <i class="material-icons avatar" *ngIf="request.avatar.length === 0">person</i>
       </div>
       <div class="info">
         <div class="item">{{request.userName}}</div>

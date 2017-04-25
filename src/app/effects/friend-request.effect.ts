@@ -42,7 +42,7 @@ export class RequestEffect {
       }));
 
   @Effect() declineRequest: Observable<Action> = this.actions
-    .ofType(requestActions.ADDITIONAL.ACCEPT)
+    .ofType(requestActions.ADDITIONAL.DECLINE)
     .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}/${DECLINE}`,{}, createOptions())
       .map(body => {
         this.toastr.showSuccess('Žádost byla odmítnuta.', REQUEST);

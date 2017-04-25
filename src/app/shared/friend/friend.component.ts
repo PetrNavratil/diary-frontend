@@ -12,7 +12,7 @@ import 'moment/locale/cs';
 export class FriendComponent {
   @Input() friends: Friend[] = [];
   @Input() clickable = true;
-  @Output() removeFriend: EventEmitter<Friend> = new EventEmitter<Friend>();
+  @Output() removeFriend: EventEmitter<number> = new EventEmitter<number>();
   @Output() goToDetail: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(){
@@ -25,7 +25,7 @@ export class FriendComponent {
 
   remove(friend: Friend, event){
     event.stopPropagation();
-    this.removeFriend.emit(friend);
+    this.removeFriend.emit(friend.id);
   }
 
   detail(friend: Friend){

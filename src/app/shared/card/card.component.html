@@ -1,5 +1,7 @@
 <div class="card-container" [style.padding.px]="padded ? 20 : 0">
-  <div #title class="title" [style.padding.px]="titleRef && titleRef.nativeElement.children.length > 0 && !padded ? 20 : 0">
+  <div #title class="title"
+       [ngClass]="{'full-padding':titleRef && titleRef.nativeElement.children.length > 0 && !padded,
+       'bottom-padding': titleRef && titleRef.nativeElement.children.length > 0 && padded}">
     <ng-content select="[title]"></ng-content>
   </div>
   <ng-content></ng-content>

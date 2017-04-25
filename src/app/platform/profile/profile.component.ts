@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { AppState } from '../../shared/models/store-model';
 import { Store } from '@ngrx/store';
 import {} from '@flowup/squirrel';
@@ -10,53 +10,44 @@ import { FriendRequest } from '../../shared/models/friendRequest.model';
 import { Friend } from '../../shared/models/friend.model';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { animate, style, state, trigger, transition } from '@angular/animations';
+import { peopleActions } from '../../reducers/people.reducer';
+import { requestActions } from '../../reducers/friend-request.reducer';
+import { friendsReducer, friendsActions } from '../../reducers/friends.reducer';
+
+const COLLAPSED = 'collapsed';
+const EXPANDED = 'expanded';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
+  animations: [
+    trigger('expandable', [
+      state(COLLAPSED, style({'height': '0', 'opacity': '0', 'width': '0'})),
+      state(EXPANDED, style({'height': '*', 'opacity': '1', 'width': '100%'})),
+      transition('* => *', animate('500ms ease-out'))
+    ])
+  ],
 })
-export class ProfileComponent implements OnDestroy {
+export class ProfileComponent implements OnDestroy, AfterViewInit {
   user: User;
   subscriptions: any[] = [];
   loading: boolean = false;
   @ViewChild('photoInput') inputElement: ElementRef;
+  @ViewChild('dropdown') dropdownElement: ElementRef;
+  userInputChange: Subject<string> = new Subject<string>();
+  state: string = COLLAPSED;
   friendRequests: FriendRequest[] = [];
-
-  friends: Friend[] = [
-    {
-      id: 1,
-      avatar: 'https://scontent.xx.fbcdn.net/v/t1.0-1/c0.14.50.50/p50x50/13895226_1070492593039496_7069195752827529506_n.jpg?oh=f9e858c7dcb1faeebd679bc7541d25d6&oe=5988C374',
-      username: 'pnik',
-      firstName: 'Petr',
-      lastName: 'Navratil',
-      books: 15,
-      shelves: 1,
-      since: moment().format()
-    },
-    {
-      id: 1,
-      avatar: 'https://scontent.xx.fbcdn.net/v/t1.0-1/c0.14.50.50/p50x50/13895226_1070492593039496_7069195752827529506_n.jpg?oh=f9e858c7dcb1faeebd679bc7541d25d6&oe=5988C374',
-      username: 'pnik',
-      firstName: 'Petr',
-      lastName: 'Navratil',
-      books: 15,
-      shelves: 1,
-      since: moment().format()
-    },
-    {
-      id: 1,
-      avatar: 'https://scontent.xx.fbcdn.net/v/t1.0-1/c0.14.50.50/p50x50/13895226_1070492593039496_7069195752827529506_n.jpg?oh=f9e858c7dcb1faeebd679bc7541d25d6&oe=5988C374',
-      username: 'pnik',
-      firstName: 'Petr',
-      lastName: 'Navratil',
-      books: 15,
-      shelves: 1,
-      since: moment().format()
-    },
-  ];
+  searcherLoading = false;
+  people: User[] = [];
+  friends: Friend[] = [];
+  updateFriends = false;
 
   constructor(private store: Store<AppState>, private router: Router) {
+
+    this.store.dispatch({type: friendsActions.API_GET});
 
     this.subscriptions.push(
       this.store.select('users').subscribe(
@@ -74,9 +65,43 @@ export class ProfileComponent implements OnDestroy {
       (data: SquirrelState<FriendRequest>) => {
         if (!data.loading) {
           this.friendRequests = data.data;
+          if(this.updateFriends){
+            this.updateFriends = false;
+            this.store.dispatch({type: requestActions.API_GET});
+          }
         }
       }
     ));
+
+    this.subscriptions.push(this.store.select('friends').subscribe(
+      (data: SquirrelState<Friend>) => {
+        if (!data.loading) {
+          this.friends = data.data;
+        }
+      }
+    ));
+
+    this.subscriptions.push(this.store.select('people').subscribe(
+      (data: SquirrelState<User>) => {
+        if (!data.loading) {
+          this.state = data.data.length ? EXPANDED : COLLAPSED;
+          this.people = data.data;
+          this.searcherLoading = false;
+        }
+      }
+    ));
+
+    this.subscriptions.push(this.userInputChange
+      .debounceTime(500)
+      .distinctUntilChanged()
+      .subscribe(value => {
+        if (value === '') {
+          this.searcherLoading = false;
+        } else {
+          this.store.dispatch({type: peopleActions.API_GET, payload: value});
+        }
+      }));
+
   }
 
   ngOnDestroy() {
@@ -107,6 +132,42 @@ export class ProfileComponent implements OnDestroy {
 
   goToDetail(id: number){
     this.router.navigateByUrl(`platform/friend/${id}`);
+  }
+
+  showDropdown() {
+    if(this.people.length > 0){
+      this.state = EXPANDED;
+    }
+  }
+
+  changed(value: string){
+    this.searcherLoading = true;
+    this.userInputChange.next(value);
+  }
+
+  avatar(url: string):string{
+    return getImageUrl(url);
+  }
+
+  ngAfterViewInit(){
+    document.body.addEventListener('click', (event) => {
+      if (!this.dropdownElement.nativeElement.contains(event.target)) {
+        this.state = COLLAPSED;
+      }
+    });
+  }
+
+  sendRequest(id: number){
+    this.store.dispatch({type: requestActions.API_CREATE, payload: id});
+  }
+
+  declineRequest(id: number){
+    this.store.dispatch({type: requestActions.ADDITIONAL.DECLINE, payload:id});
+  }
+
+  acceptRequest(id: number){
+    this.updateFriends = true;
+    this.store.dispatch({type: requestActions.ADDITIONAL.ACCEPT, payload:id})
   }
 
 

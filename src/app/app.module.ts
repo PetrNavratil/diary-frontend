@@ -38,6 +38,10 @@ import { LatestBooksEffect } from './effects/latestBooks.effect';
 import { ToastModule, ToastOptions } from 'ng2-toastr';
 import { RequestEffect } from './effects/friend-request.effect';
 import { requestReducer } from './reducers/friend-request.reducer';
+import { PeopleEffect } from './effects/people.effect';
+import { peopleReducer } from './reducers/people.reducer';
+import { friendsReducer } from './reducers/friends.reducer';
+import { FriendsEffect } from './effects/friends.effect';
 
 export class CustomOption extends ToastOptions {
   animate = 'flyRight';
@@ -74,7 +78,9 @@ export class CustomOption extends ToastOptions {
       statistics: statisticReducer,
       intervals: intervalsReducer,
       latestBooks: latestBooksReducer,
-      requests: requestReducer
+      requests: requestReducer,
+      people: peopleReducer,
+      friends: friendsReducer
     }),
     EffectsModule.runAfterBootstrap(SearchEffect),
     EffectsModule.runAfterBootstrap(BookDetail),
@@ -90,6 +96,8 @@ export class CustomOption extends ToastOptions {
     EffectsModule.runAfterBootstrap(LatestBooksEffect),
 
     EffectsModule.runAfterBootstrap(RequestEffect),
+    EffectsModule.runAfterBootstrap(PeopleEffect),
+    EffectsModule.runAfterBootstrap(FriendsEffect),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
 
 

@@ -26,6 +26,7 @@ $divider-color: rgba($font-color, .6);
           border: 2px solid $font-color;
           height: $avatar-size;
           width: $avatar-size;
+          font-size: $avatar-size;
         }
       }
       .info{

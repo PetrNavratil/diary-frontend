@@ -53,16 +53,46 @@
 
   <div class="friends-section">
     <app-card class="friend-card">
-      SEARCH FRIENDS
+      <div title>Vyhledávejte přátele</div>
+      <div class="searcher-container" #dropdown>
+        <i class="material-icons search-icon">search</i>
+        <input type="text"
+               class="search-input"
+               placeholder="Hledej podle jména, příjmení, přezdívky či emailu"
+               (focus)="showDropdown()"
+               ngModel
+               (ngModelChange)="changed($event)"
+        >
+        <md-spinner *ngIf="searcherLoading"></md-spinner>
+        <div class="dropdown" [@expandable]="state">
+          <div class="container">
+            <div class="friend" *ngFor="let person of people">
+              <div class="user">
+                <div class="avatar-container">
+                  <img [src]="avatar(person.avatar)" *ngIf="person.avatar.length > 0" class="avatar">
+                  <i class="material-icons avatar" *ngIf="person.avatar.length === 0">person</i>
+                </div>
+                <div class="info">
+                  <div class="item">{{person.userName}}</div>
+                  <div class="item">{{person.firstName}} {{person.lastName}}</div>
+                </div>
+              </div>
+              <div class="buttons">
+                <button md-raised-button color="primary" (click)="sendRequest(person.id)">Poslat žádost</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </app-card>
-    <app-card class="friend-card" noPaddingCard="">
-      <div class="title">
+    <app-card class="friend-card" [padded]="false">
+      <div title>
         Žádosti o přátelství
       </div>
-      <app-friend-request [requests]="friendRequests"></app-friend-request>
+      <app-friend-request (decline)="declineRequest($event)" (accept)="acceptRequest($event)" [requests]="friendRequests"></app-friend-request>
     </app-card>
-    <app-card class="friend-card" noPaddingCard>
-      <div class="title">Vaši přátelé</div>
+    <app-card class="friend-card" [padded]="false">
+      <div title>Vaši přátelé</div>
       <app-friend [friends]="friends" (goToDetail)="goToDetail($event)"></app-friend>
     </app-card>
   </div>

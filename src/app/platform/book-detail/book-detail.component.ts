@@ -155,16 +155,18 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
             console.error(data.error);
           } else {
             if (this.user) {
-              this.comments = data.data;
-              this.userComment = this.comments.find(comment => comment.userId === this.user.id);
+              this.comments = data.data.filter(comment => comment.userId !== this.user.id);
+              this.userComment = data.data.find(comment => comment.userId === this.user.id);
               if (!this.userComment) {
                 this.userComment = {
-                  date: 'date',
                   userName: this.user.userName,
+                  date: '',
                   text: '',
                   userAvatar: this.user.avatar,
                   bookId: this.id,
-                  userId: this.user.id
+                  userId: this.user.id,
+                  lastName: this.user.lastName,
+                  firstName: this.user.firstName
                 };
                 this.newComment = true;
               } else {

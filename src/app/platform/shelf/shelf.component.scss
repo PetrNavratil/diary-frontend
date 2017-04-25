@@ -33,10 +33,10 @@ $padding: 20px;
       background-color: transparent;
       border-radius: 2px;
       &:focus{
-        background-color: lighten($card-background-color, 15%);;
+        background-color: lighten($card-background-color, 15%);
       }
       &:hover{
-        background-color: lighten($card-background-color, 10%);;
+        background-color: lighten($card-background-color, 10%);
       }
     }
     .shelf-count {

@@ -194,7 +194,6 @@
         <app-comment
           [editable]="bookInfo?.inBooks"
           [commentData]="userComment"
-          [newComment]="newComment"
           *ngIf="userComment"
           (addComment)="addComment($event)"
           (deleteComment)="deleteComment($event)"

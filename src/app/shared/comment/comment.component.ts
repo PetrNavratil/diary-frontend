@@ -1,6 +1,6 @@
 import {
-  Component, Input, trigger, state, style, transition, animate, Output, EventEmitter, ViewChild, ElementRef,
-  ChangeDetectionStrategy, OnChanges
+  Component, Input, Output, EventEmitter, ViewChild, ElementRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { DiaryComment } from '../models/comment.model';
 import { getImageUrl } from '../getImageUrl';
@@ -11,71 +11,22 @@ import 'moment/locale/cs';
   selector: 'app-comment',
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss'],
-  animations: [
-    trigger('display', [
-      state('inactive', style({
-        opacity: '0'
-      })),
-      state('active', style({
-        opacity: '1'
-      })),
-      transition('inactive => active', animate('500ms ease-in')),
-      transition('active => inactive', animate('500ms ease-out'))
-    ]),
-    trigger('edit', [
-      state('inactive', style({
-        opacity: '0'
-      })),
-      state('active', style({
-        opacity: '1'
-      })),
-      transition('inactive => active', animate('500ms ease-in')),
-      transition('active => inactive', animate('500ms ease-out'))
-    ])
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CommentComponent implements OnChanges {
+export class CommentComponent{
 
-  @Input() newComment = false;
   @Input() editable = false;
   @Input() commentData: DiaryComment;
   @Output() editComment = new EventEmitter<DiaryComment>();
   @Output() addComment = new EventEmitter<DiaryComment>();
   @Output() deleteComment = new EventEmitter<DiaryComment>();
   @ViewChild('commentEdit') comment: ElementRef;
-  commentPlaceholder = 'Add text by typing here...';
-
-  displayState = 'active';
-  editState = 'inactive';
-  displayed = 'display';
+  @Input() loading = false;
+  commentPlaceholder = 'Přidejte Váš komentář ke knize...';
+  focused = false;
 
   constructor(){
     moment.locale('cs');
-  }
-
-  switchMode() {
-    if (!this.editable) {
-      return;
-    }
-    if (this.displayed === 'display') {
-      this.displayState = this.displayState === 'inactive' ? 'active' : 'inactive';
-    } else {
-      this.editState = this.editState === 'inactive' ? 'active' : 'inactive';
-    }
-  }
-
-  swapState(location: string) {
-    if (!this.editable) {
-      return;
-    }
-    if (location === 'display' && this.displayState === 'inactive' && this.displayed === 'display') {
-      this.displayed = 'edit';
-      this.switchMode();
-    } else if (location === 'edit' && this.editState === 'inactive' && this.displayed === 'edit') {
-      this.displayed = 'display';
-      this.switchMode();
-    }
   }
 
   edit() {
@@ -97,24 +48,16 @@ export class CommentComponent implements OnChanges {
   }
 
   removePlaceholder() {
+    this.focused = true;
     if (this.comment.nativeElement.textContent.trim() === this.commentPlaceholder) {
       this.comment.nativeElement.textContent = '';
     }
-    console.log('focus');
   }
 
   setPlaceholder() {
-    console.log('blur');
+    this.focused = false;
     if (this.comment.nativeElement.textContent.trim().length === 0) {
       this.comment.nativeElement.textContent = this.commentPlaceholder;
-    }
-  }
-
-  ngOnChanges() {
-    if (this.newComment && this.displayed !== 'edit') {
-      this.switchMode();
-    } else if (!this.newComment) {
-      this.switchMode();
     }
   }
 
@@ -123,6 +66,23 @@ export class CommentComponent implements OnChanges {
   }
 
   get time(){
-    return this.commentData.date.length > 0 ? moment(this.commentData.date).format('LLL') : moment().format('LLL');
+    return this.commentData.date.length > 0 ? moment(this.commentData.date).format('LLL') : '';
+  }
+
+  setEditable(){
+    if(this.editable){
+      this.comment.nativeElement.setAttribute("contentEditable", true);
+      this.comment.nativeElement.focus();
+    }
+  }
+
+  /**
+   * Clears pasted values to the editable div to assure div default style setting
+   * @param event
+   */
+  pasteToInput(event: ClipboardEvent): void {
+    const text = event.clipboardData.getData('text/plain').trim();
+    document.execCommand('insertText', false, text);
+    event.preventDefault();
   }
 }

@@ -312,6 +312,7 @@ $arrow-size: 40px;
       margin-right: 20px;
       flex-grow: 1;
       flex-basis: 0;
+      overflow: hidden;
     }
     .other-comments {
       display: flex;
@@ -320,6 +321,7 @@ $arrow-size: 40px;
       flex-basis: 0;
       border-left: 1px solid gray;
       padding-left: 19px;
+      overflow: hidden;
     }
   }
 

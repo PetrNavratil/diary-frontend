@@ -205,9 +205,10 @@
     </div>
 
   </app-card>
-  <app-card *ngIf="bookInfo?.inBooks">
-    <app-dropdown-row>
-      <div class="header" row-header>SHOW EDUCATIONAL</div>
+  <app-card *ngIf="bookInfo?.inBooks" class="educational">
+    <div title> Rozbor díla</div>
+    <app-dropdown-row (status)="changeEducationalVisibility($event)">
+      <div class="header" row-header>Kliknutím {{educationalVisible ? 'skryjete' : 'zobrazíte'}} sekci rozboru díla </div>
       <div class="education-content" dropdown-content>
         <app-education [data]="bookInfo.educational" (dataUpdate)="setEducational($event)"></app-education>
       </div>

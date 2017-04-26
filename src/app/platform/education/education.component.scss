@@ -1,3 +1,4 @@
+@import '../../theme';
 $column-margin: 20px;
 $alert-color: #f44336;
 $border-color: rgba(0, 0, 0, .12);
@@ -17,17 +18,17 @@ $border-color: rgba(0, 0, 0, .12);
     }
     &.right {
       padding-left: $column-margin - 1px;
-      border-left: 1px solid $border-color;
+      border-left: 1px solid $divider-color;
 
       .info {
         width: 100%;
         height: 100%;
-        padding: 10% 40px 10px 40px;
+        padding: 10% 40px 10px 0px;
         opacity: 0;
         transition: opacity .5s;
         box-sizing: border-box;
         font-size: 18px;
-        color: rgba(black, .74);
+        color: $font-color;
         line-height: 20px;
         letter-spacing: 1.2px;
         &.visible {

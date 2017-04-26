@@ -325,20 +325,27 @@ $arrow-size: 40px;
     }
   }
 
-  .education-content {
+  .educational{
+    .header{
+    }
 
+    .education-content {
+      margin-top: 30px;
+    }
   }
 
   .similar-books-container {
     display: flex;
     flex-direction: row;
     overflow: hidden;
+    padding-bottom: 6px;
 
     .book {
       max-height: $book-height;
       min-height: $book-height;
       min-width: $book-width;
       max-width: $book-width;
+      box-shadow: $card-on-card-shadow;
       &:not(:last-child) {
         margin-right: 15px;
       }

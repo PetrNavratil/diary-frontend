@@ -80,6 +80,34 @@ md-spinner {
   }
 }
 
+ .mat-select-trigger, .mat-select-value, .mat-select-arrow{
+   color: white !important;
+ }
+
+ .mat-select-value{
+  font-family: $font-book !important;
+ }
+
+ .mat-option {
+   color: white !important;
+   font-family: $font-book;
+   background-color: $dropdown-color !important;
+   &:hover{
+     background-color: $dropdown-hover-color !important;
+   }
+   &.mat-selected{
+     background-color: $dropdown-selected-color !important;
+   }
+ }
+
+.mat-select-underline{
+  background-color: white !important;
+}
+
+textarea{
+  font-family: $font-book !important;
+}
+
 /* A font by Jos Buivenga (exljbris) -> www.exljbris.com */
 @font-face {
   font-family: Diavlo;

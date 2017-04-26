@@ -53,7 +53,6 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   comments: DiaryComment[] = [];
   userComment: DiaryComment;
   user: User;
-  newComment = false;
   similarBooks: Book[] = [];
   shelves: Shelf[] = [];
   inShelves: number[] = [];
@@ -75,6 +74,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   readingDuration = '';
   // timestamps of start and stop of reading
   readingStartStop = '';
+  educationalVisible = false;
 
   constructor(private store: Store<AppState>,
               private route: ActivatedRoute,
@@ -168,9 +168,6 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
                   lastName: this.user.lastName,
                   firstName: this.user.firstName
                 };
-                this.newComment = true;
-              } else {
-                this.newComment = false;
               }
             }
           }
@@ -439,6 +436,10 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
 
   generatePdf(){
   this.pdf.generateBookDetailPdf(this.id);
+  }
+
+  changeEducationalVisibility(status: string){
+    this.educationalVisible = status === 'expanded';
   }
 
 }

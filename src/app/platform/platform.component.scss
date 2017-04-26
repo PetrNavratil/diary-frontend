@@ -38,6 +38,7 @@ $latest-width: 250px;
       margin-top: 30px;
       opacity: .85;
       transition: opacity .3s;
+      box-shadow: $card-on-card-shadow;
       &:hover{
         opacity: 1;
       }

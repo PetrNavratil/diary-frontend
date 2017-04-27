@@ -20,7 +20,7 @@ export class ToastrService {
 
   showError(content: string, title: string, show?: boolean): void {
     if(localStorage.getItem('id_token') || show){
-      this.toastr.error(content, title, {data: {error: true}})
+      this.toastr.error(content, title, {data: {error: true}, dismiss: 'click'})
     }
   }
 

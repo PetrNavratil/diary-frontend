@@ -21,7 +21,7 @@ const EXPANDED = 'expanded';
   animations: [
     trigger('expandable', [
       state(COLLAPSED, style({'height': '0', 'opacity': '0', 'width': '301px'})),
-      state(EXPANDED, style({'height': '50vh', 'opacity': '1', 'width': '601px'})),
+      state(EXPANDED, style({'height': '50vh', 'opacity': '1', 'width': '401px'})),
       transition('* => *', animate('500ms ease-out'))
     ])
   ],

@@ -50,5 +50,9 @@ export class FriendDetailComponent {
     this.store.dispatch({type: shelvesActions.ADDITIONAL.API_COPY, payload: id});
   }
 
+  goToDetail(id:number){
+    this.router.navigateByUrl(`platform/detail/${id}`);
+  }
+
 
 }

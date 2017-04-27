@@ -1,8 +1,8 @@
 <div class="searcher-container">
   <i class="material-icons search-icon">search</i>
-  <input type="text" class="search-input" title="Search" placeholder="Search books" (blur)="hideDropdown()" (focus)="displayDropdown()" [ngModel]="key"
+  <input type="text" class="search-input" title="Search" placeholder="Vyhledávejte knihy" (blur)="hideDropdown()" (focus)="displayDropdown()" [ngModel]="key"
          (ngModelChange)="changed($event)">
-  <app-loader [ngClass]="{'hidden': !loading}"></app-loader>
+  <md-spinner [ngClass]="{'hidden': !loading}"></md-spinner>
   <div class="dropdown " [@expandable]="state">
     <div class="book" *ngFor="let book of books" (click)="selected(book)">
       <div class="summary">

@@ -18,7 +18,7 @@
       <app-card [padded]="false" >
         <div title>Knihy uživatele</div>
         <div class="books-holder">
-            <div class="book" *ngFor="let book of friend.books">
+            <div class="book" *ngFor="let book of friend.books" (click)="goToDetail(book.id)">
               <app-book-preview  [book]="book"></app-book-preview>
             </div>
         </div>

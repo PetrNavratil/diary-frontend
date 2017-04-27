@@ -31,15 +31,15 @@ export class ToolbarComponent implements OnDestroy {
   friendRequests: FriendRequest[] = [];
   menuItems: any[] = [
     {
-      name: 'Books',
+      name: 'Knihy',
       link: 'books'
     },
     {
-      name: 'Shelves',
+      name: 'Poličky',
       link: 'shelves'
     },
     {
-      name: 'Statistics',
+      name: 'Přehled čtení',
       link: 'statistics'
     }
   ];

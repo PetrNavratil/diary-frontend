@@ -30,6 +30,7 @@ $toolbar-background-color: $card-background-color;
       height: 100%;
       outline: none;
       cursor: pointer;
+      border-right: 1px solid rgba($font-color, .4);
       &.active{
         background-color: rgba(white, .15);
       }

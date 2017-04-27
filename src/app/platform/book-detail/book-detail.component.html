@@ -179,11 +179,19 @@
       </app-card>
     </div>
   </div>
-
   <app-card>
     <div title>Doporučené knihy podle GoodReads</div>
-    <div class="similar-books-container" *ngIf="!bookResLoading; else spinner">
-      <app-book-preview class="book" *ngFor="let simBook of similarBooks" [book]="simBook" (click)="goToBook(simBook)"></app-book-preview>
+    <div *ngIf="bookResLoading; then spinner"></div>
+    <div class="similar-books-container" [ngClass]="{'hidden': bookResLoading}" #bookContainer>
+      <div class="navigate left" (mousedown)="shiftLeft()" (mouseup)="stopShift()" (contextmenu)="$event.preventDefault()">
+        <i class="material-icons arrow">keyboard_arrow_left</i>
+      </div>
+      <div class="navigate right" (mousedown)="shiftRight()" (mouseup)="stopShift()" (contextmenu)="$event.preventDefault()">
+        <i class="material-icons arrow">keyboard_arrow_right</i>
+      </div>
+      <div class="sweeper" #sweeper>
+        <app-book-preview class="book" *ngFor="let simBook of similarBooks" [book]="simBook" (click)="goToBook(simBook)"></app-book-preview>
+      </div>
     </div>
   </app-card>
 

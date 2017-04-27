@@ -1,4 +1,7 @@
-import { Component, AfterViewChecked, OnDestroy, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component, AfterViewChecked, OnDestroy, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild,
+  ElementRef
+} from '@angular/core';
 import { AppState } from '../../shared/models/store-model';
 import { Store } from '@ngrx/store';
 import { GRBook, GRSimilarBook } from '../../shared/models/goodreadsBook.model';
@@ -77,6 +80,9 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   educationalVisible = false;
   commentsLoading = false;
 
+  @ViewChild('bookContainer') bookContainer: ElementRef;
+  @ViewChild('sweeper') sweeper: ElementRef;
+
   constructor(private store: Store<AppState>,
               private route: ActivatedRoute,
               private router: Router,
@@ -127,6 +133,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
             if (data.data.length) {
               this.bookRes = data.data[0];
               this.book = Object.assign({}, data.data[0].goodReadsBook);
+              this.sweeper.nativeElement.style.left = 0;
               if (this.book.similarBooks) {
                 this.similarBooks = this.book.similarBooks.map((book: GRSimilarBook) => ({
                   id: book.id,
@@ -448,6 +455,33 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
 
   changeEducationalVisibility(status: string){
     this.educationalVisible = status === 'expanded';
+  }
+
+  interval: any;
+
+  shiftLeft(){
+    this.interval = setInterval(() => {
+      let left = +this.sweeper.nativeElement.style.left.replace('px', '');
+      let visibleWidth = this.sweeper.nativeElement.offsetWidth + left;
+      if (visibleWidth + 50 < this.bookContainer.nativeElement.offsetWidth){
+        return;
+      } else {
+        this.sweeper.nativeElement.style.left = left - 20 + 'px';
+      }
+    }, 80);
+  }
+
+  shiftRight(){
+    this.interval = setInterval(() => {
+      let left = +this.sweeper.nativeElement.style.left.replace('px', '');
+      if(left != 0){
+        this.sweeper.nativeElement.style.left = left + 20 + 'px';
+      }
+    }, 80);
+  }
+
+  stopShift(){
+    clearInterval(this.interval);
   }
 
 }

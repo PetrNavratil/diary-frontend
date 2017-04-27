@@ -13,7 +13,8 @@ export class AuthService {
     domain: 'petrn.eu.auth0.com',
     clientID: 'IEIH7LLFi8KDXMNQAGvTY0lbE0tGjJI3',
     // specify your desired callback URL
-    redirectUri: 'http://localhost:4200',
+    redirectUri: 'http://www.stud.fit.vutbr.cz/~xnavra53/diary/',
+    // redirectUri: 'http://localhost:4200',
     responseType: 'token id_token'
   });
 

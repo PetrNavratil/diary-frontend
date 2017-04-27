@@ -19,7 +19,6 @@ export class EducationComponent implements OnChanges {
   druhs = [
     'Lyrika',
     'Epika',
-    'Lyrikoepika',
     'Drama'
   ];
   zanrs = {
@@ -37,11 +36,6 @@ export class EducationComponent implements OnChanges {
       'Epos',
       'Román'
     ],
-    Lyrikoepika: [
-      'Balada',
-      'Romance',
-      'Básnická povídka'
-    ],
     Lyrika: [
       'Píseň',
       'Elegie',
@@ -49,14 +43,16 @@ export class EducationComponent implements OnChanges {
       'Óda',
       'Žalmy',
       'Epigram',
-      'Pásmo'
+      'Pásmo',
+      'Balada',
+      'Romance',
+      'Básnická povídka'
     ],
     Drama: [
       'Tragédie',
       'Komedie',
       'Činohra',
       'Veselohra',
-      'Melodram',
       'Tragikomedie',
       'Absurdní drama',
       'Aktovka',

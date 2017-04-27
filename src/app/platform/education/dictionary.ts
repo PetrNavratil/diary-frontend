@@ -13,11 +13,7 @@ export const Dictionary = {
   'základem je vypravování děje, v němž se odrážejí osudy, chování, prožitky a vztahy lidí v určitém přírodním a společenském prostředí\n' +
   'epické útvary veršované nebo prozaické s monologickou formou výpovědi\n' +
   'žánry epiky: velké (epos, román), střední (pohádka, pověst, novela, povídky, legenda, bajka), malé (anekdota), lyrickoepické (balada, romance)',
-  Lyrikoepika: 'no idea',
-  Drama: 'divadelní hra (jednoaktové, dvouaktové, víceaktové)\n' +
-  'třetí základní druh literatury\n' +
-  'osudy, chování osob a prožitky se projevují v jednání a přímé řeči postav přímo na jevišti, kde se vytváří děj hry' +
-  'základními formami – tragédie, komedie, činohra',
+  Drama: 'příběh je vyprávěn pomocí dialogů a monologů, obvyklé je jeho předvedení v divadle/filmu, rozhlase atd. Základní formy jsou tragédie a komedie.',
   Anekdota: 'stručné vyprávění humorné příhody (většinou o lidech), které je zakončeno překvapivou pointou (žánr malé epiky)',
   Historka: 'jednoduché vyprávění zakončené anekdotickou nebo poučnou pointou\n' +
   'může být součástí i většího díla, (žánr malé epiky)',
@@ -25,18 +21,13 @@ export const Dictionary = {
   'připisuje zvířatům lidské vlastnosti, vyslovuje mravní ponaučení, vtipnou nebo satirickou formou ukazuje, co je dobro a zlo (žánr malé epiky)',
   Bájemýty: 'veršované, prozaické vyprávění smyšleného příběhu o nadpřirozených bytostech, které si dávný člověk vytvářel ve své obrazotvornosti a jejichž pomocí se snažil vysvětlit nepochopitelné přírodní jevy\n' +
   'vypravování o vzniku světa, životě bohů, stvoření lidí a zvířat, působení přírodních sil (žánr střední epiky)',
-  Legenda: 'veršovaný nebo prozaický žánr převážně středověké náboženské epiky vyprávějící o životě, skutcích, zázracích a mučednictví světců, který se četl v kostelích\n' +
+  Legenda: 'veršovaný nebo prozaický žánr převážně středověké náboženské epiky vyprávějící o životě, skutcích, zázracích a mučednictví světců\n' +
   'útvar z části založený na pravdě a z části na smyšlenkách (žánr střední epiky)',
-  Pověst: 'útvar lidové slovesnosti, prozaický žánr sdružující jak fantastické, tak reálné události spojené s určitým místem, osobou\n' +
-  'druhy: \n' +
-  '\tmístní\n' +
-  '\theraldické (rodové)\n' +
-  '\thistorické (národní)\n' +
-  '\tdémonické (o vlkodlacích, bezhlavých rytířích...)\n' +
-  '\tbohatýrské; (žánr střední epiky)',
+  Pověst: 'útvar lidové slovesnosti, prozaický žánr sdružující jak fantastické, tak reálné události spojené s určitým místem, osobou',
   Pohádka: 'prozaický žánr lidové slovesnosti\n' +
   'podává nadpřirozené jevy jako realitu s naivní samozřejmostí, jako by bylo vše skutečné, netýká se konkrétní události, místa, postav\n' +
   'fantastický děj ve smyšleném světě, do jehož chodu zasahují nadpřirozené bytosti, kouzla, oživlé předměty\n' +
+  'často se vyskytuje číslo tři a sedm, typicky je uvozena frází "Bylo, nebylo...\n' +
   'střet dobra + zla = dobro vítězí\n' +
   'druhy:\n' +
   '\tkouzelné (fantastické)\n' +
@@ -49,12 +40,13 @@ export const Dictionary = {
   'druhy:\n' +
   '\thumoresky\n' +
   '\tromaneta\n' +
-  '\t arabesky\n' +
+  '\tarabesky\n' +
   '\tčrty\n' +
-  '\t skici',
+  '\tskici',
   Novela: 'epický prozaický žánr středního rozsahu (delší než povídka) s poutavým příběhem a výrazným zakončením, děj je soustředěn na jednu událost ze života hlavní postavy (ta vyvíjí), je jednoduchý, má rychlý spád a překvapující obrat v závěru (pointu)',
-  Romaneto: 'prozaický žánr specifický pro českou literaturu\n' +
-  'základem je důmyslný až fantastický příběh, kde jedna epizoda příběhu je odhalována druhou až k závěrečné pointě',
+  Romaneto: 'prozaický žánr specifický pro českou literaturu, jehož zakladatelem je Jakub Arbes a autorem názvu je Jan Neruda\n' +
+  'Základem je důmyslný až fantastický příběh, kde jedna epizoda příběhu je odhalována druhou až k závěrečné pointě.' +
+  'Hlavní myšlenka bývá rozpor mezi tajemnými jevy a jejich vědeckým vysvětlením. Jde v podstatě o novelu, která se vyznačuje napínavým dějem s fantaskními či detektivními prvky. Součástí příběhu je zdánlivě nepochopitelná záhada, která je v závěru racionálně vysvětlena.',
   Epos: 'rozsáhlá veršovaná epická skladba s pomalým tokem děje, vypráví se o významné události, vztahující k jednomu místu nebo postavě, zobrazuje ideály rytířského života, oslavně a výpravně, často bez pochopení historických souvislostí nebo odlišnosti historických epoch \n' +
   'druhy:\n' +
   '\tnárodní epos, epos hrdinský, bohatýrský, rytířský, duchovní, idylický\n' +
@@ -88,24 +80,23 @@ export const Dictionary = {
   Elegie: 'báseň složená s elegickým distichonem (charakteristická forma pro dvojverší používané v antické elegii a epigramu), smuteční ladění, nejčastěji motiv žalu nad ztrátou blízkého, bolest ze zklamané lásky, stesk nad uprchlým mládím',
   Hymnus: 'chvalozpěv, báseň menšího rozsahu, která oslavuje boha, hrdinu, morální vlastnosti, národ, vlast; laděná vznešeně až pateticky',
   Óda: 'báseň většího rozsahu, která oslavuje boha, hrdinu, morální vlastnosti',
-  Žalmy: 'TODO TODO TOD',
+  Žalmy: 'literární útvar známý z Bible (Starý zákon). Jde o modlitbu psanou poetickou formou. Může jít o modlitbu soukromou i veřejnou.',
   Epigram: 'krátká satirická báseň vyjadřující úsečnou formou výraznou a adresnou myšlenku o nějaké události (situaci) nebo o osobě\n' +
   'obvykle má dvě části\n' +
   '\tv první se naznačí situace (expozice)\n' +
   '\tv druhé části se situace vtipně rozřeší, tzv. vyhrocenou pointou (překvapivým závěrem)',
   Pásmo: 'polytematická báseň, delší rozsah, volně řazená témata, která spolu bezprostředně nesouvisí (volný tok básnických představ)',
-  Tragédie: 'truchlohra, jednotlivec vede nerovný boj proti nepřátelským silám, které mají podobu osudu, zákonů a zvyků společnosti, ve které hrdina žije, ale v tomto boji hrdina podléhá a hyne',
-  Komedie: 'původně píseň zpívaná ve veselém průvodu na počest Dionýsa (boha vína ), dnes druh dramatu, s humorem a nadsázkou zobrazuje zápas prostých lidí s nedostatky, které jsou vcelku málo významné a nakonec jsou překonány',
+  Tragédie: 'forma dramatu s vážným obsahem, v něž se hrdina dostane do neřešitelného konfliktu s vlastním osudem, v marném boji následně podléhá.',
+  Komedie: 'forma dramatu se šťastným koncem, je opakem tragédie. Vyskytuje se zde humorný nadhled nad lidskými slabostmi a lidskou nedostatečností. Základem je humor a komika. Na konci jsou hrdinovy problémy vyřešeny a všechno skončí dobře.',
   Činohra: 'námětem často vážný problém ze současného života bez tragického rozuzlení – ne mimořádný společenský problém (tím liší od tragédie) – zdůrazňující psychologickou stránku jednání osob\n' +
   'popisuje běžný život a mívá i prvky komiky',
   Veselohra: 'české označení pro novodobou komedii',
-  Melodram: 'koncertní m.), dramatická báseň, v níž je recitované nebo mluvené slovo doprovázeno hudbou nebo hereckou akcí na jevišti (scénický m.)',
-  Tragikomedie: 'TODO TODO TODO',
+  Tragikomedie: 'drama vážné tematiky s veselými prvky, závažný příběh má šťastný konec',
   Absurdnídrama: 'nesmyslný nebo protismyslný, dílo postavené na výpovědi o pocitech osamělého jedince, který ztrácí schopnost dorozumět se s ostatními',
   Aktovka: 'divadelní žánr v rozsahu jednoho dějství (aktu)',
   Monodrama: 'divadlo jednoho herce',
   Antika: 'řecký a římský starověk, období řecké a římské kultury',
-  Středověk: 'TODO TODO TODO',
+  Středověk: 'od 5. do 15. století, dobové myšlení i pohled na svět tehdy velmi ovlivňovala církev (křesťanství), později oddanost panstvu a vrchnosti. Jedinými vzdělanci byli tehdy duchovní a někteří příslušníci šlechty. Literatura byla anonymní a převládala náboženská tematika. Převažovala hrdinská epika a dvorská lyrika.',
   Humanismusarenesance: 'humanismus\n' +
   '\tfilozoficko-etické stanovisko soustřeďující se na člověka, jeho potřeby a schopnosti, směr ve společnosti od 14. – 16.století\n' +
   'renesance\n' +
@@ -117,7 +108,7 @@ export const Dictionary = {
   '\thnutí 18.století projevující se racionalismem – názorem o poznatelnosti světa (pravda) a neomezených schopnostech lidského rozumu (svoboda myšlení)',
   Preromantismus: 'soubor různých uměleckých projevů a tendencí, rozvíjel se koncem 18.stol., představitelé nabádali k obnovení blízkého vztahu mezi člověkem a přírodou, důraz na rozum, cit člověka, inspirací byla lidová slovesnost',
   Romantismus: 'směr počátku 19.stol. odmítající staré formy a tradice, opovrhuje konvencemi, ideálem je svoboda, láska, cit, prožitek fantazie',
-  Biedermeir: 'TODO TODO TODO',
+  Biedermeir: 'umělecký směr a životní styl první poloviny 19. století, typický pro měšťanskou kulturu hlavně v německy mluvících zemích. Zdůrazňuje klid, umírněnost, měšťanské ctnosti a drobnou práci. Důležitý je rodinný život.',
   Realismus: 'směr usilující o vytvoření pravdivého obrazu skutečnosti v díle',
   Naturalismus: 'směr 2.pol.19.st.\n' +
   'snaží se o co nejvěrnější vystižení skutečnosti (ba i společensky patologických jevů), v literatuře – postavy psychicky nevyrovnané, bouřlivé, rozpolcené',
@@ -129,17 +120,17 @@ export const Dictionary = {
   AvantgardaSurrealismus: 'umělecký směr zrozený ve Francii 20.let 20. stol.; přehlížení běžné logiky a naopak hledání zdroje v niterných duševních pochodech a fantazii',
   AvantgardaDadaismus: 'literární a výtvarné hnutí založené během 1.sv.v. vyznačující se popřením obsahu a formy díla, práce s náhodnými a nesmyslnými spojeními, vyjadřuje odpor k válce, pocit nesmyslnosti života',
   AvantgardaPoetismus: 'avantgardní směr dvacátých let 20.stol. v českém umění, důraz na hravost, fantazii, citové prožívání, dělník uprostřed zábavy, poznat krásu světa',
-  Existencionalismus: 'TODO TODO TODO',
+  Existencionalismus: 'od první světové války až po druhou (do 50. – 60. let. 20. století). Východiskem tohoto proudu je jedinec izolovaný od společnosti a dějinného vývoje, soustředěný na svoje ego, plný pocitu úzkosti, nesmyslnosti existence a vědomí nevyhnutelnosti smrti. Pokouší se překonat své zoufalství, sebepoznání.',
   Socialistickýrealismus: 'tvůrčí princip usilující o zobrazení skutečnosti ve společném vývoji, ovlivněný levicovými a sociálními myšlenkami',
-  Magickýrealismus: 'TODO TODO TODO',
+  Magickýrealismus: 'rozšířený zejména v literatuře Latinské Ameriky v druhé polovině 20. století. (García Marquéze: Sto roků samoty). Je typický prolínáním reality s iluzí (sny, halucinace, mýty), obsahuje magické prvky – důležité je, že takové prvky působí přirozeně. Zakřivuje plynutí času, je obrácena příčina a následek, minulost a přítomnost se zrcadlí.',
   Postmoderna: 'zaměření proti dosavadnímu tzv. modernímu umění, odmítá avantgardní tendence, využívá různorodost poetik, často využívá citací, připomínají starší díla',
-  forma: 'FORMA TOOLTIP INFO',
-  jazyk: 'JAZYK TOOLTIP INFO',
-  postavy: 'POSTAVY TOOLTIP INFO',
-  obsah: 'OBSAH TOOLTIP INFO',
-  tema: 'TEMA TOOLTIP INFO',
-  hodnoceni: 'HODNOCENI TOOLTIP INFO',
-  smer: 'SMER TOOLTIP INFO',
-  druh: 'DRUH TOOLTIP INFO',
-  zanr: 'ZANR TOOLTIP INFO'
+  forma: 'Jak je dílo strukturováno? Jedná se např. o deník nebo román v dopisech? Př. Tento román má dvě části, první je vyprávěním před událostí, druhá se odehrává po. Každá část je dělena do kapitol, které jsou prostě číslovány.',
+  jazyk: 'Jakým jazykem je dílo napsáno? Je použitý striktně spisovný jazyk, nebo hovorový? Je zde z hlediska jazyka něco neobvyklého?',
+  postavy: 'Jaké hlavní a vedlejší postavy jsou v díle?',
+  obsah: 'O čem dílo je?',
+  tema: 'Jaké je hlavní téma díla? ',
+  hodnoceni: 'Jaký máte názor na dílo a jak byste jej ohodnotili? ',
+  smer: 'Více informací o jednotlivých směrech se zobrazí po najetí myší na příslušný směr.',
+  druh: 'Více informací o jednotlivých druzích se zobrazí po najetí myší na příslušný druh.',
+  zanr: 'Více informací o jednotlivých žánrech se zobrazí po najetí myší na příslušný žánr.'
 };

@@ -70,8 +70,8 @@
         <div title>Informace o knize</div>
         <div class="info-obal" *ngIf="bookRes && !bookResLoading; else spinner">
           <div class="info-container" *ngIf="selectedTab === tabs[0]">
-            <div class="cover">
-              <img src="{{bookRes.goodReadsBook.imageUrl}}">
+            <div >
+              <img class="cover" src="{{bookRes.goodReadsBook.imageUrl}}">
             </div>
             <div class="details">
               <div class="label">název</div>
@@ -88,8 +88,8 @@
             </div>
           </div>
           <div class="info-container" *ngIf="selectedTab === tabs[1]">
-            <div class="cover">
-              <img src="{{bookRes.googleBook.imageUrl}}">
+            <div >
+              <img class="cover" src="{{bookRes.googleBook.imageUrl}}">
             </div>
             <div class="details">
               <div class="label">název</div>

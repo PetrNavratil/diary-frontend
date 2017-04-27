@@ -8,6 +8,7 @@ $tracker-font: $font-book;
   height: $height;
   font-size: 15px;
   font-family: $tracker-font;
+  cursor: pointer;
   .info {
     display: flex;
     flex-direction: column;

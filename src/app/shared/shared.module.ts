@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SearcherComponent } from './searcher/searcher.component';
-import { LoaderComponent } from './loader/loader.component';
 import { CardComponent } from './card/card.component';
 import { NoPaddingCard } from './card/no-padding-card.directive';
 import { MaterialModule } from '@angular/material';
@@ -40,7 +39,6 @@ import { FriendComponent } from './friend/friend.component';
   declarations: [
     ToolbarComponent,
     SearcherComponent,
-    LoaderComponent,
     CardComponent,
     NoPaddingCard,
     EqualValidator,
@@ -66,7 +64,6 @@ import { FriendComponent } from './friend/friend.component';
 
     ToolbarComponent,
     SearcherComponent,
-    LoaderComponent,
     CardComponent,
     NoPaddingCard,
     EqualValidator,

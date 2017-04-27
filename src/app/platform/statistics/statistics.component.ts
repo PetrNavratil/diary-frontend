@@ -35,6 +35,8 @@ export class StatisticsComponent implements OnDestroy {
   readingsLoading = false;
   statistic: Statistic;
   subscriptions: Subscription[] = [];
+  yearTimelineExpanded = false;
+  monthTimelineExpanded = false;
   @ViewChild('yearTimeline') yearTimelineElement: ElementRef;
   @ViewChild('monthTimeline') monthTimelineElement: ElementRef;
 
@@ -192,6 +194,14 @@ export class StatisticsComponent implements OnDestroy {
       opts['start'] = moment(this.selectedMonth.id +1, 'M');
     }
     return opts;
+  }
+
+  monthExpanded(state: boolean){
+    this.monthTimelineExpanded = state;
+  }
+
+  yearExpanded(state: boolean){
+    this.yearTimelineExpanded = state;
   }
 
 }

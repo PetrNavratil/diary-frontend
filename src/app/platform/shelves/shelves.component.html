@@ -4,14 +4,19 @@
     <md-input-container class="input">
       <input mdInput placeholder="Název nové poličky" type="text" [(ngModel)]="shelfName">
     </md-input-container>
-    <button md-raised-button color="primary" [disabled]="unique" (click)="addShelf()">Přidat poličku</button>
+    <app-loading-button [loading]="loading"  [color]="'primary'" [disabled]="unique" (click)="addShelf()" [title]="'Přidat poličku'"></app-loading-button>
   </div>
 </app-card>
 
 <app-card *ngFor="let shelf of shelves" [padded]="false">
   <app-shelf [shelf]="shelf"
+             [loading]="loading"
              [shelfNames]="shelfNames"
              (removeShelf)="deleteShelf($event)"
              (goToDetail)="goToDetail($event)"
-             (updateShelf)="editShelf($event)" ></app-shelf>
+             (updateShelf)="editShelf($event)"></app-shelf>
+</app-card>
+
+<app-card *ngIf="shelves.length === 0">
+<app-nothing>Zatím nemáte žádné poličky</app-nothing>
 </app-card>

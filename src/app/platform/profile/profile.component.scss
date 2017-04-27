@@ -3,14 +3,14 @@
 $photo-size: 70px;
 $photo-margin: 20px;
 $margin-icon: 5px;
-$divider-color: rgba($font-color, .6);
 $avatar-size: 40px;
 $input-margin: 10px;
 
 .profile-container {
   display: flex;
   .user-info-card {
-    flex-grow: 1;
+    max-width: 600px;
+    width: 600px;
     .user-info {
       display: flex;
       flex-direction: column;
@@ -44,7 +44,18 @@ $input-margin: 10px;
         }
       }
     }
+    .change-password{
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid $divider-color;
+      display: flex;
+      flex-direction: column;
 
+      button{
+        align-self: flex-end;
+      }
+
+    }
   }
   .friends-section {
     flex-grow: 3;
@@ -99,7 +110,14 @@ $input-margin: 10px;
           top: 0;
           left: 0;
           background-color: lighten(brown, 6%);
+          border-radius: 2px;
           .container {
+            .nothing{
+              color: $font-color;
+              /deep/ .nothing-container{
+                font-size: 16px !important;
+              }
+            }
             .friend {
               display: flex;
               padding: 5px 10px;

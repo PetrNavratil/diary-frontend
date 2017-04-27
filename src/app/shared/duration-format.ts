@@ -2,6 +2,9 @@ import * as moment from 'moment';
 
 export function getDurationFormat(time: moment.Duration): string {
   let formatted: string = '';
+  if(!time.milliseconds()){
+    return '-';
+  }
   if (time.years()) {
     switch (time.years()) {
       case 1:

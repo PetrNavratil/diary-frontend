@@ -7,20 +7,20 @@
   </app-card>
   <div class="books-shelves">
     <div class="column">
-      <app-card [padded]="false">
-       <div title>Poličky uživatele</div>
-        <app-shelf [editable]="false" *ngFor="let shelf of friend.shelves" [shelf]="shelf" class="shelf"></app-shelf>
+      <app-card>
+        <div>Poličky uživatele</div>
+      </app-card>
+      <app-card [padded]="false" *ngFor="let shelf of friend.shelves">
+        <app-shelf [editable]="false"  [shelf]="shelf" (copyShelf)="copyShelf($event)" ></app-shelf>
       </app-card>
     </div>
     <div class="column">
-      <app-card [padded]="false">
+      <app-card [padded]="false" >
         <div title>Knihy uživatele</div>
         <div class="books-holder">
-          <app-card [padded]="false" *ngFor="let book of friend.books">
-            <div class="book">
+            <div class="book" *ngFor="let book of friend.books">
               <app-book-preview  [book]="book"></app-book-preview>
             </div>
-          </app-card>
         </div>
       </app-card>
     </div>

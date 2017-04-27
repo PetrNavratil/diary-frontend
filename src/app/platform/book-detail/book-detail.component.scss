@@ -38,6 +38,9 @@ $arrow-size: 40px;
         flex-direction: column;
         background-color: $dropdown-color !important;
         align-items: flex-end;
+        &:hover{
+          background-color: $dropdown-color !important;
+        }
         .button {
           font-size: 14px;
           i {
@@ -53,7 +56,7 @@ $arrow-size: 40px;
       }
       &:hover {
         cursor: pointer;
-        background-color: $dropdown-hover-color;
+        background-color: $dropdown-hover-color !important;
         color: white;
       }
     }

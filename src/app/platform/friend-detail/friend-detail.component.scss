@@ -20,6 +20,7 @@ $divider-color: rgba($font-color, .6);
         .book{
           height: $book-height;
           width: $book-width;
+          box-shadow: $card-on-card-shadow;
         }
       }
     }

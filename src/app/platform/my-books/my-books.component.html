@@ -27,6 +27,11 @@
       </div>
   </div>
 </app-card>
+<app-card *ngIf="!selectedBooks.length" class="nothing">
+  <app-nothing >
+    Zatím nemáte přidané žádné knihy
+  </app-nothing>
+</app-card>
 
 <div class="books-container">
   <app-card [padded]="false" *ngFor="let book of selectedBooks" (click)="goToDetail(book.id)">
@@ -34,7 +39,4 @@
       <app-book-preview [book]="book"></app-book-preview>
     </div>
   </app-card>
-  <app-nothing *ngIf="!selectedBooks.length" class="nothing">
-    sorry fella no books!
-  </app-nothing>
 </div>

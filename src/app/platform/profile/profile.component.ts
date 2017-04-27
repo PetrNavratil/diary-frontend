@@ -15,6 +15,7 @@ import { animate, style, state, trigger, transition } from '@angular/animations'
 import { peopleActions } from '../../reducers/people.reducer';
 import { requestActions } from '../../reducers/friend-request.reducer';
 import { friendsReducer, friendsActions } from '../../reducers/friends.reducer';
+import { AuthService } from '../../shared/auth.service';
 
 const COLLAPSED = 'collapsed';
 const EXPANDED = 'expanded';
@@ -44,8 +45,9 @@ export class ProfileComponent implements OnDestroy, AfterViewInit {
   searcherLoading = false;
   people: User[] = [];
   friends: Friend[] = [];
+  showNothing = false;
 
-  constructor(private store: Store<AppState>, private router: Router) {
+  constructor(private store: Store<AppState>, private router: Router, private auth: AuthService) {
 
     this.store.dispatch({type: friendsActions.API_GET});
 
@@ -80,8 +82,9 @@ export class ProfileComponent implements OnDestroy, AfterViewInit {
     this.subscriptions.push(this.store.select('people').subscribe(
       (data: SquirrelState<User>) => {
         if (!data.loading) {
-          this.state = data.data.length ? EXPANDED : COLLAPSED;
+          // this.state = data.data.length ? EXPANDED : COLLAPSED;
           this.people = data.data;
+          console.log('people', this.people);
           this.searcherLoading = false;
         }
       }
@@ -94,6 +97,7 @@ export class ProfileComponent implements OnDestroy, AfterViewInit {
         if (value === '') {
           this.searcherLoading = false;
         } else {
+          this.showNothing = true;
           this.store.dispatch({type: peopleActions.API_GET, payload: value});
         }
       }));
@@ -131,9 +135,7 @@ export class ProfileComponent implements OnDestroy, AfterViewInit {
   }
 
   showDropdown() {
-    if(this.people.length > 0){
-      this.state = EXPANDED;
-    }
+    this.state = EXPANDED;
   }
 
   changed(value: string){
@@ -201,6 +203,10 @@ export class ProfileComponent implements OnDestroy, AfterViewInit {
 
   shouldAddRequest(userId: number){
     return !this.shouldRemoveRequest(userId) && !this.shouldDeclineOrAccept(userId) && !this.shouldRemoveFromFriends(userId);
+  }
+
+  changePassword(){
+    this.auth.changePassword(this.user.email);
   }
 
 }

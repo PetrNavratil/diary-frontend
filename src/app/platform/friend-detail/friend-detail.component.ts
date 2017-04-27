@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { Friend } from '../../shared/models/friend.model';
-import * as moment from 'moment';
 import { AppState } from '../../shared/models/store-model';
 import { Store } from '@ngrx/store';
 import { SquirrelState } from '@flowup/squirrel';
-import { Shelf } from '../../shared/models/shelf.model';
 import { shelvesActions } from '../../reducers/shelves.reducer';
-import { Book } from '../../shared/models/book.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { friendsActions } from '../../reducers/friends.reducer';
 import { Subscription } from 'rxjs';
@@ -46,6 +43,11 @@ export class FriendDetailComponent {
   removeFriend(id: number){
     this.store.dispatch({type: friendsActions.API_DELETE, payload: id});
     this.router.navigateByUrl('platform/profile');
+  }
+
+  copyShelf(id: number){
+    console.log('id', id);
+    this.store.dispatch({type: shelvesActions.ADDITIONAL.API_COPY, payload: id});
   }
 
 

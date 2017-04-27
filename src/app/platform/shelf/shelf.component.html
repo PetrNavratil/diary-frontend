@@ -1,5 +1,5 @@
-<app-dropdown-row (status)="setStatus($event)" *ngIf="shelf">
-    <div class="header" row-header [ngClass]="{'expanded': status !== 'collapsed'}">
+<app-dropdown-row (isExpanded)="setStatus($event)" *ngIf="shelf">
+    <div class="header" row-header [ngClass]="{'expanded': status}">
       <div class="name-container">
         <div #shelfName class="name" *ngIf="editable" contenteditable="true" (click)="$event.stopPropagation()" (input)="getName()">
           {{shelf.name}}
@@ -12,10 +12,10 @@
         </div>
       </div>
       <div class="actions">
-        <button class="button" md-raised-button color="primary" *ngIf="editable" [disabled]="unique" (click)="editShelf($event)">Edit</button>
-        <button class="button" md-raised-button color="warn" *ngIf="editable" (click)="deleteShelf(shelf.id, $event)">Delete</button>
-        <button class="button" md-raised-button color="primary" *ngIf="!editable" (click)="copyShelf(shelf.id, $event)">Zkopírovat poličku</button>
-        <i class="material-icons dropdown-icon" [ngClass]="{'expanded': status !== 'collapsed'}">arrow_drop_down_circle</i>
+        <app-loading-button class="button" [loading]="loading" [color]="'primary'" *ngIf="editable" [disabled]="unique" (click)="editShelf($event)" [title]="'Přejmenovat poličku'"></app-loading-button>
+        <app-loading-button class="button" [loading]="loading" [color]="'warn'" *ngIf="editable" (click)="deleteShelf(shelf.id, $event)" [title]="'Smazat poličku'"></app-loading-button>
+        <app-loading-button class="button" [loading]="loading" [color]="'primary'" *ngIf="!editable" (click)="copyShelfF(shelf.id, $event)" [title]="'Zkopírovat poličku'"></app-loading-button>
+        <i class="material-icons dropdown-icon" [ngClass]="{'expanded': status}">arrow_drop_down_circle</i>
       </div>
     </div>
     <div class="content" dropdown-content>

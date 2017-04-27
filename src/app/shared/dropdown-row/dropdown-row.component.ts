@@ -20,10 +20,10 @@ const EXPANDED = 'expanded';
 export class DropdownRowComponent {
 
   state: string = COLLAPSED;
-  @Output() status: EventEmitter<string> = new EventEmitter<string>();
+  @Output() isExpanded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   toggle() {
     this.state = this.state === COLLAPSED ? EXPANDED : COLLAPSED;
-    this.status.emit(this.state);
+    this.isExpanded.emit(this.state === EXPANDED);
   }
 }

@@ -35,10 +35,14 @@
             class="button"
             [color]="'primary'"
             [loading]="loading"
-            [title]="'Submit changes'"
+            [title]="'Potvrdit změnu'"
             (click)="editUser($event)">
           </app-loading-button>
         </div>
+      </div>
+      <div class="change-password" *ngIf="user.email.length > 0">
+        <div>Po kliknutí na následující tlačítko Vám bude na vaši emailovou adresu odeslán odkaz, kde je možné provést změni hesla.</div>
+        <button md-raised-button color="primary" (click)="changePassword()">Změnit heslo</button>
       </div>
     </app-card>
 
@@ -54,9 +58,10 @@
                ngModel
                (ngModelChange)="changed($event)"
         >
-        <md-spinner *ngIf="searcherLoading"></md-spinner>
+        <md-spinner *ngIf="searcherLoading "></md-spinner>
         <div class="dropdown" [@expandable]="state">
           <div class="container">
+            <app-nothing *ngIf="people.length === 0 && showNothing" class="nothing"> Žádní uživatelé nebyli nalezeni</app-nothing>
             <div class="friend" *ngFor="let person of people">
               <div class="user">
                 <div class="avatar-container">

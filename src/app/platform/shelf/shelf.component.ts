@@ -11,11 +11,12 @@ export class ShelfComponent {
   @Input() shelf: Shelf;
   @Input() editable = true;
   @Input() shelfNames: string[] = [];
+  @Input() loading = false;
   @Output() removeShelf: EventEmitter<number> = new EventEmitter<number>();
   @Output() updateShelf: EventEmitter<Shelf> = new EventEmitter<Shelf>();
   @Output() goToDetail: EventEmitter<number> = new EventEmitter<number>();
-  @Output() copy: EventEmitter<number> = new EventEmitter<number>();
-  status: string = 'collapsed';
+  @Output() copyShelf: EventEmitter<number> = new EventEmitter<number>();
+  status = false;
   @ViewChild('shelfName') shelfElement: ElementRef;
 
   constructor(private cd: ChangeDetectorRef){
@@ -33,7 +34,7 @@ export class ShelfComponent {
     this.updateShelf.emit(this.shelf);
   }
 
-  setStatus(status: string) {
+  setStatus(status: boolean) {
     this.status = status;
   }
 
@@ -53,9 +54,9 @@ export class ShelfComponent {
     this.cd.markForCheck();
   }
 
-  copyShelf(id: number, event){
+  copyShelfF(id: number, event){
     event.stopPropagation();
-    this.copy.emit(id);
+    this.copyShelf.emit(id);
   }
 
 }

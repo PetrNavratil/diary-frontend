@@ -85,4 +85,16 @@ export class ShelvesEffect {
         this.toastr.showError('Nepodařilo se editovat. Kliknutím aktualizujete stránku.', SHELVES);
         return Observable.of({type: shelvesActions.API_UPDATE_FAIL, payload: body.json()})
       }));
+
+  @Effect() copyShelf: Observable<Action> = this.actions
+    .ofType(shelvesActions.ADDITIONAL.API_COPY)
+    .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}/copy`, {}, createOptions())
+      .map(body => {
+        this.toastr.showSuccess('Polička byla úspěšně zkopírována mezi vaše poličky.', SHELVES);
+        return {type: shelvesActions.ADDITIONAL.COPY}
+      })
+      .catch(body => {
+        this.toastr.showError('Poličku se nepodařilo zkopírovat. Kliknutím aktualizujete stránku.', SHELVES);
+        return Observable.of({type: shelvesActions.ADDITIONAL.COPY})
+      }));
 }

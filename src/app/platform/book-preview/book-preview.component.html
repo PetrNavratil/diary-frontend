@@ -6,15 +6,15 @@
   </div>
   <div class="book-info">
     <div class="item">
-      <div class="label">Title</div>
+      <div class="label">Název</div>
       <div class="value">{{book.title | truncate:40}}</div>
     </div>
     <div class="item">
-      <div class="label">Author</div>
+      <div class="label">Autor</div>
       <div class="value">{{book.author}}</div>
     </div>
     <div class="item" *ngIf="book?.status >= 0">
-      <div class="label">Status</div>
+      <div class="label">Stav</div>
       <div class="value">{{book.status | bookStatus}}</div>
     </div>
   </div>

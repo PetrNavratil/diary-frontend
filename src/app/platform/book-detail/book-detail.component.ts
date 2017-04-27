@@ -75,6 +75,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   // timestamps of start and stop of reading
   readingStartStop = '';
   educationalVisible = false;
+  commentsLoading = false;
 
   constructor(private store: Store<AppState>,
               private route: ActivatedRoute,
@@ -91,6 +92,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.store.dispatch({type: booksActions.ADDITIONAL.GET_SINGLE, payload: this.id});
         this.store.dispatch({type:commentActions.API_GET , payload: this.id});
         this.store.dispatch({type:shelvesActions.API_GET });
+        this.store.dispatch({type: trackingActions.API_GET, payload: this.id});
       }
     });
     // user book info
@@ -103,7 +105,6 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
           } else {
             if (data.data.length && !data.loading) {
               this.bookInfo = data.data[0];
-              this.store.dispatch({type: trackingActions.API_GET, payload: this.id});
               if (this.updateLatest) {
                 console.log('updating latest because it was closed by changing status');
                 this.store.dispatch({type: trackingActions.ADDITIONAL.API_GET_LAST});
@@ -136,9 +137,13 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
               } else {
                 this.similarBooks = [];
               }
-              if (this.bookInfo && this.bookInfo.educational.obsah.length === 0) {
-                this.bookInfo.educational.obsah = this.book.description;
-                this.bookInfo = Object.assign({}, this.bookInfo);
+              if (this.bookInfo) {
+                if(this.bookInfo.educational.obsah.length === 0){
+                  this.bookInfo.educational = Object.assign({}, this.bookInfo.educational, {obsah: this.book.description});
+                }
+                if(this.bookInfo.educational.hodnoceni.length === 0 && this.userComment.text.length > 0) {
+                  this.bookInfo.educational = Object.assign({}, this.bookInfo.educational, {hodnoceni: this.userComment.text});
+                }
               }
             }
           }
@@ -151,6 +156,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
     this.subscriptions.push(this.store.select('comments')
       .subscribe(
         (data: SquirrelState<DiaryComment>) => {
+          this.commentsLoading = data.loading;
           if (data.error) {
             console.error(data.error);
           } else {
@@ -347,6 +353,8 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
 
   removeBook() {
     this.store.dispatch({type:booksActions.API_DELETE , payload:this.id});
+    this.updateLatest = true;
+    this.trackings.readings = [];
   }
 
   changeStatus(status: number) {

@@ -36,8 +36,9 @@ export class TrackingBarComponent {
           if(data.error){
             console.error(data.error);
           } else {
-            if (data.data[0].lastInterval.bookId > 0) {
+            if (!data.loading) {
               this.reading = data.data[0].lastInterval;
+              this.time = '';
             }
           }
         }

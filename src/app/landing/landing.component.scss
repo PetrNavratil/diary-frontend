@@ -220,6 +220,9 @@ $google-color: #DC4A38;
         .text{
           text-align: right;
           margin-bottom: 10px;
+          &:first-child{
+            margin-bottom: 20px;
+          }
         }
       }
     }

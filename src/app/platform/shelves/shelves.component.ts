@@ -18,14 +18,18 @@ export class ShelvesComponent {
   shelves: Shelf[] = [];
   shelfNames: string[] = [];
   subscriptions = [];
+  loading = false;
 
   constructor(private store: Store<AppState>, private router: Router) {
     this.store.dispatch({type: shelvesActions.API_GET});
     this.subscriptions.push(
       this.store.select('shelves').subscribe(
         (data: SquirrelState<Shelf>) => {
-          this.shelves = data.data;
-          this.shelfNames = this.shelves.map(shelf => shelf.name);
+          this.loading = data.loading;
+          if(!data.loading){
+            this.shelves = data.data;
+            this.shelfNames = this.shelves.map(shelf => shelf.name);
+          }
         }
       ));
   }

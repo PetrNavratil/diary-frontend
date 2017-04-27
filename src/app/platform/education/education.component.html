@@ -6,16 +6,13 @@
           placeholder="Směr"
           name="smer"
           [ngModel]="data.smer"
-          required
           #smerSelect="ngModel"
+          required
           (mouseenter)="showHint('smer')" (mouseleave)="hideHint()">
           <md-option *ngFor="let smer of smers" [value]="smer" (mouseenter)="showHint(smer)" (mouseleave)="hideHint()">
             {{smer}}
           </md-option>
         </md-select>
-        <span class="alert red" *ngIf="smerSelect.invalid && smerSelect.touched">
-          Smer musi byt zadan
-        </span>
       </div>
       <div class="item">
         <md-select
@@ -31,27 +28,21 @@
             {{druh}}
           </md-option>
         </md-select>
-        <span class="alert red" *ngIf="druhSelect.invalid && druhSelect.touched">
-          Druh musi byt zadan
-        </span>
       </div>
       <div class="item">
         <md-select
           placeholder="Žánr"
           name="zanr"
           [ngModel]="data.zanr"
-          required
           #zanrSelect="ngModel"
           [disabled]="druhSelect.invalid"
+          required
           (mouseenter)="showHint('zanr')" (mouseleave)="hideHint()"
         >
           <md-option *ngFor="let zanr of selectedZanr" [value]="zanr" (mouseenter)="showHint(zanr)" (mouseleave)="hideHint()">
             {{zanr}}
           </md-option>
         </md-select>
-        <span class="alert red" *ngIf="zanrSelect.invalid && zanrSelect.touched">
-          Zanr musi byt zadan
-        </span>
       </div>
       <div class="item">
         <md-input-container>
@@ -63,13 +54,10 @@
       </div>
       <div class="item">
         <md-input-container [dividerColor]="jazykInput.invalid && jazykInput.touched ? 'warn' : 'primary'">
-          <textarea #jazyk mdInput mdTextareaAutosize placeholder="Jazyk" name="jazyk" [ngModel]="data.jazyk" required #jazykInput="ngModel"
+          <textarea #jazyk mdInput mdTextareaAutosize placeholder="Jazyk" name="jazyk" [ngModel]="data.jazyk"  #jazykInput="ngModel"
                     (focus)="showHint('jazyk')" (blur)="hideHint()"
                     (mouseenter)="showHint('jazyk')" (mouseleave)="hideHint(jazyk)">
           </textarea>
-          <md-hint *ngIf="jazykInput.invalid && jazykInput.touched" class="red" align="start">
-            Jazyk musi byt zadan
-          </md-hint>
         </md-input-container>
       </div>
     </div>
@@ -114,6 +102,6 @@
     </md-input-container>
   </div>
   <div class="row buttons">
-    <button md-raised-button color="primary" [disabled]="!f.valid">{{data.id === 0 ? 'Add new educational' : 'Edit educational'}}</button>
+    <button md-raised-button color="primary" [disabled]="!f.valid">{{data.id === 0 ? 'Přidat nový rozbor' : 'Upravit rozbor'}}</button>
   </div>
 </form>

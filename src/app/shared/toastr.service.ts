@@ -4,6 +4,12 @@ import { ToastsManager } from 'ng2-toastr';
 export class ToastrService {
 
   constructor(private toastr: ToastsManager){
+    this.toastr.onClickToast()
+      .subscribe((toast: any) => {
+        if(toast.data && toast.data.error){
+          location.reload();
+        }
+      });
   }
 
   showSuccess(content: string, title: string, show?: boolean): void{
@@ -14,7 +20,7 @@ export class ToastrService {
 
   showError(content: string, title: string, show?: boolean): void {
     if(localStorage.getItem('id_token') || show){
-      this.toastr.error(content, title);
+      this.toastr.error(content, title, {data: {error: true}})
     }
   }
 

@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import '~ng2-toastr/bundles/ng2-toastr.min.css';
+@import 'toastr';
 @import '~vis/dist/vis.css';
 @import 'app/_theme.scss';
 
@@ -13,21 +13,24 @@ body {
   background-size: cover;
 
   .vis-timeline{
-    background-color: rgba(goldenrod, .05);
-    border: 1px solid rgba(goldenrod, .2);
+    border: 1px solid rgba($font-color, $label-color-opacity);
   }
   .vis-item{
-    border: 2px solid rgba(goldenrod, .3);
     font-size: 16px;
-    color: rgba(black, .87);
-    background-color: rgba(goldenrod, .25);
+    color: $font-color;
+    background-color: $dropdown-selected-color;
+    border-color: darken($dropdown-color, 10%);
     &.vis-selected{
-      background-color: rgba(goldenrod, .5);
-      border-color: rgba(goldenrod, .7);
+      background-color: $dropdown-hover-color;
+      border-color: lighten($dropdown-color, 10%);
     }
   }
   .vis-label, .vis-time-axis.vis-foreground{
-    background-color: rgba(goldenrod, .1);
+    background-color: $dropdown-color;
+    color: $font-color !important;
+  }
+  .vis-text{
+    color: $font-color !important;
   }
 }
 
@@ -55,9 +58,9 @@ md-spinner {
 }
 
  .mat-input-placeholder {
-  color: white !important;
+  color: $font-color !important;
   &.mat-warn {
-    color: goldenrod;
+    color: $dropdown-selected-color;
   }
 }
 

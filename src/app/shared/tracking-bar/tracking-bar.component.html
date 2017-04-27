@@ -1,4 +1,4 @@
-<div class="tracking-container" *ngIf="reading">
+<div class="tracking-container" *ngIf="reading?.id > 0">
   <div class="info" (click)="redirectToDetail()">
     <div class="title">{{reading.title | truncate:40}}</div>
     <div class="second-row">

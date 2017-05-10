@@ -152,7 +152,6 @@ export class StatisticsComponent implements OnDestroy {
   }
 
   createIntervalTimeline() {
-    console.log('da fuq');
     const groups = this.intervals.filter((interval, index, intervalArray: StatisticInterval[]) => {
       return intervalArray.findIndex(intrvl => intrvl.bookId === interval.bookId) === index;
     }).map(tmpInterval => ({
@@ -167,8 +166,6 @@ export class StatisticsComponent implements OnDestroy {
       end: interval.completed ? moment(interval.stop) : moment(),
       group: interval.bookId
     })));
-    console.log('items', items);
-    console.log('groups', groups);
     this.monthTimeline = new vis.Timeline(
       this.monthTimelineElement.nativeElement,
       items,

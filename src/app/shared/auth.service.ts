@@ -13,8 +13,8 @@ export class AuthService {
     domain: 'petrn.eu.auth0.com',
     clientID: 'IEIH7LLFi8KDXMNQAGvTY0lbE0tGjJI3',
     // specify your desired callback URL
-    redirectUri: 'http://www.stud.fit.vutbr.cz/~xnavra53/diary/',
-    // redirectUri: 'http://localhost:4200',
+    // redirectUri: 'http://www.stud.fit.vutbr.cz/~xnavra53/diary/',
+    redirectUri: 'http://localhost:4200',
     responseType: 'token id_token'
   });
 
@@ -39,7 +39,6 @@ export class AuthService {
   }
 
   public login(username: string, password: string): void {
-    console.log('username', username, password);
     this.auth0.redirect.loginWithCredentials({
       connection: 'Username-Password-Authentication',
       username,
@@ -53,7 +52,7 @@ export class AuthService {
   }
 
   public signup(email, password, username): void {
-    console.log('asdasdas', this.auth0.redirect.signupAndLogin({
+    this.auth0.redirect.signupAndLogin({
       connection: 'Username-Password-Authentication',
       email,
       password,
@@ -64,7 +63,7 @@ export class AuthService {
         console.error(err.description);
         return err.description;
       }
-    }));
+    });
   }
 
   public loginWithGoogle(): void {
@@ -96,14 +95,13 @@ export class AuthService {
   }
 
   changePassword(email: string) {
-    console.log('email', email);
     this.auth0.changePassword({
       email: email,
       connection: 'Username-Password-Authentication'
     }, (err, resp) => {
-      if(err){
+      if (err) {
         this.toastr.showError('Email se nepodařilo odeslat. Zkuste akci opakovat.', 'Změna hesla', true);
-      }else{
+      } else {
         this.toastr.showSuccess('Email byl úspěšně odeslán.', 'Změna hesla', true);
       }
     });

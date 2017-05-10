@@ -43,7 +43,6 @@ export class ShelvesComponent {
   }
 
   goToDetail(id: number) {
-    console.log('id ', id);
     this.router.navigate([`platform/detail/${id}`]);
   }
 

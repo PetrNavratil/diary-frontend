@@ -60,7 +60,6 @@ export class LandingComponent implements OnDestroy {
     );
     this.subscription = this.auth.errorMessage$.subscribe(
       (message: string) => {
-        console.log('error message', message);
         if(message){
           this.errorMessage = message;
         } else {
@@ -75,7 +74,6 @@ export class LandingComponent implements OnDestroy {
   }
 
   login(form) {
-    console.log('form', form);
     this.auth.login(form.userName, form.password);
   }
 
@@ -96,6 +94,5 @@ export class LandingComponent implements OnDestroy {
 
   loginDone(){
     this.showReset = this.loginState === 'active';
-    console.log('login done');
   }
 }

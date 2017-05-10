@@ -46,7 +46,6 @@ export class FriendDetailComponent {
   }
 
   copyShelf(id: number){
-    console.log('id', id);
     this.store.dispatch({type: shelvesActions.ADDITIONAL.API_COPY, payload: id});
   }
 

@@ -82,9 +82,7 @@ export class ProfileComponent implements OnDestroy, AfterViewInit {
     this.subscriptions.push(this.store.select('people').subscribe(
       (data: SquirrelState<User>) => {
         if (!data.loading) {
-          // this.state = data.data.length ? EXPANDED : COLLAPSED;
           this.people = data.data;
-          console.log('people', this.people);
           this.searcherLoading = false;
         }
       }

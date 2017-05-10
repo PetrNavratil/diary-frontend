@@ -25,7 +25,6 @@ export class AppComponent {
       this.store.dispatch({type: userActions.API_GET});
     } else {
       if(this.router.url.indexOf('register') === -1){
-        console.log('url', this.router.url);
         this.router.navigateByUrl('/landing/login');
       }
     }
@@ -40,7 +39,6 @@ export class AppComponent {
           }
         } else {
           if (data.data.length) {
-            console.log('happening right');
             if (this.router.url === '/' || this.router.url.indexOf('landing') >= 0) {
               setTimeout(() => this.router.navigate(['/platform']), 200);
             } else {

@@ -112,7 +112,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
             if (data.data.length && !data.loading) {
               this.bookInfo = data.data[0];
               if (this.updateLatest) {
-                console.log('updating latest because it was closed by changing status');
+                // updating latest because it was closed by changing status
                 this.store.dispatch({type: trackingActions.ADDITIONAL.API_GET_LAST});
                 this.updateLatest = false;
               }
@@ -226,7 +226,6 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
             console.error(data.error);
           } else {
             if (data.data.length && !data.loading) {
-              console.log('tracking DATA', data.data);
               this.trackings = data.data[0];
               this.selectedReading = this.trackings.readings.length ? this.trackings.readings.length - 1 : -1;
               if (this.trackings.lastInterval.start) {
@@ -399,7 +398,6 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   }
 
   setEducational(educational: EducationModel) {
-    console.log('form', educational);
     this.bookInfo.educational = educational;
     this.store.dispatch({type:booksActions.API_UPDATE , payload:this.bookInfo});
   }

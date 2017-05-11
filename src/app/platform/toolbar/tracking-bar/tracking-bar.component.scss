@@ -1,0 +1,42 @@
+$height: 40px;
+@import '../../../theme';
+$tracker-font: $font-book;
+
+.tracking-container {
+  display: flex;
+  width: 350px;
+  height: $height;
+  font-size: 15px;
+  font-family: $tracker-font;
+  cursor: pointer;
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    .second-row {
+      display: flex;
+      justify-content: space-between;
+      .author {
+
+      }
+      .time {
+        font-size: 15px;
+      }
+    }
+
+  }
+  .track {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    width: $height;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    .button {
+      width: $height;
+      height: $height;
+    }
+  }
+}

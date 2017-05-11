@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { BookDetailComponent } from './book-detail/book-detail.component';
-import { MyBooksComponent } from './my-books/my-books.component';
+import { MyBooksComponent } from './books/my-books.component';
 import { ShelvesComponent } from './shelves/shelves.component';
 import { ProfileComponent } from './profile/profile.component';
 import { StatisticsComponent } from './statistics/statistics.component';
-import { FriendDetailComponent } from './friend-detail/friend-detail.component';
+import { FriendDetailComponent } from './friend-profile/friend-detail.component';
 
 export const platformRoutes: Routes = [{
   path: '',

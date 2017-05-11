@@ -8,10 +8,10 @@ import { SquirrelState } from '@flowup/squirrel';
 import { readingsActions } from '../../reducers/reading.reducer';
 import { Reading } from '../../shared/models/tracking.model';
 import { statisticActions } from '../../reducers/statistic.reducer';
-import { Statistic } from '../../shared/models/statistic.model';
+import { Statistic } from '../../models/statistic.model';
 import { getDurationFormat } from '../../shared/duration-format';
 import { Subscription } from 'rxjs';
-import { StatisticInterval } from '../../shared/models/statistic-interval.model';
+import { StatisticInterval } from '../../models/statistic-interval.model';
 import { intervalsActions } from '../../reducers/statistic-intervals.reducer';
 
 @Component({

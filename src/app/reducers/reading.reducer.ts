@@ -1,5 +1,5 @@
 import { squirrelReducer, SquirrelActions, SquirrelState } from '@flowup/squirrel';
-import { Reading } from '../shared/models/tracking.model';
+import { Reading } from '../models/tracking.model';
 import { Action } from '@ngrx/store';
 
 const modelName = 'READINGS';

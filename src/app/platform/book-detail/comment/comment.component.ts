@@ -2,7 +2,7 @@ import {
   Component, Input, Output, EventEmitter, ViewChild, ElementRef,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { DiaryComment } from '../../../shared/models/comment.model';
+import { DiaryComment } from '../../../models/comment.model';
 import { getImageUrl } from '../../../shared/getImageUrl';
 import * as moment from 'moment';
 import 'moment/locale/cs';

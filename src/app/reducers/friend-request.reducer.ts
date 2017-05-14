@@ -1,5 +1,5 @@
 import { squirrelReducer, SquirrelActions, SquirrelState } from '@flowup/squirrel';
-import { FriendRequest } from '../shared/models/friendRequest.model';
+import { FriendRequest } from '../models/friendRequest.model';
 import { Action } from '@ngrx/store';
 const modelName = 'REQUEST';
 const generic = squirrelReducer(modelName);

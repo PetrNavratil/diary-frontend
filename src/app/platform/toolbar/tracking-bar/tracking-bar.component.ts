@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { AppState } from '../../../shared/models/store-model';
+import { AppState } from '../../../models/store-model';
 import { Store } from '@ngrx/store';
-import { StoredReading, Reading } from '../../../shared/models/tracking.model';
+import { StoredReading, Reading } from '../../../models/tracking.model';
 import { trackingActions } from '../../../reducers/tracking.reducer';
 import * as moment from 'moment'
-import { User } from '../../../shared/models/user.model';
+import { User } from '../../../models/user.model';
 import { Router } from '@angular/router';
 import { SquirrelState } from '@flowup/squirrel';
 

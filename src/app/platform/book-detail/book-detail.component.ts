@@ -2,9 +2,9 @@ import {
   Component, AfterViewChecked, OnDestroy, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild,
   ElementRef
 } from '@angular/core';
-import { AppState } from '../../shared/models/store-model';
+import { AppState } from '../../models/store-model';
 import { Store } from '@ngrx/store';
-import { GRBook, GRSimilarBook } from '../../shared/models/goodreadsBook.model';
+import { GRBook, GRSimilarBook } from '../../models/goodreadsBook.model';
 import * as Tether from 'tether';
 import { SquirrelState } from '@flowup/squirrel';
 import { ActivatedRoute, Router } from '@angular/router';

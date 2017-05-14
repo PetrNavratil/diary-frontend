@@ -1,9 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
-import { AppState } from '../shared/models/store-model';
+import { AppState } from '../models/store-model';
 import { Store } from '@ngrx/store';
 import { latestBooksActions } from '../reducers/latestBooks.reducer';
 import { SquirrelState } from '@flowup/squirrel';
-import { Book } from '../shared/models/book.model';
+import { Book } from '../models/book.model';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 

@@ -1,5 +1,5 @@
 import { Pipe } from '@angular/core';
-import { BookStatus } from './models/book-status.enum';
+import { BookStatus } from '../models/book-status.enum';
 
 @Pipe({name: 'bookStatus'})
 export class BookStatusPipe {

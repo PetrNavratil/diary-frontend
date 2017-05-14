@@ -3,7 +3,7 @@ import { Http, ResponseContentType, RequestOptionsArgs } from '@angular/http';
 import { environment } from '../../environments/environment';
 import { createOptions } from './createOptions';
 import { ReplaySubject, Observable } from 'rxjs';
-import { BookStatus } from './models/book-status.enum';
+import { BookStatus } from '../models/book-status.enum';
 import { ToastrService } from './toastr.service';
 
 declare function saveAs(data: Blob | File, filename?: string, disableAutoBom?: boolean);

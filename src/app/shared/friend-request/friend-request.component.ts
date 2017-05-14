@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { FriendRequest } from '../models/friendRequest.model';
+import { FriendRequest } from '../../models/friendRequest.model';
 import { getImageUrl } from '../getImageUrl';
 
 @Component({

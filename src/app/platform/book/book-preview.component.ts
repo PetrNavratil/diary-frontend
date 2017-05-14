@@ -1,7 +1,7 @@
 import { Component, Input, trigger, state, style, transition, animate } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { getLargeImage } from '../../shared/getLargeImage';
-import { Book } from '../../shared/models/book.model';
+import { Book } from '../../models/book.model';
 
 const HOVERED = 'hovered';
 const STATIC = 'statis';

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../shared/models/store-model';
+import { AppState } from '../../models/store-model';
 import {  } from '@flowup/squirrel';
 import { shelvesActions } from '../../reducers/shelves.reducer';
-import { Shelf } from '../../shared/models/shelf.model';
+import { Shelf } from '../../models/shelf.model';
 import { Router } from '@angular/router';
 import { SquirrelState } from '@flowup/squirrel';
 

@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter, OnChanges } from '@angular/core';
-import { EducationModel } from '../../../shared/models/education.model';
+import { EducationModel } from '../../../models/education.model';
 import { Dictionary } from './dictionary';
 
 @Component({

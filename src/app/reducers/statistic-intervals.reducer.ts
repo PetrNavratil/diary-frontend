@@ -1,4 +1,4 @@
-import { StatisticInterval } from '../shared/models/statistic-interval.model';
+import { StatisticInterval } from '../models/statistic-interval.model';
 import { SquirrelState, SquirrelActions, squirrelReducer } from '@flowup/squirrel';
 import { Action } from '@ngrx/store';
 

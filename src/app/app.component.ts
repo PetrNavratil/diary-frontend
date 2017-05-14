@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { AppState } from './shared/models/store-model';
+import { AppState } from './models/store-model';
 import { Store } from '@ngrx/store';
-import { User } from './shared/models/user.model';
+import { User } from './models/user.model';
 import { Router } from '@angular/router';
 import { userActions } from './reducers/user.reducer';
 import { SquirrelState } from '@flowup/squirrel';

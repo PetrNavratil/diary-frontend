@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { SquirrelActions, squirrelReducer, SquirrelState } from '@flowup/squirrel';
-import { User } from '../shared/models/user.model';
+import { User } from '../models/user.model';
 
 const modelName = 'PEOPLE';
 const generic = squirrelReducer(modelName);

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { getImageUrl } from '../getImageUrl';
-import { Friend } from '../models/friend.model';
+import { Friend } from '../../models/friend.model';
 import * as moment from 'moment';
 import 'moment/locale/cs';
 

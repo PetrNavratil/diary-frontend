@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { GRSearchBook } from '../../../shared/models/goodreadsBook.model';
-import { AppState } from '../../../shared/models/store-model';
+import { GRSearchBook } from '../../../models/goodreadsBook.model';
+import { AppState } from '../../../models/store-model';
 import { Store } from '@ngrx/store';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';

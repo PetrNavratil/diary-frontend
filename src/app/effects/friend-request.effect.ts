@@ -7,7 +7,7 @@ import { Action, Store } from '@ngrx/store';
 import { requestActions } from '../reducers/friend-request.reducer';
 import { environment } from '../../environments/environment';
 import { createOptions } from '../shared/createOptions';
-import { AppState } from '../shared/models/store-model';
+import { AppState } from '../models/store-model';
 import { friendsActions } from '../reducers/friends.reducer';
 
 const API_ENDPOINT = '/friends/requests';

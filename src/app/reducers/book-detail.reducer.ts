@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { squirrelReducer, SquirrelActions, SquirrelState } from '@flowup/squirrel';
-import { BookInfo } from '../shared/models/book.model';
+import { BookInfo } from '../models/book.model';
 
 
 const modelName = 'DETAIL';

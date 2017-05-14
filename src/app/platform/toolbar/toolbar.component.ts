@@ -1,11 +1,11 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ElementRef } from '@angular/core';
-import { AppState } from '../../shared/models/store-model';
+import { Component, OnDestroy, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { AppState } from '../../models/store-model';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { User } from '../../shared/models/user.model';
+import { User } from '../../models/user.model';
 import { SquirrelState } from '@flowup/squirrel';
 import { getImageUrl } from '../../shared/getImageUrl';
-import { FriendRequest } from '../../shared/models/friendRequest.model';
+import { FriendRequest } from '../../models/friendRequest.model';
 import { animate, style, state, trigger, transition } from '@angular/animations';
 import { requestActions } from '../../reducers/friend-request.reducer';
 

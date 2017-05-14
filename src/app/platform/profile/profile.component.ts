@@ -1,20 +1,19 @@
 import { Component, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { AppState } from '../../shared/models/store-model';
+import { AppState } from '../../models/store-model';
 import { Store } from '@ngrx/store';
 import {} from '@flowup/squirrel';
-import { User } from '../../shared/models/user.model';
+import { User } from '../../models/user.model';
 import { userActions } from '../../reducers/user.reducer';
 import { SquirrelState } from '@flowup/squirrel';
 import { getImageUrl } from '../../shared/getImageUrl';
-import { FriendRequest } from '../../shared/models/friendRequest.model';
-import { Friend } from '../../shared/models/friend.model';
-import * as moment from 'moment';
+import { FriendRequest } from '../../models/friendRequest.model';
+import { Friend } from '../../models/friend.model';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { animate, style, state, trigger, transition } from '@angular/animations';
 import { peopleActions } from '../../reducers/people.reducer';
 import { requestActions } from '../../reducers/friend-request.reducer';
-import { friendsReducer, friendsActions } from '../../reducers/friends.reducer';
+import { friendsActions } from '../../reducers/friends.reducer';
 import { AuthService } from '../../shared/auth.service';
 
 const COLLAPSED = 'collapsed';

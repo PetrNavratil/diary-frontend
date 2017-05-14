@@ -1,11 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { SquirrelState } from '@flowup/squirrel';
-import { AppState } from '../../shared/models/store-model';
+import { AppState } from '../../models/store-model';
 import { Store } from '@ngrx/store';
-import { Book } from '../../shared/models/book.model';
+import { Book } from '../../models/book.model';
 import { booksActions } from '../../reducers/books.reducer';
 import { Router } from '@angular/router';
-import { BookStatus } from '../../shared/models/book-status.enum';
+import { BookStatus } from '../../models/book-status.enum';
 import { PdfService } from '../../shared/pdf.service';
 
 @Component({

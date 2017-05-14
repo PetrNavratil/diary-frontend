@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Friend } from '../../shared/models/friend.model';
-import { AppState } from '../../shared/models/store-model';
+import { Friend } from '../../models/friend.model';
+import { AppState } from '../../models/store-model';
 import { Store } from '@ngrx/store';
 import { SquirrelState } from '@flowup/squirrel';
 import { shelvesActions } from '../../reducers/shelves.reducer';

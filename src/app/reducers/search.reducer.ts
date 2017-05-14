@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 import { squirrelReducer, SquirrelActions, SquirrelState } from '@flowup/squirrel';
-import { GRSearchBook } from '../shared/models/goodreadsBook.model';
+import { GRSearchBook } from '../models/goodreadsBook.model';
 
 
 const modelName = 'SEARCH';

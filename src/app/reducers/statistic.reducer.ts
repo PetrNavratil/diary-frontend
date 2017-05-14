@@ -1,5 +1,5 @@
 import { squirrelReducer, SquirrelActions, SquirrelState } from '@flowup/squirrel';
-import { Statistic } from '../shared/models/statistic.model';
+import { Statistic } from '../models/statistic.model';
 import { Action } from '@ngrx/store';
 const modelName = 'STATISTICS';
 const generic = squirrelReducer(modelName);

@@ -1,5 +1,5 @@
 import { squirrelReducer, SquirrelActions, SquirrelState } from '@flowup/squirrel';
-import { Shelf } from '../shared/models/shelf.model';
+import { Shelf } from '../models/shelf.model';
 import { Action } from '@ngrx/store';
 
 const modelName = 'SHELVES';

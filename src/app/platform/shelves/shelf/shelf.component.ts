@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Shelf } from '../../../shared/models/shelf.model';
+import { Shelf } from '../../../models/shelf.model';
 
 @Component({
   selector: 'app-shelf',

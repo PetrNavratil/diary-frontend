@@ -104,8 +104,6 @@ export function createTranslateLoader(http: Http) {
     EffectsModule.runAfterBootstrap(PeopleEffect),
     EffectsModule.runAfterBootstrap(FriendsEffect),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
-
-
   ],
   providers: [
     {provide: ToastOptions, useClass: CustomOption}

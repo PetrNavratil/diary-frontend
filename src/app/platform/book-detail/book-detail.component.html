@@ -9,9 +9,9 @@
         {{bookInfo.title}} - {{bookInfo.author}}
       </div>
       <div class="actions" *ngIf="bookInfo">
-        <app-loading-button [icon]="'add'" [color]="'primary'" [title]="'bookDetail.addBook' | translate" [loading]="insertLoading" class="button action-item"
+        <app-loading-button [icon]="'add'" [color]="'primary'" [title]="'bookDetail.addBook' | translate" [loading]="userBookLoading" class="button action-item"
                             *ngIf="!bookInfo.inBooks" (click)="addBook()"></app-loading-button>
-        <app-loading-button [icon]="'delete'" [color]="'warn'" class="button action-item" [loading]="insertLoading" [title]="'bookDetail.removeBook' | translate"
+        <app-loading-button [icon]="'delete'" [color]="'warn'" class="button action-item" [loading]="userBookLoading" [title]="'bookDetail.removeBook' | translate"
                             *ngIf="bookInfo.inBooks" (click)="removeBook()"></app-loading-button>
         <app-loading-button [icon]="'play_circle_outline'" [color]="'primary'" class="button action-item" [loading]="false"
                             [title]="'bookDetail.startTracking' | translate"

@@ -17,6 +17,11 @@ export class EqualValidator implements Validator {
     return this.reverse === 'true' ? true : false;
   }
 
+  /**
+   * Validates if two fields of form are the same
+   * @param c
+   * @returns {any}
+   */
   validate(c: AbstractControl): { [key: string]: any } {
     // self value
     let v = c.value;

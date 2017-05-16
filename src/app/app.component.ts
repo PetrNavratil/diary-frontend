@@ -17,6 +17,9 @@ import { LanguageService } from './shared/language.service';
   ]
 })
 export class AppComponent {
+  /**
+   * Subscription for user
+   */
   subscription: Subscription;
 
   constructor(private router: Router,
@@ -24,23 +27,31 @@ export class AppComponent {
               private toastr: ToastsManager,
               private vcr: ViewContainerRef,
               private auth: AuthService,
-  private language: LanguageService) {
+              private language: LanguageService) {
+    // sets language
     this.language.init();
+    // inits auth0 library
     this.auth.handleAuthentication();
+    // sets container for toaster
     this.toastr.setRootViewContainerRef(vcr);
-    if(auth.isValid()){
+    // is toke valid?
+    if (auth.isValid()) {
+      // get logged user
       this.store.dispatch({type: userActions.API_GET});
     } else {
-      if(this.router.url.indexOf('register') === -1){
+      // if not route register redirect user to login form
+      if (this.router.url.indexOf('register') === -1) {
         this.router.navigateByUrl('/landing/login');
       }
     }
+    // subscribe to store for users
     this.subscription = this.store.select('users').subscribe(
       (data: SquirrelState<User>) => {
-        if(data.loading){
+        if (data.loading) {
           return;
         }
         if (data.error) {
+          // handles F5 on platform when token expires
           if (this.router.url !== '/landing/register') {
             this.router.navigate(['/landing/login']);
           }

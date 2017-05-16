@@ -7,7 +7,15 @@ import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 })
 export class CardComponent{
 
+  /**
+   * Holds title element
+   * @type {ElementRef}
+   */
   @ViewChild('title') titleRef: ElementRef;
+  /**
+   * States whether card content should be padded
+   * @type {boolean}
+   */
   @Input() padded = true;
 
 }

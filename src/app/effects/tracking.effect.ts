@@ -20,6 +20,9 @@ export class TrackingEffect {
               private toastr: ToastrService) {
   }
 
+  /**
+   * Gets tracking
+   */
   @Effect() getTracking: Observable<Action> = this.actions
     .ofType(trackingActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + '/book/' + action.payload, createOptions())
@@ -32,6 +35,9 @@ export class TrackingEffect {
         return Observable.of({type: trackingActions.API_GET_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Gets last tracking
+   */
   @Effect() getLastTracking: Observable<Action> = this.actions
     .ofType(trackingActions.ADDITIONAL.API_GET_LAST)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT, createOptions())
@@ -44,6 +50,9 @@ export class TrackingEffect {
         return Observable.of({type: trackingActions.API_GET_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Starts book tracking
+   */
   @Effect() startTracking: Observable<Action> = this.actions
     .ofType(trackingActions.ADDITIONAL.API_START)
     .switchMap((action) => this.http.put(`${environment.apiUrl}${API_ENDPOINT}/start/${action.payload.id}?getReadings=${action.payload.readings}`, {}, createOptions())
@@ -65,6 +74,9 @@ export class TrackingEffect {
         return Observable.of({type: trackingActions.API_GET_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Stopts book tracking
+   */
   @Effect() stopTracking: Observable<Action> = this.actions
     .ofType(trackingActions.ADDITIONAL.API_END)
     .switchMap((action) => this.http.put(`${environment.apiUrl}${API_ENDPOINT}/stop/${action.payload.id}?getReadings=${action.payload.readings}`, {}, createOptions())

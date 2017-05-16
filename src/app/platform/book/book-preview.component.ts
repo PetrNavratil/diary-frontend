@@ -20,21 +20,41 @@ const STATIC = 'statis';
 })
 export class BookPreviewComponent {
 
+  /**
+   * Book information
+   * @type {Book}
+   */
   @Input() book: Book;
+
+  /**
+   * Book element state
+   * @type {string}
+   */
   state = STATIC;
 
   constructor(private sanitizer: DomSanitizer) {
   }
 
+  /**
+   * Sanitized provided url to for use in template
+   * @param url
+   * @returns {SafeStyle}
+   */
   sanitize(url: string): SafeStyle {
     return this.sanitizer.bypassSecurityTrustStyle(`url('${getLargeImage(url)}')`);
   }
 
-  hover() {
+  /**
+   * Changes state of element after hover
+   */
+  hover(): void {
     this.state = HOVERED;
   }
 
-  leave() {
+  /**
+   * Changes state of element after mouse leaves element
+   */
+  leave(): void {
     this.state = STATIC;
   }
 }

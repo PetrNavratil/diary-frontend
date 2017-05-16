@@ -7,6 +7,7 @@ import { booksActions } from '../../reducers/books.reducer';
 import { Router } from '@angular/router';
 import { BookStatus } from '../../models/book-status.enum';
 import { PdfService } from '../../shared/pdf.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-my-books',
@@ -15,13 +16,34 @@ import { PdfService } from '../../shared/pdf.service';
 })
 export class Books implements OnDestroy {
 
-  subscriptions: any[] = [];
+  /**
+   * Subscription to store
+   * @type {Subscription[]}
+   */
+  subscriptions: Subscription[] = [];
+  /**
+   * User's books
+   * @type {Book[]}
+   */
   books: Book[] = [];
+  /**
+   * Currently visible books
+   * @type {Book[]}
+   */
   selectedBooks: Book[] = [];
+  /**
+   * Selected status of filter
+   * @type {BookStatus}
+   */
   selected: BookStatus = BookStatus.ALL;
+  /**
+   * Search pattern
+   * @type {string}
+   */
   pattern: string = '';
 
   constructor(private store: Store<AppState>, private router: Router, private pdf: PdfService) {
+    // get data and subscribe to books
     this.store.dispatch({type: booksActions.API_GET});
     this.subscriptions.push(
       this.store.select('books').subscribe(
@@ -33,10 +55,19 @@ export class Books implements OnDestroy {
     );
   }
 
+  /**
+   * Redirect to the book detail after click
+   * @param id
+   */
   goToDetail(id: number): void {
     this.router.navigate([`platform/detail/${id}`]);
   }
 
+  /**
+   * Filters books by provided status
+   * @param status
+   * @returns {Book[]}
+   */
   selectBooks(status: BookStatus): Book[] {
     if (status === BookStatus.ALL) {
       return this.books;
@@ -45,36 +76,54 @@ export class Books implements OnDestroy {
     }
   }
 
-  selectNewBooks(status: BookStatus) {
+  /**
+   * Filters selected books after status option is clicked in stastus dropdown
+   * @param status
+   */
+  selectNewBooks(status: BookStatus): void {
     this.selected = status;
     this.selectedBooks = this.selectBooks(this.selected);
   }
 
-  search() {
+  /**
+   * Search among selected books by pattern
+   * Stores them to selectedBooks
+   */
+  search(): void {
     this.selectedBooks = this.selectBooks(this.selected).filter(book => {
       return book.title.toLowerCase().indexOf(this.pattern.toLowerCase()) > -1 || book.author.toLowerCase().indexOf(this.pattern.toLowerCase()) > -1;
     })
   }
 
-  clearPattern(event) {
+  /**
+   * Clears search pattern after button is clicked
+   * @param event
+   */
+  clearPattern(event): void {
     event.stopPropagation();
     this.pattern = '';
     this.selectedBooks = this.selectBooks(this.selected);
+  }
+
+  /**
+   * Generates PDF list of books after button is clicked
+   */
+  generatePdf(): void {
+    this.pdf.generateBooksPdf(this.selected);
+  }
+
+  /**
+   * Generates TXT list of books after button is clicked
+   */
+  generateTxt(): void {
+    this.pdf.generateBooksTxt(this.selected);
   }
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+    // clear store
     this.store.dispatch({type: 'CLEAR'});
   }
-
-  generatePdf(){
-    this.pdf.generateBooksPdf(this.selected);
-  }
-
-  generateTxt(){
-    this.pdf.generateBooksTxt(this.selected);
-  }
-
 }

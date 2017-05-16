@@ -20,6 +20,9 @@ export class ShelvesEffect {
               private toastr: ToastrService) {
   }
 
+  /**
+   * Gets user's shelves
+   */
   @Effect() getShelves: Observable<Action> = this.actions
     .ofType(shelvesActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT, createOptions())
@@ -32,6 +35,9 @@ export class ShelvesEffect {
         return Observable.of({type: shelvesActions.API_GET_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Adds shelf
+   */
   @Effect() addShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.API_CREATE)
     .switchMap((action) => this.http.post(environment.apiUrl + API_ENDPOINT, action.payload, createOptions())
@@ -50,6 +56,9 @@ export class ShelvesEffect {
         return Observable.of({type: shelvesActions.API_CREATE_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Adds book to the shelf
+   */
   @Effect() addBookToShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.ADDITIONAL.API_ADD_BOOK)
     .switchMap((action) => this.http.post(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, action.payload.book, createOptions())
@@ -68,6 +77,9 @@ export class ShelvesEffect {
         return Observable.of({type: shelvesActions.API_UPDATE_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Removes book from shelf
+   */
   @Effect() removeBookFromShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.ADDITIONAL.API_REMOVE_BOOK)
     .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id + '/' + action.payload.book.id, createOptions())
@@ -86,6 +98,9 @@ export class ShelvesEffect {
         return Observable.of({type: shelvesActions.API_UPDATE_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Removes shelf
+   */
   @Effect() removeShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.API_DELETE)
     .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, createOptions())
@@ -104,6 +119,9 @@ export class ShelvesEffect {
         return Observable.of({type: shelvesActions.API_DELETE_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Renames shelf
+   */
   @Effect() updateShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.API_UPDATE)
     .switchMap((action) => this.http.put(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, action.payload, createOptions())
@@ -122,6 +140,9 @@ export class ShelvesEffect {
         return Observable.of({type: shelvesActions.API_UPDATE_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Copies shelf
+   */
   @Effect() copyShelf: Observable<Action> = this.actions
     .ofType(shelvesActions.ADDITIONAL.API_COPY)
     .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}/copy`, {}, createOptions())

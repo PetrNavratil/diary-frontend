@@ -18,14 +18,16 @@ export class LatestBooksEffect {
               private http: Http,
               private language: LanguageService,
               private toastr: ToastrService) {
-
   }
 
+  /**
+   * Gets recenlty added books
+   */
   @Effect() getLatestBooks: Observable<Action> = this.actions
     .ofType(latestBooksActions.API_GET)
     .switchMap((action) => this.http.get(`${environment.apiUrl}${API_ENDPOINT}`, createOptions())
       .map(body => ({type: latestBooksActions.GET, payload: body.json()}))
-      .catch(body =>{
+      .catch(body => {
         this.toastr.showError(
           `${this.language.instantTranslate('toasts.latest.getFail')}${this.language.instantTranslate('toasts.refresh')}`,
           `${this.language.instantTranslate('toasts.latest.title')}`

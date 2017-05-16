@@ -10,17 +10,45 @@ import { Dictionary } from './dictionary';
 })
 export class EducationComponent implements OnChanges {
 
+  /**
+   * Holds literary analysis data
+   * @type {EducationModel}
+   */
   @Input() data: EducationModel;
+  /**
+   * Emits event after click on edit button
+   * @type {EventEmitter<EducationModel>}
+   */
   @Output() dataUpdate: EventEmitter<EducationModel> = new EventEmitter<EducationModel>();
 
+  /**
+   * States whether tooltip section is visible
+   * @type {boolean}
+   */
   hintVisible = false;
+  /**
+   * Displayed hint
+   * @type {string}
+   */
   hint = '';
+  /**
+   * Selected genre
+   * @type {Array}
+   */
   selectedZanr = [];
+  /**
+   * Lit. druhy
+   * @type {string[]}
+   */
   druhs = [
     'Lyrika',
     'Epika',
     'Drama'
   ];
+  /**
+   * Lit. zanry
+   * @type {string}
+   */
   zanrs = {
     Epika: [
       'Anekdota',
@@ -60,6 +88,10 @@ export class EducationComponent implements OnChanges {
     ]
   };
 
+  /**
+   * Lit. smery
+   * @type {string[]}
+   */
   smers = [
     'Antika',
     'Středověk',
@@ -85,35 +117,48 @@ export class EducationComponent implements OnChanges {
     'Postmoderna'
   ];
 
-  ngOnChanges() {
-    if (this.data && this.data.zanr.length) {
-      this.selectedZanr = this.zanrs[this.data.druh];
-    }
-  }
-
-
-  saveEducation(form: any) {
+  /**
+   * Emits event after click on edit button
+   * @param form
+   */
+  saveEducation(form: any): void {
     form.value.id = this.data.id;
     this.dataUpdate.emit(form.value);
   }
 
-  setZanr(druh: any) {
+  /**
+   * Nastavi zanry podle druhu
+   * @param druh
+   */
+  setZanr(druh: any): void {
     this.selectedZanr = this.zanrs[druh.value];
   }
 
-  showHint(key: string) {
+  /**
+   * Shows tooltip text after hover
+   * @param key
+   */
+  showHint(key: string): void {
     let dictKey = key.replace(/-|\(|\)| /g, '');
     this.hint = Dictionary[dictKey];
     this.hintVisible = true;
   }
 
-
-  hideHint(source?: any) {
+  /**
+   * Hides hint
+   * @param source
+   */
+  hideHint(source?: any): void {
     if (source && document.activeElement === source) {
       return;
     } else {
       this.hintVisible = false;
     }
+  }
 
+  ngOnChanges() {
+    if (this.data && this.data.zanr.length) {
+      this.selectedZanr = this.zanrs[this.data.druh];
+    }
   }
 }

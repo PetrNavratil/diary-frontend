@@ -21,6 +21,9 @@ export class SearchEffect {
               private toastr: ToastrService) {
   }
 
+  /**
+   * Searches books
+   */
   @Effect() search: Observable<Action> = this.actions
     .ofType(searchActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + encodeURI(action.payload), createOptions())

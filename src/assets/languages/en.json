@@ -19,7 +19,9 @@
       "emailNotSet": "Email address has to be filled",
       "passwordLength": "Minimum password length is 5 characters",
       "usernameNotSet": "Username has to be filled",
-      "passwordsNotSame": "Passwords has to be equal"
+      "passwordsNotSame": "Passwords has to be equal",
+      "emailNotSent": "Email could not be sent. Try again.",
+      "emailSent": "Email's been sent."
     }
   },
   "shared": {

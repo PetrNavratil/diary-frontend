@@ -1,6 +1,12 @@
 import * as moment from 'moment';
 import Duration = moment.Duration;
 
+/**
+ * Returns formatted string representing passed duration in human form
+ * @param time
+ * @param language
+ * @returns {string}
+ */
 export function getDurationFormat(time: moment.Duration, language: string): string {
   let formatted: string = '';
   if(!time.milliseconds()){
@@ -174,7 +180,11 @@ export function getDurationFormat(time: moment.Duration, language: string): stri
 }
 
 
-
+/**
+ * Returns formatted string representing passed duration in 00:00:00:00...
+ * @param time
+ * @returns {string}
+ */
 export function simpleDuration(time: moment.Duration): string{
   let formatted = '';
   if (time.years()) {

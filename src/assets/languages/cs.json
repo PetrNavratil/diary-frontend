@@ -19,7 +19,9 @@
       "emailNotSet": "Email musí být zadaný",
       "passwordLength": "Heslo musí být delší než 5 znaků",
       "usernameNotSet": "Uživatelské jméno musí být zadané",
-      "passwordsNotSame": "Hesla musí být shodná"
+      "passwordsNotSame": "Hesla musí být shodná",
+      "emailNotSent": "Email se nepodařilo odeslat. Opakujte akci.",
+      "emailSent": "Email byl odeslán."
     }
   },
   "shared": {

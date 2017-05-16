@@ -28,16 +28,40 @@ const EXPANDED = 'expanded';
 })
 export class SearcherComponent implements OnDestroy {
 
+  /**
+   * Array of found books
+   * @type {GRSearchBook[]}
+   */
   books: GRSearchBook[] = [];
+  /**
+   * Search pattern
+   * @type {string}
+   */
   key: string = '';
+  /**
+   * Loading of searching
+   * @type {boolean}
+   */
   loading: boolean = false;
+  /**
+   * Subject for input change
+   * @type {Subject<string>}
+   */
   userInputChange: Subject<string> = new Subject<string>();
-  subscription: Subscription;
+  /**
+   * Subscriptions from store
+   * @type {Subscription[]}
+   */
+  subscriptions: Subscription[] = [];
+  /**
+   * States whether search content is visible
+   * @type {string}
+   */
   state: string = COLLAPSED;
 
-
   constructor(private store: Store<AppState>, private router: Router, private http: Http) {
-    this.subscription = this.store.select('search').subscribe(
+    // subscribe to the search
+    this.subscriptions.push(this.store.select('search').subscribe(
       (data: SquirrelState<GRSearchBook>) => {
         this.loading = data.loading;
         if (data.error) {
@@ -48,9 +72,11 @@ export class SearcherComponent implements OnDestroy {
           this.books = data.data;
         }
       }
-    );
+    ));
 
-    this.userInputChange
+    // subscribe to the input change
+    // dispatch action after .5s delay if changed
+    this.subscriptions.push(this.userInputChange
       .debounceTime(500)
       .distinctUntilChanged()
       .subscribe(value => {
@@ -60,37 +86,52 @@ export class SearcherComponent implements OnDestroy {
         }
         this.store.dispatch({type: searchActions.API_GET, payload: value});
         return value;
-      });
+      }));
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  changed(value: string) {
+  /**
+   * Called after input is changed
+   * Passes pattern to the subject
+   * @param value
+   */
+  changed(value: string): void {
     this.loading = true;
     this.userInputChange.next(value);
   }
 
-  displayDropdown() {
+  /**
+   * Shows dropdown
+   */
+  displayDropdown(): void {
     if (this.books.length) {
       this.state = EXPANDED;
     }
   }
 
-  hideDropdown() {
+  /**
+   * Hides dropdown
+   */
+  hideDropdown(): void {
     this.state = COLLAPSED;
   }
 
-  selected(book: GRSearchBook) {
+  /**
+   * Sends request to add book to the database
+   * Redirect to the book detail
+   * @param book
+   */
+  selected(book: GRSearchBook): void {
     this.state = COLLAPSED;
     this.http.post(`${environment.apiUrl}/book`, book, createOptions()).subscribe(
       data => {
         this.router.navigate([`platform/detail/${data.json().id}`]);
       }
     );
-
   }
 
-
+  ngOnDestroy() {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
 }

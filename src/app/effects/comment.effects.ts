@@ -18,9 +18,11 @@ export class CommentsEffect {
               private http: Http,
               private language: LanguageService,
               private toastr: ToastrService) {
-
   }
 
+  /**
+   * Gets all book's comments
+   */
   @Effect() getComments: Observable<Action> = this.actions
     .ofType(commentActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + '?bookId=' + action.payload, createOptions())
@@ -33,6 +35,9 @@ export class CommentsEffect {
         return Observable.of({type: commentActions.API_GET_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Adds book comment
+   */
   @Effect() addComment: Observable<Action> = this.actions
     .ofType(commentActions.API_CREATE)
     .switchMap((action) => this.http.post(environment.apiUrl + API_ENDPOINT, action.payload, createOptions())
@@ -51,6 +56,9 @@ export class CommentsEffect {
         return Observable.of({type: commentActions.API_CREATE_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Removes book comment
+   */
   @Effect() removeComment: Observable<Action> = this.actions
     .ofType(commentActions.API_DELETE)
     .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, createOptions())
@@ -69,6 +77,9 @@ export class CommentsEffect {
         return Observable.of({type: commentActions.API_DELETE_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Updates book comment
+   */
   @Effect() updateComment: Observable<Action> = this.actions
     .ofType(commentActions.API_UPDATE)
     .switchMap((action) => this.http.put(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, action.payload, createOptions())

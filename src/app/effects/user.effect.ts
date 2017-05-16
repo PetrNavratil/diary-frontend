@@ -12,13 +12,15 @@ const USER_ENDPOINT = '/user';
 
 @Injectable()
 export class UserEffect {
-  constructor(
-    private actions: Actions,
-    private http: Http,
-    private language: LanguageService,
-    private toastr: ToastrService) {
+  constructor(private actions: Actions,
+              private http: Http,
+              private language: LanguageService,
+              private toastr: ToastrService) {
   }
 
+  /**
+   * Gets logged user
+   */
   @Effect() getUser = this.actions.ofType(userActions.API_GET)
     .switchMap(action => this.http.get(environment.apiUrl + USER_ENDPOINT, createOptions())
       .map(body => ({type: userActions.GET, payload: [body.json()]}))
@@ -33,6 +35,9 @@ export class UserEffect {
         })
       }));
 
+  /**
+   * Edits user
+   */
   @Effect() editUser = this.actions.ofType(userActions.API_UPDATE)
     .switchMap(action => this.http.put(`${environment.apiUrl}${USER_ENDPOINT}/${action.payload.id}`, action.payload, createOptions())
       .map(body => {
@@ -53,6 +58,9 @@ export class UserEffect {
         })
       }));
 
+  /**
+   * Uploads avatar
+   */
   @Effect() uploadAvatar = this.actions.ofType(userActions.ADDITIONAL.UPLOAD_AVATAR)
     .switchMap(action => {
       let formData: FormData = new FormData();

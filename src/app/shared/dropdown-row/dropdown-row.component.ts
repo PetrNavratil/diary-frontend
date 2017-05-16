@@ -19,11 +19,21 @@ const EXPANDED = 'expanded';
 })
 export class DropdownRowComponent {
 
+  /**
+   * States whether content is expanded
+   * @type {string}
+   */
   state: string = COLLAPSED;
+  /**
+   * Emits event after state of dropdown is changed
+   * @type {EventEmitter<boolean>}
+   */
   @Output() isExpanded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  toggle() {
-    console.log('asdasdad');
+  /**
+   * Shows/hides dropdown content after click
+   */
+  toggle(): void {
     this.state = this.state === COLLAPSED ? EXPANDED : COLLAPSED;
     this.isExpanded.emit(this.state === EXPANDED);
   }

@@ -20,6 +20,9 @@ export class ReadingEffect {
               private toastr: ToastrService) {
   }
 
+  /**
+   * Gets user's book reading
+   */
   @Effect() getReadings: Observable<Action> = this.actions
     .ofType(readingsActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT, createOptions())

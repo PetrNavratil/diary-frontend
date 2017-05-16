@@ -14,9 +14,15 @@ const API_ENDPOINT = '/book-detail/';
 
 @Injectable()
 export class BookDetail {
-  constructor(private actions: Actions, private http: Http, private toastr: ToastrService, private language: LanguageService) {
+  constructor(private actions: Actions,
+              private http: Http,
+              private toastr: ToastrService,
+              private language: LanguageService) {
   }
 
+  /**
+   * Gets book detail information from gr and gb
+   */
   @Effect() bookDetail: Observable<Action> = this.actions
     .ofType(detailActions.API_GET)
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + encodeURI(action.payload), createOptions())

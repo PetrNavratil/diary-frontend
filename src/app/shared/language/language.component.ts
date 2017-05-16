@@ -11,6 +11,10 @@ export class LanguageComponent {
   constructor(private language: LanguageService) {
   }
 
+  /**
+   * Sets language based on parameter
+   * @param language
+   */
   setLanguage(language: string): void{
     this.language.changeLanguage(language);
   }

@@ -19,6 +19,9 @@ export class FriendsEffect {
               private toastr: ToastrService) {
   }
 
+  /**
+   * Gets user's friends
+   */
   @Effect() getFriends: Observable<Action> = this.actions
     .ofType(friendsActions.API_GET)
     .switchMap((action) => this.http.get(`${environment.apiUrl}${API_ENDPOINT}`, createOptions())
@@ -31,6 +34,9 @@ export class FriendsEffect {
         return Observable.of({type: friendsActions.API_GET_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Gets specific friend
+   */
   @Effect() getFriend: Observable<Action> = this.actions
     .ofType(friendsActions.ADDITIONAL.API_GET_SINGLE)
     .switchMap((action) => this.http.get(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`, createOptions())
@@ -43,6 +49,9 @@ export class FriendsEffect {
         return Observable.of({type: friendsActions.API_GET_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Removes friend
+   */
   @Effect() deleteFriend: Observable<Action> = this.actions
     .ofType(friendsActions.API_DELETE)
     .switchMap((action) => this.http.delete(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`, createOptions())

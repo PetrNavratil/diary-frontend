@@ -23,9 +23,11 @@ export class RequestEffect {
               private toastr: ToastrService,
               private language: LanguageService,
               private store: Store<AppState>) {
-
   }
 
+  /**
+   * Gets user's friend requests
+   */
   @Effect() getRequests: Observable<Action> = this.actions
     .ofType(requestActions.API_GET)
     .switchMap((action) => this.http.get(`${environment.apiUrl}${API_ENDPOINT}`, createOptions())
@@ -38,9 +40,12 @@ export class RequestEffect {
         return Observable.of({type: requestActions.API_GET_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Adds friend request
+   */
   @Effect() addRequest: Observable<Action> = this.actions
     .ofType(requestActions.API_CREATE)
-    .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`,{}, createOptions())
+    .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`, {}, createOptions())
       .map(body => {
         this.toastr.showSuccess(
           `${this.language.instantTranslate('toasts.requests.addSuc')}`,
@@ -56,9 +61,12 @@ export class RequestEffect {
         return Observable.of({type: requestActions.API_CREATE_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Declines friend requests
+   */
   @Effect() declineRequest: Observable<Action> = this.actions
     .ofType(requestActions.ADDITIONAL.DECLINE)
-    .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}/${DECLINE}`,{}, createOptions())
+    .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}/${DECLINE}`, {}, createOptions())
       .map(body => {
         this.toastr.showSuccess(
           `${this.language.instantTranslate('toasts.requests.declineSuc')}`,
@@ -74,9 +82,12 @@ export class RequestEffect {
         return Observable.of({type: requestActions.API_DELETE_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Accepts friend request
+   */
   @Effect() acceptRequest: Observable<Action> = this.actions
     .ofType(requestActions.ADDITIONAL.ACCEPT)
-    .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}/${ACCEPT}`,{}, createOptions())
+    .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}/${ACCEPT}`, {}, createOptions())
       .map(body => {
         this.toastr.showSuccess(
           `${this.language.instantTranslate('toasts.requests.acceptSuc')}`,
@@ -93,6 +104,9 @@ export class RequestEffect {
         return Observable.of({type: requestActions.API_DELETE_FAIL, payload: body.json()})
       }));
 
+  /**
+   * Removes friend request
+   */
   @Effect() removeRequest: Observable<Action> = this.actions
     .ofType(requestActions.API_DELETE)
     .switchMap((action) => this.http.delete(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`, createOptions())

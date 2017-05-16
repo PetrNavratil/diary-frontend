@@ -12,30 +12,42 @@ import { Router } from '@angular/router';
   templateUrl: './platform.component.html',
   styleUrls: ['./platform.component.scss'],
 })
-export class PlatformComponent implements OnDestroy{
+export class PlatformComponent implements OnDestroy {
 
+  /**
+   * Recently added books holder
+   * @type {Array}
+   */
   books: Book[] = [];
+  /**
+   * Subscription for latest books
+   */
   subscription: Subscription;
   loading = false;
 
   constructor(private store: Store<AppState>, private router: Router) {
+    // get latest books and set interval
     this.store.dispatch({type: latestBooksActions.API_GET});
-    setInterval(() => this.store.dispatch({type: latestBooksActions.API_GET}), 60000*2);
+    setInterval(() => this.store.dispatch({type: latestBooksActions.API_GET}), 60000 * 2);
     this.subscription = this.store.select('latestBooks').subscribe(
       (data: SquirrelState<Book>) => {
         this.loading = data.loading;
-        if(!data.loading) {
+        if (!data.loading) {
           this.books = data.data;
         }
       }
     )
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  redirectToDetail(id: number){
+  /**
+   * Redirect user to the book detail section
+   * @param id
+   */
+  redirectToDetail(id: number): void {
     this.router.navigateByUrl(`platform/detail/${id}`);
   }
 }

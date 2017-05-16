@@ -19,6 +19,9 @@ export class IntervalsEffect {
               private toastr: ToastrService) {
   }
 
+  /**
+   * Gets reading intervals for period timeline
+   */
   @Effect() getStatisticIntervals: Observable<Action> = this.actions
     .ofType(intervalsActions.API_GET)
     .switchMap((action) => this.http.get(`${environment.apiUrl}${API_ENDPOINT}?month=${action.payload.month}&year=${action.payload.year}`, createOptions())

@@ -20,6 +20,9 @@ export class PeopleEffect {
               private toastr: ToastrService) {
   }
 
+  /**
+   * Searches among users
+   */
   @Effect() getPeople: Observable<Action> = this.actions
     .ofType(peopleActions.API_GET)
     .switchMap((action) => this.http.get(`${environment.apiUrl}${API_ENDPOINT}?key=${action.payload}`, createOptions())

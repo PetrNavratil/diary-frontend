@@ -10,10 +10,10 @@ import { PdfService } from '../../shared/pdf.service';
 
 @Component({
   selector: 'app-my-books',
-  templateUrl: 'my-books.component.html',
-  styleUrls: ['my-books.component.scss']
+  templateUrl: 'books.component.html',
+  styleUrls: ['books.component.scss']
 })
-export class MyBooksComponent implements OnDestroy {
+export class Books implements OnDestroy {
 
   subscriptions: any[] = [];
   books: Book[] = [];

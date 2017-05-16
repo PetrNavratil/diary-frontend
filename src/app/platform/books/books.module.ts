@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
-import { MyBooksComponent } from './my-books.component';
+import { Books } from './books.component';
 import { BookModule } from '../book/book.module';
 
 @NgModule({
@@ -11,10 +11,10 @@ import { BookModule } from '../book/book.module';
     BookModule
   ],
   declarations: [
-    MyBooksComponent
+    Books
   ],
   exports: [
-    MyBooksComponent
+    Books
   ]
 })
 export class BooksModule { }

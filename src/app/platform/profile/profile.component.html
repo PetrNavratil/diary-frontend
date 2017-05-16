@@ -1,7 +1,10 @@
 <div class="profile-container" *ngIf="user">
     <app-card class="user-info-card">
-      <div title>Uživatelské údaje</div>
+      <div title>{{'profile.userInfo' | translate}}</div>
       <div class="user-info">
+        <div class="lang">
+          <app-language></app-language>
+        </div>
         <div class="photo-row">
           <img class="photo" [src]="avatarUrl" *ngIf="user.avatar.length > 0" (click)="openFile()">
           <i class="material-icons photo" *ngIf="user.avatar.length === 0" (click)="openFile()">person</i>
@@ -12,7 +15,7 @@
               minlength="1"
               maxlength="25"
               type="text"
-              placeholder="Nickname"
+              placeholder="{{'shared.username' | translate}}"
               [(ngModel)]="user.userName">
           </md-input-container>
         </div>
@@ -21,39 +24,39 @@
             <input
               mdInput
               type="text"
-              placeholder="First Name"
+              placeholder="{{'shared.firstName' | translate}}"
               [(ngModel)]="user.firstName">
           </md-input-container>
           <md-input-container class="detail-input">
             <input
               mdInput
               type="text"
-              placeholder="Last Name"
+              placeholder="{{'shared.lastName' | translate}}"
               [(ngModel)]="user.lastName">
           </md-input-container>
           <app-loading-button
             class="button"
             [color]="'primary'"
             [loading]="loading"
-            [title]="'Potvrdit změnu'"
+            [title]="'profile.confirmChanges' | translate"
             (click)="editUser($event)">
           </app-loading-button>
         </div>
       </div>
       <div class="change-password" *ngIf="user.email.length > 0">
-        <div>Po kliknutí na následující tlačítko Vám bude na vaši emailovou adresu odeslán odkaz, kde je možné provést změni hesla.</div>
-        <button md-raised-button color="primary" (click)="changePassword()">Změnit heslo</button>
+        <div>{{'profile.changePasswordHint' | translate}}</div>
+        <button md-raised-button color="primary" (click)="changePassword()">{{'profile.changePassword' | translate}}</button>
       </div>
     </app-card>
 
   <div class="friends-section">
     <app-card class="friend-card">
-      <div title>Vyhledávejte přátele</div>
+      <div title>{{'profile.findFriends' | translate}}</div>
       <div class="searcher-container" #dropdown>
         <i class="material-icons search-icon">search</i>
         <input type="text"
                class="search-input"
-               placeholder="Hledej podle jména, příjmení, přezdívky či emailu"
+               placeholder="{{'profile.searchHint' | translate}}"
                (focus)="showDropdown()"
                ngModel
                (ngModelChange)="changed($event)"
@@ -61,7 +64,7 @@
         <md-spinner *ngIf="searcherLoading "></md-spinner>
         <div class="dropdown" [@expandable]="state">
           <div class="container">
-            <app-nothing *ngIf="people.length === 0 && showNothing" class="nothing"> Žádní uživatelé nebyli nalezeni</app-nothing>
+            <app-nothing *ngIf="people.length === 0 && showNothing" class="nothing"> {{'profile.noUsers' | translate}}</app-nothing>
             <div class="friend" *ngFor="let person of people">
               <div class="user">
                 <div class="avatar-container">
@@ -74,12 +77,12 @@
                 </div>
               </div>
               <div class="buttons">
-                <button class="button" md-raised-button color="primary" *ngIf="shouldAddRequest(person.id)" (click)="sendRequest(person.id)">Poslat žádost</button>
-                <button class="button" md-raised-button color="warn" *ngIf="shouldRemoveRequest(person.id)" (click)="removeRequestFromSearcher(person.id)">Zrušit žádost</button>
-                <button class="button" md-raised-button color="warn" *ngIf="shouldRemoveFromFriends(person.id)" (click)="removeFriend(person.id)" >Odebrat z přátel</button>
+                <button class="button" md-raised-button color="primary" *ngIf="shouldAddRequest(person.id)" (click)="sendRequest(person.id)">{{'profile.sendRequest' | translate}}</button>
+                <button class="button" md-raised-button color="warn" *ngIf="shouldRemoveRequest(person.id)" (click)="removeRequestFromSearcher(person.id)">{{'profile.abortRequest' | translate}}</button>
+                <button class="button" md-raised-button color="warn" *ngIf="shouldRemoveFromFriends(person.id)" (click)="removeFriend(person.id)" >{{'profile.removeFriend' | translate}}</button>
                 <div class="tmp" *ngIf="shouldDeclineOrAccept(person.id)" style="display: flex;">
-                  <button class="button" md-raised-button color="primary" (click)="acceptRequestFromSearcher(person.id)" >Příjmout</button>
-                  <button class="button" md-raised-button color="warn" (click)="declineRequestFromSearcher(person.id)" >Odmítnout</button>
+                  <button class="button" md-raised-button color="primary" (click)="acceptRequestFromSearcher(person.id)" >{{'profile.accept' | translate}}</button>
+                  <button class="button" md-raised-button color="warn" (click)="declineRequestFromSearcher(person.id)" >{{'profile.decline' | translate}}</button>
                 </div>
               </div>
             </div>
@@ -90,20 +93,20 @@
     <div class="requests">
       <app-card class="friend-card" [padded]="false">
         <div title>
-          Příchozí žádosti o přátelství
+          {{'profile.incomingRequests' | translate}}
         </div>
         <app-friend-request (decline)="declineRequest($event)" (accept)="acceptRequest($event)" [requests]="incomingFriendRequests"></app-friend-request>
       </app-card>
       <app-card class="friend-card" [padded]="false">
         <div title>
-         Odeslané žádosti o přátelství
+          {{'profile.outgoingRequests' | translate}}
         </div>
         <app-friend-request [outgoing]="true" [requests]="outgoingFriendRequests" (remove)="removeRequest($event)" ></app-friend-request>
       </app-card>
     </div>
 
     <app-card class="friend-card" [padded]="false">
-      <div title>Vaši přátelé</div>
+      <div title>{{'profile.yourFriends' | translate}}</div>
       <app-friend [friends]="friends" (goToDetail)="goToDetail($event)" (removeFriend)="removeFriend($event)" ></app-friend>
     </app-card>
   </div>

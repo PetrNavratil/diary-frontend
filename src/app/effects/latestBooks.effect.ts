@@ -7,13 +7,17 @@ import { Action } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import { createOptions } from '../shared/createOptions';
 import { ToastrService } from '../shared/toastr.service';
+import { LanguageService } from '../shared/language.service';
 
 const API_ENDPOINT = '/books/latest';
 
 @Injectable()
 export class LatestBooksEffect {
 
-  constructor(private actions: Actions, private http: Http, private toastr: ToastrService) {
+  constructor(private actions: Actions,
+              private http: Http,
+              private language: LanguageService,
+              private toastr: ToastrService) {
 
   }
 
@@ -22,7 +26,10 @@ export class LatestBooksEffect {
     .switchMap((action) => this.http.get(`${environment.apiUrl}${API_ENDPOINT}`, createOptions())
       .map(body => ({type: latestBooksActions.GET, payload: body.json()}))
       .catch(body =>{
-        this.toastr.showError('Nepodařilo se začít nově přidané knihy. Kliknutím aktualizujete stránku.', 'Přidané knihy');
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.latest.getFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.latest.title')}`
+        );
         return Observable.of({type: latestBooksActions.API_GET_FAIL, payload: body.json()})
       }));
 }

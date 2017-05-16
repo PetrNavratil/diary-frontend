@@ -7,13 +7,17 @@ import { booksActions } from '../reducers/books.reducer';
 import { environment } from '../../environments/environment';
 import { createOptions } from '../shared/createOptions';
 import { ToastrService } from '../shared/toastr.service';
+import { LanguageService } from '../shared/language.service';
 const API_ENDPOINT = '/books';
-const BOOK = 'Kniha';
 
 @Injectable()
 export class BookEffect {
 
-  constructor(private actions: Actions, private http: Http, private toastr: ToastrService) {
+
+  constructor(private actions: Actions,
+              private http: Http,
+              private language: LanguageService,
+              private toastr: ToastrService) {
   }
 
   @Effect() getBooks: Observable<Action> = this.actions
@@ -21,7 +25,10 @@ export class BookEffect {
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT, createOptions())
       .map(body => ({type: booksActions.GET, payload: body.json()}))
       .catch(body => {
-        this.toastr.showError('Nepodařilo se načíst vaše knihy. Kliknutím aktualizujete stránku.', BOOK);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.books.getBooksFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.books.title')}`
+        );
         return Observable.of({type: booksActions.API_GET_FAIL, payload: body.json()})
       }));
 
@@ -30,7 +37,10 @@ export class BookEffect {
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + '/' + action.payload, createOptions())
       .map(body => ({type: booksActions.GET, payload: [body.json()]}))
       .catch(body => {
-        this.toastr.showError('Nepodařilo se načíst knihu. Kliknutím aktualizujete stránku.', BOOK);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.books.getBookFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.books.title')}`
+        );
         return Observable.of({type: booksActions.API_GET_FAIL, payload: body.json()})
       }));
 
@@ -38,11 +48,17 @@ export class BookEffect {
     .ofType(booksActions.API_CREATE)
     .switchMap((action) => this.http.post(environment.apiUrl + API_ENDPOINT + '/' + action.payload, {}, createOptions())
       .map(body => {
-        this.toastr.showSuccess('Kniha byla úspěšně přidána mezi vaše knihy.', BOOK);
+        this.toastr.showSuccess(
+          `${this.language.instantTranslate('toasts.books.insertSuc')}`,
+          `${this.language.instantTranslate('toasts.books.title')}`
+        );
         return {type: booksActions.GET, payload: [body.json()]}
       })
       .catch(body => {
-        this.toastr.showError('Nepodařilo se přidat knihu mezi vaše knihy. Kliknutím aktualizujete stránku.', BOOK);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.books.insertFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.books.title')}`
+        );
         return Observable.of({type: booksActions.API_CREATE_FAIL, payload: body.json()})
       }));
 
@@ -50,11 +66,17 @@ export class BookEffect {
     .ofType(booksActions.API_DELETE)
     .switchMap((action) => this.http.delete(environment.apiUrl + API_ENDPOINT + '/' + action.payload, createOptions())
       .map(body => {
-        this.toastr.showSuccess('Kniha byla úspěšně odebrána z vašich knih.', BOOK);
+        this.toastr.showSuccess(
+          `${this.language.instantTranslate('toasts.books.removeSuc')}`,
+          `${this.language.instantTranslate('toasts.books.title')}`
+        );
         return {type: booksActions.GET, payload: [body.json()]}
       })
       .catch(body => {
-        this.toastr.showError('Nepodařilo se odebrat knihu z vašich knih. Kliknutím aktualizujete stránku.', BOOK);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.books.removeFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.books.title')}`
+        );
         return Observable.of({type: booksActions.API_DELETE_FAIL, payload: body.json()})
       }));
 
@@ -62,11 +84,17 @@ export class BookEffect {
     .ofType(booksActions.API_UPDATE)
     .switchMap((action) => this.http.put(environment.apiUrl + API_ENDPOINT + '/' + action.payload.id, action.payload, createOptions())
       .map(body => {
-        this.toastr.showSuccess('Stav knihy byl úspěšně aktualizován.', BOOK);
+        this.toastr.showSuccess(
+          `${this.language.instantTranslate('toasts.books.statusSuc')}`,
+          `${this.language.instantTranslate('toasts.books.title')}`
+          );
         return {type: booksActions.UPDATE, payload: body.json()}
       })
       .catch(body => {
-        this.toastr.showError('Nepodařilo se aktualizovat stav knihy. Kliknutím aktualizujete stránku.', BOOK);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.books.statusFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.books.title')}`
+        );
         return Observable.of({type: booksActions.API_UPDATE_FAIL, payload: body.json()})
       }));
 }

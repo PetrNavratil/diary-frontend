@@ -5,7 +5,7 @@
   </div>
   <div class="latest" [ngClass]="{'loading': loading}">
     <app-card >
-      <div title>Nedávno přidané knihy</div>
+      <div title>{{'books.recentBooks' | translate}}</div>
       <div class="card-content">
         <app-book-preview
           *ngFor="let book of books"

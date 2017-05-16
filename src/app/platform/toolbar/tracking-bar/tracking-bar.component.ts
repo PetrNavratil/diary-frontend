@@ -7,6 +7,7 @@ import * as moment from 'moment'
 import { User } from '../../../models/user.model';
 import { Router } from '@angular/router';
 import { SquirrelState } from '@flowup/squirrel';
+import { simpleDuration } from '../../../shared/duration-format';
 
 @Component({
   selector: 'app-tracking-bar',
@@ -47,11 +48,9 @@ export class TrackingBarComponent {
     setInterval(() => {
       if (this.reading && !this.reading.completed) {
         let now = moment();
-        let diff = now.diff(moment(this.reading.start));
-        this.time = moment.utc(moment.duration(diff).asMilliseconds()).format("HH:mm:ss");
+        this.time = simpleDuration(moment.duration(now.diff(moment(this.reading.start))));
       }
     }, 1000);
-
   }
 
   start() {
@@ -65,5 +64,4 @@ export class TrackingBarComponent {
   redirectToDetail(){
     this.router.navigate([`platform/detail/${this.reading.bookId}`]);
   }
-
 }

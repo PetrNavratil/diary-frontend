@@ -1,35 +1,38 @@
 <app-card>
-  <div title>Vaše knihy</div>
+  <div title>{{'books.yourBooks' | translate}}</div>
     <div class="sort-row">
       <div class="input-holder">
         <md-input-container class="input-container">
           <input mdInput type="text" class="input" [(ngModel)]="pattern" (ngModelChange)="search()"
-                 placeholder="Vyhledávejte mezi vašemi knihami podle názvu či autora">
+                 placeholder="{{'books.searchAmongBooks' | translate}}">
           <i class="material-icons clear" [ngClass]="{'visible': pattern.length}" mdSuffix (click)="clearPattern($event)">clear</i>
         </md-input-container>
       </div>
       <div class="buttons">
-        <app-dropdown [closeOnClick]="true" [buttonTitle]="selected | bookStatus" class="dropdown">
+        <app-dropdown [closeOnClick]="true" [dropdownId]="'statusSelect'" [buttonTitle]="selected | bookStatus | translate" class="dropdown">
           <div class="select-dropdown">
             <div class="item" *ngFor="let item of [0,1,2,3,4]" (click)="selectNewBooks(item)"
                  [ngClass]="{'selected': selected === item}">
-              <span class="name"> {{ item | bookStatus}}</span>
+              <span class="name"> {{ item | bookStatus | translate}}</span>
             </div>
           </div>
         </app-dropdown>
-        <app-loading-button
-          class="button"
-          (click)="generatePdf()"
-          [title]="'Generovat seznam zvolenych knih [PDF]'"
-          [color]="'primary'"
-          [loading]="pdfLoading | async"
-        ></app-loading-button>
+        <app-dropdown [closeOnClick]="true" [dropdownId]="'fileSelect'" [buttonTitle]="'books.generateList' | translate" class="dropdown ">
+          <div class="select-dropdown">
+            <div class="item" (click)="generatePdf()">
+              <span class="name">PDF</span>
+            </div>
+            <div class="item" (click)="generateTxt()">
+              <span class="name">TXT</span>
+            </div>
+          </div>
+        </app-dropdown>
       </div>
   </div>
 </app-card>
 <app-card *ngIf="!selectedBooks.length" class="nothing">
   <app-nothing >
-    Zatím nemáte přidané žádné knihy
+    {{'books.noBooks' | translate}}
   </app-nothing>
 </app-card>
 

@@ -28,6 +28,7 @@ export class DropdownComponent implements AfterViewChecked, OnDestroy {
   @Input() buttonTitle: string = '';
   @Input() closeOnClick: boolean = false;
   @Input() disabled = false;
+  @Input() dropdownId: string;
 
   constructor(private el: ElementRef, private cd: ChangeDetectorRef) {
     document.body.addEventListener('click', (event) => {
@@ -44,8 +45,8 @@ export class DropdownComponent implements AfterViewChecked, OnDestroy {
 
   ngAfterViewChecked() {
     this.tether = new Tether({
-      element: `#dropdown-content${this.getId()}`,
-      target: `#dropdown-button${this.getId()}`,
+      element: `#dropdown-content${this.dropdownId}`,
+      target: `#dropdown-button${this.dropdownId}`,
       attachment: 'top left',
       targetAttachment: 'bottom left'
     });
@@ -57,10 +58,6 @@ export class DropdownComponent implements AfterViewChecked, OnDestroy {
     this.dropdown.nativeElement.parentElement.removeChild(this.dropdown.nativeElement);
   }
 
-  getId(): string {
-    let splitted = this.buttonTitle.split(' ');
-    return splitted[splitted.length - 1];
-  }
 
   dropdownClick() {
     if (this.closeOnClick) {

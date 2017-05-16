@@ -3,25 +3,25 @@
   </md-spinner>
 </ng-template>
 <app-card>
-  <div title>Celkový přehled čtení</div>
+  <div title>{{'statistics.summary' | translate}}</div>
   <div class="statistics-container">
     <div class="summary" *ngIf="statistic; else spinner">
       <div class="summary-column left">
-        <div class="label">Počet knih</div>
+        <div class="label">{{'statistics.bookCount' | translate}}</div>
         <div class="content">{{statistic.booksCount}}</div>
-        <div class="label">Počet přečtených knih</div>
+        <div class="label">{{'statistics.readCount' | translate}}</div>
         <div class="content">{{statistic.booksRead}}</div>
-        <div class="label">Počet čtených knih</div>
+        <div class="label">{{'statistics.readingCount' | translate}}</div>
         <div class="content">{{statistic.booksReading}}</div>
-        <div class="label">Počet knih k přečtení</div>
+        <div class="label">{{'statistics.toReadCount' | translate}}</div>
         <div class="content">{{statistic.booksToRead}}</div>
-        <div class="label">Počet přidanýchm, ale nepřečtených knih</div>
+        <div class="label">{{'statistics.notReadCount' | translate}}</div>
         <div class="content">{{statistic.booksNotRead}}</div>
       </div>
       <div class="summary-column" >
-        <div class="label">Čas strávený čtením <span class="small">součet dílčích intervalů</span></div>
+        <div class="label">{{'statistics.timeSpentReading' | translate}} <span class="small">{{'statistics.intervalSum' | translate}}</span></div>
         <div class="content">{{spentReading}}</div>
-        <div class="label">Nejvíckrát přečtená kniha</div>
+        <div class="label">{{'statistics.mostRead' | translate}}</div>
         <div class="content">{{statistic.mostlyRead.title.length > 0 ? statistic.mostlyRead.title : '-'}}</div>
       </div>
     </div>
@@ -31,16 +31,16 @@
   <app-dropdown-row (isExpanded)="monthExpanded($event)">
     <div class="header" row-header>
       <div class="title">
-        <span>Časová osa čtení knih za období {{selectedMonth.name}}/{{selectedYear}}  </span>
-        <span class="small">Intervaly jednotlivých úseků četby</span>
+        <span>{{'statistics.intervalTimeline' | translate}} {{selectedMonth.name}}/{{selectedYear}}  </span>
+        <span class="small">{{'statistics.intervalTimelineDesc' | translate}}</span>
       </div>
       <div class="small">
-        Klikněte pro {{monthTimelineExpanded ? 'skrytí' : 'zobrazení'}}
+        {{monthTimelineExpanded ? ('statistics.hide' | translate) : ('statistics.show' | translate)}}
       </div>
     </div>
     <div class="statistics" dropdown-content>
       <div class="buttons">
-        <app-dropdown class="dropdown" [buttonTitle]="selectedMonth.name" [closeOnClick]="true">
+        <app-dropdown class="dropdown" [dropdownId]="'monthSelect'" [buttonTitle]="selectedMonth.name" [closeOnClick]="true">
           <div class="action-dropdown">
             <div class="item" *ngFor="let month of months"
                  (click)="selectMonth(month)"
@@ -49,7 +49,7 @@
             </div>
           </div>
         </app-dropdown>
-        <app-dropdown class="dropdown" [buttonTitle]="selectedYear" [closeOnClick]="true">
+        <app-dropdown class="dropdown" [dropdownId]="'yearSelect'" [buttonTitle]="selectedYear" [closeOnClick]="true">
           <div class="action-dropdown">
             <div class="item" *ngFor="let year of years"
                  (click)="selectYear(year)"
@@ -61,7 +61,7 @@
       </div>
       <div *ngIf="intervalsLoading; then spinner"></div>
       <app-nothing *ngIf="!intervalsLoading && !intervals.length">
-        Ve zvolenem období nebyla čtena žádná kniha.
+        {{'statistics.intervalNoBooks' | translate}}
       </app-nothing>
       <div #monthTimeline></div>
     </div>
@@ -71,17 +71,17 @@
   <app-dropdown-row (isExpanded)="yearExpanded($event)">
     <div class="header" row-header>
       <div class="title">
-        <span>Časová osa čtení všech knih </span>
-        <span class="small">Intervaly celkové doby četby</span>
+        <span>{{'statistics.allTimeline' | translate}} </span>
+        <span class="small">{{'statistics.allTimelineDesc' | translate}}</span>
       </div>
       <div class="small">
-        Klikněte pro {{yearTimelineExpanded ? 'skrytí' : 'zobrazení'}}
+        {{yearTimelineExpanded ? ('statistics.hide' | translate) : ('statistics.show' | translate)}}
       </div>
     </div>
     <div class="statistics" dropdown-content>
       <div *ngIf="readingsLoading; then spinner"></div>
       <app-nothing *ngIf="!readingsLoading && !wholeTimeReading.length">
-        Zatím jste nečetli žádnou knihu.
+        {{'statistics.noBooksRead' | translate}}
       </app-nothing>
       <div #yearTimeline></div>
     </div>

@@ -1,6 +1,6 @@
 <div class="searcher-container">
   <i class="material-icons search-icon">search</i>
-  <input type="text" class="search-input" title="Search" placeholder="Vyhledávejte knihy" (blur)="hideDropdown()" (focus)="displayDropdown()" [ngModel]="key"
+  <input type="text" class="search-input" title="Search" placeholder="{{'books.searchNewBooks' | translate}}" (blur)="hideDropdown()" (focus)="displayDropdown()" [ngModel]="key"
          (ngModelChange)="changed($event)">
   <md-spinner [ngClass]="{'hidden': !loading}"></md-spinner>
   <div class="dropdown " [@expandable]="state">

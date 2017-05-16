@@ -23,6 +23,7 @@ export class DropdownRowComponent {
   @Output() isExpanded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   toggle() {
+    console.log('asdasdad');
     this.state = this.state === COLLAPSED ? EXPANDED : COLLAPSED;
     this.isExpanded.emit(this.state === EXPANDED);
   }

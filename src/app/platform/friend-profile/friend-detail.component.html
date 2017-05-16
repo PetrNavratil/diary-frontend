@@ -1,14 +1,14 @@
 <div class="friend-detail-container" *ngIf="friend">
   <app-card [padded]="false">
     <div title>
-      Detail uživatele
+      {{'friend.userDetail' | translate}}
     </div>
     <app-friend [friends]="[friend]" [clickable]="false" (removeFriend)="removeFriend($event)"></app-friend>
   </app-card>
   <div class="books-shelves">
     <div class="column">
       <app-card>
-        <div>Poličky uživatele</div>
+        <div>{{'friend.userShelves' | translate}}</div>
       </app-card>
       <app-card [padded]="false" *ngFor="let shelf of friend.shelves">
         <app-shelf [editable]="false"  [shelf]="shelf" (copyShelf)="copyShelf($event)" ></app-shelf>
@@ -16,7 +16,7 @@
     </div>
     <div class="column">
       <app-card [padded]="false" >
-        <div title>Knihy uživatele</div>
+        <div title>{{'friend.userBooks' | translate}}</div>
         <div class="books-holder">
             <div class="book" *ngFor="let book of friend.books" (click)="goToDetail(book.id)">
               <app-book-preview  [book]="book"></app-book-preview>

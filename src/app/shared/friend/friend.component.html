@@ -10,20 +10,20 @@
         <div class="item">{{friend.firstName}} {{friend.lastName}}</div>
       </div>
       <div class="info">
-        <div class="item">Přátelé od:</div>
+        <div class="item">{{'friend.friendsSince' | translate}}:</div>
         <div class="item shift">{{getDate(friend.since)}}</div>
       </div>
       <div class="info">
-        <div class="item">Knih:</div>
+        <div class="item">{{'friend.books' | translate}}:</div>
         <div class="item shift">{{friend.booksCount}}</div>
       </div>
       <div class="info">
-        <div class="item">Poliček:</div>
+        <div class="item">{{'friend.shelves' | translate}}:</div>
         <div class="item shift">{{friend.shelvesCount}}</div>
       </div>
     </div>
     <div class="buttons">
-      <button md-raised-button color="warn" (click)="remove(friend,$event)">Odebrat z přátel</button>
+      <button md-raised-button color="warn" (click)="remove(friend,$event)">{{'profile.removeFriend' | translate}}</button>
     </div>
   </div>
 </div>

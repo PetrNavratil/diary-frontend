@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { LandingModule } from './landing/landing.module';
@@ -42,12 +42,17 @@ import { PeopleEffect } from './effects/people.effect';
 import { peopleReducer } from './reducers/people.reducer';
 import { friendsReducer } from './reducers/friends.reducer';
 import { FriendsEffect } from './effects/friends.effect';
+import { TranslateModule, TranslateStaticLoader, TranslateLoader } from 'ng2-translate';
 
 export class CustomOption extends ToastOptions {
   animate = 'flyRight';
   newestOnTop = true;
   toastLife = 3000;
   positionClass = 'toast-bottom-right';
+}
+
+export function createTranslateLoader(http: Http) {
+  return new TranslateStaticLoader(http, './assets/languages', '.json');
 }
 
 
@@ -62,6 +67,11 @@ export class CustomOption extends ToastOptions {
     LandingModule,
     PlatformModule,
     ToastModule.forRoot(),
+    TranslateModule.forRoot({
+      provide: TranslateLoader,
+      useFactory: (createTranslateLoader),
+      deps: [Http]
+    }),
 
     AppRoutes,
 

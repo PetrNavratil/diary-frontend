@@ -16,7 +16,7 @@ export class FriendComponent {
   @Output() goToDetail: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(){
-    moment.locale('cs');
+    //moment.locale('cs');
 }
 
   avatar(url: string):string{

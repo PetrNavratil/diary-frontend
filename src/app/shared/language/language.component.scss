@@ -1,0 +1,29 @@
+@import '../../theme';
+.header{
+  display: flex;
+  justify-content: flex-end;
+  .language-icon{
+    font-size: 32px;
+  }
+}
+.content{
+  background-color: rgba($card-background-color, .9);
+  .language{
+    font-family: $font-book;
+    height: 45px;
+    min-width: 70px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
+    align-items: center;
+    color: $font-color;
+    cursor: pointer;
+    &:hover{
+      background-color: rgba(black, .1);
+    }
+    &:first-child{
+      border-bottom: 1px solid $divider-color;
+    }
+  }
+
+}

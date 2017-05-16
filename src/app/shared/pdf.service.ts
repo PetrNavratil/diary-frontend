@@ -5,6 +5,7 @@ import { createOptions } from './createOptions';
 import { ReplaySubject, Observable } from 'rxjs';
 import { BookStatus } from '../models/book-status.enum';
 import { ToastrService } from './toastr.service';
+import { LanguageService } from './language.service';
 
 declare function saveAs(data: Blob | File, filename?: string, disableAutoBom?: boolean);
 
@@ -14,7 +15,9 @@ export class PdfService {
   loading: ReplaySubject<boolean> = new ReplaySubject<boolean>();
   loading$: Observable<boolean> = this.loading.asObservable();
 
-  constructor(private http: Http, private toastr: ToastrService) {
+  constructor(private http: Http,
+              private language: LanguageService,
+              private toastr: ToastrService) {
     this.loading.next(false);
   }
 
@@ -27,11 +30,17 @@ export class PdfService {
         let file = new Blob([data.blob()], {type: 'application/pdf'});
         saveAs(file, `book-detail-${id}.pdf`);
         this.loading.next(false);
-        this.toastr.showSuccess('Detail knihy byl úspěšně vygenerován.', 'PDF');
+        this.toastr.showSuccess(
+          `${this.language.instantTranslate('toasts.pdf.detailSuc')}`,
+          `${this.language.instantTranslate('toasts.pdf.title')}`
+        );
       },
       () => {
         this.loading.next(false);
-        this.toastr.showError('Detail knihy se nepodařilo vygenerovat.', 'PDF');
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.pdf.detailFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.pdf.title')}`
+        );
       }
     )
   }
@@ -45,11 +54,41 @@ export class PdfService {
         let file = new Blob([data.blob()], {type: 'application/pdf'});
         saveAs(file, `books-${BookStatus[status]}.pdf`);
         this.loading.next(false);
-        this.toastr.showSuccess('Seznam knih byl úspěšně vygenerován.', 'PDF');
+        this.toastr.showSuccess(
+          `${this.language.instantTranslate('toasts.pdf.listSuc')}`,
+          `${this.language.instantTranslate('toasts.pdf.title')}`
+        );
       },
       () => {
         this.loading.next(false);
-        this.toastr.showError('Seznam knih se nepodařilo vygenerovat.', 'PDF');
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.pdf.listFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.pdf.title')}`
+        );
+      }
+    )
+  }
+
+  generateBooksTxt(status: BookStatus){
+    let options: RequestOptionsArgs = createOptions();
+    options.responseType = ResponseContentType.Blob;
+    this.loading.next(true);
+    this.http.get(`${environment.apiUrl}/txt/${status}`, options).subscribe(
+      data => {
+        let file = new Blob([data.blob()], {type: 'text/plain'});
+        saveAs(file, `books-${BookStatus[status]}.txt`);
+        this.loading.next(false);
+        this.toastr.showSuccess(
+          `${this.language.instantTranslate('toasts.pdf.listSuc')}`,
+          `${this.language.instantTranslate('toasts.pdf.title')}`
+        );
+      },
+      () => {
+        this.loading.next(false);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.pdf.listFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.pdf.title')}`
+        );
       }
     )
   }

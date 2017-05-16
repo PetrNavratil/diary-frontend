@@ -4,7 +4,7 @@
          *ngFor="let menuItem of menuItems"
          routerLinkActive="active"
          routerLink="{{menuItem.link}}">
-      {{menuItem.name}}
+      {{menuItem.name | translate}}
     </div>
   </div>
   <app-searcher></app-searcher>

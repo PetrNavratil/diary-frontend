@@ -43,7 +43,8 @@ export class LandingComponent implements OnDestroy {
   loginState = 'active';
   showReset = false;
 
-  constructor(private route: ActivatedRoute, private auth: AuthService) {
+  constructor(private route: ActivatedRoute,
+              private auth: AuthService) {
     this.route.params.subscribe(
       (params: Params) => {
         if (params['action']) {
@@ -95,4 +96,5 @@ export class LandingComponent implements OnDestroy {
   loginDone(){
     this.showReset = this.loginState === 'active';
   }
+
 }

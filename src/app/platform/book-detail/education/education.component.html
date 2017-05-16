@@ -102,6 +102,6 @@
     </md-input-container>
   </div>
   <div class="row buttons">
-    <button md-raised-button color="primary" [disabled]="!f.valid">{{data.id === 0 ? 'Přidat nový rozbor' : 'Upravit rozbor'}}</button>
+    <button md-raised-button color="primary" [disabled]="!f.valid">{{data.id === 0 ? ('educational.add' | translate) : ('educational.edit' | translate)}}</button>
   </div>
 </form>

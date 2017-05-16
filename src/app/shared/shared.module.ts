@@ -19,6 +19,9 @@ import { ToastrService } from './toastr.service';
 import { AuthService } from './auth.service';
 import { FriendRequestComponent } from './friend-request/friend-request.component';
 import { FriendComponent } from './friend/friend.component';
+import { TranslateModule } from 'ng2-translate';
+import { LanguageService } from './language.service';
+import { LanguageComponent } from './language/language.component';
 
 @NgModule({
   imports: [
@@ -28,7 +31,8 @@ import { FriendComponent } from './friend/friend.component';
     HttpModule,
     RouterModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TranslateModule
   ],
   declarations: [
     CardComponent,
@@ -40,7 +44,8 @@ import { FriendComponent } from './friend/friend.component';
     TruncatePipe,
     NothingComponent,
     FriendRequestComponent,
-    FriendComponent
+    FriendComponent,
+    LanguageComponent
   ],
   exports: [
     BrowserModule,
@@ -49,6 +54,7 @@ import { FriendComponent } from './friend/friend.component';
     RouterModule,
     MaterialModule,
     BrowserAnimationsModule,
+    TranslateModule,
 
     CardComponent,
     EqualValidator,
@@ -59,12 +65,14 @@ import { FriendComponent } from './friend/friend.component';
     TruncatePipe,
     NothingComponent,
     FriendRequestComponent,
-    FriendComponent
+    FriendComponent,
+    LanguageComponent
   ],
   providers: [
     PdfService,
     ToastrService,
-    AuthService
+    AuthService,
+    LanguageService
   ]
 })
 export class SharedModule {

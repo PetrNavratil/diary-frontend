@@ -1,0 +1,9 @@
+<app-dropdown-row>
+  <div row-header class="header">
+    <i class="material-icons language-icon">language</i>
+  </div>
+  <div dropdown-content class="content">
+    <div class="language" (click)="setLanguage('cs')">{{'shared.cs' | translate}}</div>
+    <div class="language" (click)="setLanguage('en')">{{'shared.en' | translate}}</div>
+  </div>
+</app-dropdown-row>

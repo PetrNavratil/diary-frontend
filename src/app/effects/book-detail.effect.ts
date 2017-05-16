@@ -7,13 +7,14 @@ import { detailActions } from '../reducers/book-detail.reducer';
 import { environment } from '../../environments/environment';
 import { createOptions } from '../shared/createOptions';
 import { ToastrService } from '../shared/toastr.service';
+import { LanguageService } from '../shared/language.service';
 
 const API_ENDPOINT = '/book-detail/';
 
 
 @Injectable()
 export class BookDetail {
-  constructor(private actions: Actions, private http: Http, private toastr: ToastrService) {
+  constructor(private actions: Actions, private http: Http, private toastr: ToastrService, private language: LanguageService) {
   }
 
   @Effect() bookDetail: Observable<Action> = this.actions
@@ -21,7 +22,10 @@ export class BookDetail {
     .switchMap((action) => this.http.get(environment.apiUrl + API_ENDPOINT + encodeURI(action.payload), createOptions())
       .map(body => ({type: detailActions.GET, payload: [body.json()]}))
       .catch(body => {
-        this.toastr.showError('Nepodařilo se načíst informace o knize. Kliknutím aktualizujete stránku.', 'Kniha');
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.detail.getFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.detail.title')}`
+        );
         return Observable.of({type: detailActions.API_GET_FAIL, payload: body})
       }));
 }

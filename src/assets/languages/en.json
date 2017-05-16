@@ -1,0 +1,256 @@
+{
+  "landing": {
+    "title": "Electronic reading diary",
+    "aboutFirstLine": "Search, sort and track reading time",
+    "aboutSecondLine": "of your favorite books.",
+    "forgotten-change": "Forgotten password / Change Password",
+    "fbLogin": "Login via Facebook",
+    "googleLogin": "Login via Google+",
+    "noAcc": "Don't have an account yet?",
+    "registerNow": "Sign Up!",
+    "forgottenHint": "Enter an email address for which you would like to change password. Reset link will be send to this email address.",
+    "sendEmail": "Send email",
+    "login": "Login",
+    "register": "Register",
+    "backTo": "Back to the ",
+    "loginForm": "login form",
+    "confirmPassword": "Confirm password",
+    "errors": {
+      "emailNotSet": "Email address has to be filled",
+      "passwordLength": "Minimum password length is 5 characters",
+      "usernameNotSet": "Username has to be filled",
+      "passwordsNotSame": "Passwords has to be equal"
+    }
+  },
+  "shared": {
+    "username": "Username",
+    "password": "Password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "cs": "Czech",
+    "en": "English",
+    "errors" : {
+      "emailNotValid": "Email address is not valid"
+    }
+  },
+  "books": {
+    "title": "Books",
+    "yourBooks": "Your books",
+    "searchAmongBooks": "Search among your favorite books by title or author",
+    "generateList": "Generate list",
+    "noBooks": "Don't have any books yet",
+    "recentBooks": "Recently added books",
+    "searchNewBooks": "Find books"
+  },
+  "book": {
+    "NOT_READ": "Not read",
+    "TO_READ": "Want to read",
+    "READING": "Reading",
+    "READ": "Read",
+    "ALL": "All",
+    "title": "Title",
+    "author": "Author",
+    "status": "Status",
+    "published": "Published",
+    "pages": "Pages"
+  },
+  "shelves": {
+    "title": "Shelves",
+    "yourShelves": "Your shelves",
+    "newShelf": "Name of new shelf",
+    "addShelf": "Add shelf",
+    "renameShelf": "Rename shelf",
+    "deleteShelf": "Remove shelf",
+    "copyShelf": "Copy shelf",
+    "noShelves" : "Don't have any shelves yet"
+  },
+  "statistics": {
+    "title": "Statistics",
+    "summary": "Statistics overview",
+    "bookCount": "Books count",
+    "readCount": "Read books count",
+    "readingCount": "Reading books count",
+    "toReadCount": "Want to read books count",
+    "notReadCount": "Not read yet books count",
+    "timeSpentReading": "Time spent reading",
+    "intervalSum": "Total sum of partial reading intervals",
+    "mostRead": "Mostly read book",
+    "intervalTimeline": "Reading timeline for ",
+    "intervalTimelineDesc": "Intervals of book readings",
+    "show": "Click to enlarge",
+    "hide": "Click to shrink",
+    "allTimeline": "Reading timeline since registration",
+    "allTimelineDesc": "Readings of each book",
+    "intervalNoBooks": "No books were read in selected period.",
+    "noBooksRead": "No books have been read yet."
+  },
+  "bookDetail": {
+    "book": "Book",
+    "addBook": "Add book",
+    "removeBook": "Remove book",
+    "startTracking": "Start tracking",
+    "stopTracking": "Stop tracking",
+    "manageShelves": "Manage shelves",
+    "add": "Add",
+    "generate": "Generate PDF",
+    "buy": "Buy book",
+    "recommendedBooks": "Recommended books by Goodreads",
+    "comments": "Comments",
+    "analysis": "Literary analysis",
+    "analysisOpen": "Click to enlarge literary section",
+    "analysisClose": "Click to shrink literary section",
+    "bookInfo": "Book information",
+    "dataOrigin": "Data origin",
+    "readingOverview": "Reading overview",
+    "read": "Read",
+    "readingTime": "Reading total sum",
+    "reading": "Reading",
+    "readingPeriod": "Reading period",
+    "status": "Status",
+    "from": "From",
+    "to": "To",
+    "duration": "Duration",
+    "overallTime": "Overall duration"
+  },
+  "educational": {
+    "add": "Add new literary analysis",
+    "edit": "Edit literary analysis"
+  },
+  "profile": {
+    "userInfo": "User information",
+    "confirmChanges": "Confirm changes",
+    "changePasswordHint": "To change password click on the button bellow. Edit link will be send to your email address.",
+    "changePassword": "Change password",
+    "findFriends": "Find friends",
+    "searchHint": "Seach by first name, last name, username or email address",
+    "incomingRequests": "Incoming friend requests",
+    "noUsers": "No users were found",
+    "sendRequest": "Send request",
+    "abortRequest": "Abort request",
+    "removeFriend": "Remove from friends",
+    "accept": "Accept",
+    "decline": "Decline",
+    "outgoingRequests": "Sent friend requests",
+    "yourFriends": "Your friends"
+  },
+  "friend": {
+    "userDetail": "User details",
+    "userShelves": "User's shelves",
+    "userBooks": "User's books",
+    "friendsSince": "Friends since",
+    "books": "Books",
+    "shelves": "Shelves"
+  },
+  "comments": {
+    "add": "Add comment",
+    "remove": "Remove comment",
+    "edit": "Edit comment"
+  },
+  "toasts": {
+    "refresh": "Click here to refresh page.",
+    "user": {
+      "title": "User",
+      "getFail": "Could not get the user",
+      "editSuc": "User's been edited.",
+      "editFail": "Could not edit user.",
+      "avatarSuc": "Avatar's been uploaded.",
+      "avatarFail": "Could not upload avatar."
+    },
+    "detail": {
+      "title": "Book",
+      "getFail": "Could not get book information"
+    },
+    "books": {
+      "title": "Book",
+      "getBooksFail": "Could not get your books",
+      "getBookFail": "Could not get your book",
+      "insertSuc": "Book's been added to your books.",
+      "insertFail": "Could not add book to your books.",
+      "removeSuc": "Book's been removed from your books.",
+      "removeFail": "Could not remove book from your books.",
+      "statusSuc": "Book's status's been updated.",
+      "statusFail": "Could not update book's status."
+    },
+    "comments": {
+      "title": "Comments",
+      "getFail": "Could not get book's comments.",
+      "insertSuc": "Comment's been added.",
+      "insertFail": "Could not add comment.",
+      "removeSuc": "Comment's been deleted.",
+      "removeFail": "Could not delete comment.",
+      "editSuc": "Comment's been edited.",
+      "editFail": "Could not edit comment."
+    },
+    "requests": {
+      "title": "Friend request",
+      "getFail": "Could not get requests.",
+      "addSuc": "Request's been sent.",
+      "addFail": "Could not send requests.",
+      "declineSuc": "Request's been declined.",
+      "declineFail": "Could not decline request.",
+      "acceptSuc": "Request's been accepted.",
+      "acceptFail": "Could not accept request.",
+      "removeSuc": "Request's been removed.",
+      "removeFail": "Could not remove request."
+    },
+    "friends": {
+      "title": "Friends",
+      "getFriendsFail": "Could not get list of friends.",
+      "getFriendFail": "Could not get friend detail.",
+      "removeFail": "Could not remove friend.",
+      "searchFail": "Could not find friends."
+    },
+    "latest": {
+      "title": "Recenlty added books",
+      "getFail": "Could not get recently added books."
+    },
+    "readings": {
+      "title": "Reading",
+      "getFail": "Could not get reading information."
+    },
+    "search": {
+      "title": "Searching",
+      "searchFail": "Error's occurred during searching. Please try again."
+    },
+    "shelves": {
+      "title": "Shelf",
+      "getShelvesFail": "Could not load shelves.",
+      "addShelfSuc": "Shelf's been added.",
+      "addShelfFail": "Could not add shelf.",
+      "addBookSuc": "Book's been added to the shelf.",
+      "addBookFail": "Could not add book to the shelf.",
+      "removeBookSuc": "Book's been removed from the shelf.",
+      "removeBookFail": "Could not remove book from the shelf.",
+      "removeShelfSuc": "Shelf's been removed.",
+      "removeShelfFail": "Could not remove shelf.",
+      "editShelfSuc": "Shelf's been edited.",
+      "editShelfFail": "Could not edit shelf.",
+      "copySuc": "Shelf's been copied to your shelves.",
+      "copyFail": "Could not copy the shelf to your shelves."
+    },
+    "intervals": {
+      "title": "Intervals",
+      "getFail": "Could not get intervals for selected period."
+    },
+    "statistics": {
+      "title": "Statistics",
+      "getFail": "Could not load user's statistics."
+    },
+    "trackings": {
+      "title": "Tracking",
+      "getTrackingFail": "Could not get book's tracking.",
+      "getLastFail": "Could not get the latest tracking",
+      "startSuc": "Tracking's started.",
+      "startFail": "Could not start tracking.",
+      "stopSuc": "Tracking's stopped.",
+      "stopFail": "Could not stop tracking."
+    },
+    "pdf": {
+      "title": "PDF",
+      "detailSuc": "Book detail's been generated.",
+      "detailFail": "Could not generate book detail.",
+      "listSuc": "Book list's been generated.",
+      "listFail": "Could not generate book list."
+    }
+  }
+}

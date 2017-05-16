@@ -9,16 +9,20 @@ import { environment } from '../../environments/environment';
 import { createOptions } from '../shared/createOptions';
 import { AppState } from '../models/store-model';
 import { friendsActions } from '../reducers/friends.reducer';
+import { LanguageService } from '../shared/language.service';
 
 const API_ENDPOINT = '/friends/requests';
 const ACCEPT = 'accept';
 const DECLINE = 'decline';
-const REQUEST = 'Žádost o přátelství';
 
 @Injectable()
 export class RequestEffect {
 
-  constructor(private actions: Actions, private http: Http, private toastr: ToastrService, private store: Store<AppState>) {
+  constructor(private actions: Actions,
+              private http: Http,
+              private toastr: ToastrService,
+              private language: LanguageService,
+              private store: Store<AppState>) {
 
   }
 
@@ -27,7 +31,10 @@ export class RequestEffect {
     .switchMap((action) => this.http.get(`${environment.apiUrl}${API_ENDPOINT}`, createOptions())
       .map(body => ({type: requestActions.GET, payload: body.json()}))
       .catch(body => {
-        this.toastr.showError('Nepodařilo se získat žádosti o přátelství. Kliknutím aktualizujete stránku.', REQUEST);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.requests.getFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.requests.title')}`
+        );
         return Observable.of({type: requestActions.API_GET_FAIL, payload: body.json()})
       }));
 
@@ -35,11 +42,17 @@ export class RequestEffect {
     .ofType(requestActions.API_CREATE)
     .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`,{}, createOptions())
       .map(body => {
-        this.toastr.showSuccess('Žádost byla úspěšně odeslána.', REQUEST);
+        this.toastr.showSuccess(
+          `${this.language.instantTranslate('toasts.requests.addSuc')}`,
+          `${this.language.instantTranslate('toasts.requests.title')}`
+        );
         return {type: requestActions.CREATE, payload: body.json()}
       })
       .catch(body => {
-        this.toastr.showError('Žádost se nepodařilo odeslat. Kliknutím aktualizujete stránku.', REQUEST);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.requests.addFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.requests.title')}`
+        );
         return Observable.of({type: requestActions.API_CREATE_FAIL, payload: body.json()})
       }));
 
@@ -47,11 +60,17 @@ export class RequestEffect {
     .ofType(requestActions.ADDITIONAL.DECLINE)
     .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}/${DECLINE}`,{}, createOptions())
       .map(body => {
-        this.toastr.showSuccess('Žádost byla odmítnuta.', REQUEST);
+        this.toastr.showSuccess(
+          `${this.language.instantTranslate('toasts.requests.declineSuc')}`,
+          `${this.language.instantTranslate('toasts.requests.title')}`
+        );
         return {type: requestActions.DELETE, payload: body.json()}
       })
       .catch(body => {
-        this.toastr.showError('Žádost se nepodařilo odeslat. Kliknutím aktualizujete stránku.', REQUEST);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.requests.declineFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.requests.title')}`
+        );
         return Observable.of({type: requestActions.API_DELETE_FAIL, payload: body.json()})
       }));
 
@@ -59,12 +78,18 @@ export class RequestEffect {
     .ofType(requestActions.ADDITIONAL.ACCEPT)
     .switchMap((action) => this.http.post(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}/${ACCEPT}`,{}, createOptions())
       .map(body => {
-        this.toastr.showSuccess('Žádost byla přijata.', REQUEST);
+        this.toastr.showSuccess(
+          `${this.language.instantTranslate('toasts.requests.acceptSuc')}`,
+          `${this.language.instantTranslate('toasts.requests.title')}`
+        );
         this.store.dispatch({type: friendsActions.API_GET});
         return {type: requestActions.DELETE, payload: body.json()}
       })
       .catch(body => {
-        this.toastr.showError('Žádost se nepodařilo odeslat. Kliknutím aktualizujete stránku.', REQUEST);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.requests.acceptFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.requests.title')}`
+        );
         return Observable.of({type: requestActions.API_DELETE_FAIL, payload: body.json()})
       }));
 
@@ -72,11 +97,17 @@ export class RequestEffect {
     .ofType(requestActions.API_DELETE)
     .switchMap((action) => this.http.delete(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`, createOptions())
       .map(body => {
-        this.toastr.showSuccess('Žádost byla úspěšně odebrána.', REQUEST);
+        this.toastr.showSuccess(
+          `${this.language.instantTranslate('toasts.requests.removeSuc')}`,
+          `${this.language.instantTranslate('toasts.requests.title')}`
+        );
         return {type: requestActions.DELETE, payload: body.json()}
       })
       .catch(body => {
-        this.toastr.showError('Nepodařilo se odebrat žádost. Kliknutím aktualizujete stránku.', REQUEST);
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.requests.removeFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.requests.title')}`
+        );
         return Observable.of({type: requestActions.API_DELETE_FAIL, payload: body.json()})
       }));
 

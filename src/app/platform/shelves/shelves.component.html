@@ -1,10 +1,10 @@
 <app-card>
-  <div title>Vaše poličky</div>
+  <div title>{{'shelves.yourShelves' | translate}}</div>
   <div class="input-row">
     <md-input-container class="input">
-      <input mdInput placeholder="Název nové poličky" type="text" [(ngModel)]="shelfName">
+      <input mdInput placeholder="{{'shelves.newShelf' | translate}}" type="text" [(ngModel)]="shelfName">
     </md-input-container>
-    <app-loading-button [loading]="loading"  [color]="'primary'" [disabled]="unique" (click)="addShelf()" [title]="'Přidat poličku'"></app-loading-button>
+    <app-loading-button [loading]="loading"  [color]="'primary'" [disabled]="unique" (click)="addShelf()" [title]="'shelves.addShelf' | translate"></app-loading-button>
   </div>
 </app-card>
 
@@ -18,5 +18,5 @@
 </app-card>
 
 <app-card *ngIf="shelves.length === 0">
-<app-nothing>Zatím nemáte žádné poličky</app-nothing>
+<app-nothing>{{'shelves.noShelves' | translate}}</app-nothing>
 </app-card>

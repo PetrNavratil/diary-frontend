@@ -8,6 +8,7 @@ import { getImageUrl } from '../../shared/getImageUrl';
 import { FriendRequest } from '../../models/friendRequest.model';
 import { animate, style, state, trigger, transition } from '@angular/animations';
 import { requestActions } from '../../reducers/friend-request.reducer';
+import { AuthService } from '../../shared/auth.service';
 
 const COLLAPSED = 'collapsed';
 const EXPANDED = 'expanded';
@@ -31,21 +32,21 @@ export class ToolbarComponent implements OnDestroy {
   friendRequests: FriendRequest[] = [];
   menuItems: any[] = [
     {
-      name: 'Knihy',
+      name: 'books.title',
       link: 'books'
     },
     {
-      name: 'Poličky',
+      name: 'shelves.title',
       link: 'shelves'
     },
     {
-      name: 'Přehled čtení',
+      name: 'statistics.title',
       link: 'statistics'
     }
   ];
   state: string = COLLAPSED;
 
-  constructor(private store: Store<AppState>, private cd: ChangeDetectorRef, private el: ElementRef) {
+  constructor(private store: Store<AppState>, private cd: ChangeDetectorRef, private el: ElementRef, private auth: AuthService) {
     this.subscriptions.push(this.store.select('users').subscribe(
       (data: SquirrelState<User>) => {
         if (!data.loading && data.data.length) {
@@ -84,8 +85,7 @@ export class ToolbarComponent implements OnDestroy {
 
   logout(event) {
     event.stopPropagation();
-    localStorage.clear();
-    location.reload();
+    this.auth.logout();
   }
 
   toggle(event){

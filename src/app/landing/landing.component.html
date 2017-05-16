@@ -1,9 +1,12 @@
 <div class="landing-container">
+  <div class="lang">
+<app-language></app-language>
+  </div>
   <div class="auth-section">
     <div class="logo-container">
       <img src="assets/1009-200.png" alt="" class="logo">
     </div>
-    <div class="name">Elektronický čtenářský deník</div>
+    <div class="name">{{'landing.title' | translate}}</div>
     <div class="forms-container">
 
       <form novalidate #f="ngForm" (ngSubmit)="login(f.value)" [@login]="loginState" (@login.done)="loginDone()">
@@ -17,11 +20,11 @@
                  class="input"
           >
           <md-hint *ngIf="userName.invalid && userName.touched" class="alert" align="start">
-            Email musí být zadaný
+            {{'landing.errors.emailNotSet' | translate}}
           </md-hint>
         </md-input-container>
         <md-input-container class="input-container" [dividerColor]="userPassword.invalid && userPassword.touched ? 'warn' : 'primary'">
-          <input mdInput placeholder="Heslo"
+          <input mdInput placeholder="{{'shared.password' | translate}}"
                  type="password"
                  name="password"
                  ngModel
@@ -32,15 +35,15 @@
                  class="input"
           >
           <md-hint *ngIf="userPassword.invalid && userPassword.touched" class="alert" align="start">
-            Heslo musí být delší než 5 znaků
+            {{'landing.errors.passwordLength' | translate}}
           </md-hint>
         </md-input-container>
         <span class="error" [ngClass]="{'visible': errorMessage.length}">{{errorMessage}}</span>
-        <button class="button login" type="submit" md-raised-button color="primary" [disabled]="f.invalid">Přihlásit se</button>
+        <button class="button login" type="submit" md-raised-button color="primary" [disabled]="f.invalid">{{'landing.login' | translate}}</button>
       </form>
       <form novalidate #reg="ngForm" (ngSubmit)="register(reg.value)" [@register]="registerState">
         <md-input-container class="input-container" [dividerColor]="regUserName.invalid && regUserName.touched ? 'warn' : 'primary'">
-          <input mdInput placeholder="Uživatelské jméno"
+          <input mdInput placeholder="{{'shared.username' | translate}}"
                  type="text"
                  name="userName"
                  ngModel
@@ -49,7 +52,7 @@
                  class="input"
           >
           <md-hint *ngIf="regUserName.invalid && regUserName.touched" class="alert" align="start">
-            Uživatelské jméno musí být zadané
+            {{'landing.errors.usernameNotSet' | translate}}
           </md-hint>
         </md-input-container>
         <md-input-container class="input-container" [dividerColor]="regEmail.invalid && regEmail.touched ? 'warn' : 'primary'">
@@ -63,11 +66,11 @@
                  class="input"
           >
           <md-hint *ngIf="regEmail.invalid && regEmail.touched" class="alert" align="start">
-            Emailová adresa není platná
+            {{'shared.errors.emailNotValid' | translate}}
           </md-hint>
         </md-input-container>
         <md-input-container class="input-container" [dividerColor]="regUserPass.invalid && regUserPass.touched ? 'warn' : 'primary'">
-          <input mdInput placeholder="Heslo"
+          <input mdInput placeholder="{{'shared.password' | translate}}"
                  type="password"
                  name="password"
                  ngModel
@@ -79,11 +82,11 @@
                  class="input"
           >
           <md-hint *ngIf="regUserPass.invalid && regUserPass.touched" class="alert" align="start">
-            Heslo musí být delší než 5 znaků
+            {{'landing.errors.passwordLength' | translate}}
           </md-hint>
         </md-input-container>
         <md-input-container class="input-container" [dividerColor]="regUserConfirm.invalid && regUserConfirm.touched ? 'warn' : 'primary'">
-          <input mdInput placeholder="Potvrzení hesla"
+          <input mdInput placeholder="{{'landing.confirmPassword' | translate}}"
                  type="password"
                  name="confirmPassword"
                  ngModel
@@ -95,22 +98,22 @@
                  class="input"
           >
           <md-hint *ngIf="regUserConfirm.invalid && regUserConfirm.touched" class="alert" align="start">
-            Hesla musí být shodná
+            {{'landing.errors.passwordsNotSame' | translate}}
           </md-hint>
         </md-input-container>
         <span class="error" [ngClass]="{'visible': errorMessage.length}">{{errorMessage}}</span>
-        <button type="submit" class="button login" md-raised-button color="primary" [disabled]="reg.invalid">Registrovat</button>
+        <button type="submit" class="button login" md-raised-button color="primary" [disabled]="reg.invalid">{{'landing.register' | translate}}</button>
       </form>
     </div>
 
     <div class="forgot-pass" [style.display]="show === 'login' && showReset ? 'block' : 'none'">
       <app-dropdown-row>
-        <div class="header" row-header>Zapomenuté heslo / Změna hesla</div>
+        <div class="header" row-header>{{'landing.forgotten-change' | translate}}</div>
         <div class="change-form" dropdown-content>
-          <div class="header">Zadejte email účtu, pro který chcete provést změnu hesla. Na tento email vám bude zaslán resetovací link.</div>
+          <div class="header">{{'landing.forgottenHint' | translate}}</div>
           <form novalidate #reset="ngForm" (ngSubmit)="resetPassword(reset.value)">
             <md-input-container class="input-container" [dividerColor]="changeEmail.invalid && changeEmail.touched ? 'warn' : 'primary'">
-              <input mdInput placeholder="Email Address"
+              <input mdInput placeholder="Email"
                      type="email"
                      name="email"
                      ngModel
@@ -120,11 +123,11 @@
                      class="input"
               >
               <md-hint *ngIf="changeEmail.invalid && changeEmail.touched" class="alert" align="start">
-                Emailová adresa není platná
+                {{'shared.errors.emailNotValid' | translate}}
               </md-hint>
             </md-input-container>
             <span class="error" [ngClass]="{'visible': errorMessage.length}">{{errorMessage}}</span>
-            <button class="button login" type="submit" md-raised-button color="primary" [disabled]="reset.invalid">Poslat email</button>
+            <button class="button login" type="submit" md-raised-button color="primary" [disabled]="reset.invalid">{{'landing.sendEmail' | translate}}</button>
           </form>
         </div>
       </app-dropdown-row>
@@ -132,28 +135,28 @@
     <div class="socials">
       <button class="button facebook" md-raised-button color="primary" (click)="fb()">
         <img src="assets/fb.png">
-        Přihlásit se přes Facebook
+        {{'landing.fbLogin' | translate}}
       </button>
       <button class="button google" md-raised-button color="primary" (click)="google()">
         <img src="assets/google-plus.svg">
-        Přihlásit se přes Google+
+        {{'landing.googleLogin' | translate}}
       </button>
     </div>
-    <div class="signup" *ngIf="show === 'login'">Ještě nemáte účet?
-      <span class="reg" routerLink="/landing/register">Registrujte se</span>
+    <div class="signup" *ngIf="show === 'login'">{{'landing.noAcc' | translate}}
+      <span class="reg" routerLink="/landing/register">{{'landing.registerNow' | translate}}</span>
     </div>
-    <div class="signup" *ngIf="show === 'register'"> Zpět na
-      <span class="reg" routerLink="/landing/login">přihlášení</span>
+    <div class="signup" *ngIf="show === 'register'"> {{'landing.backTo' | translate}}
+      <span class="reg" routerLink="/landing/login">{{'landing.loginForm' | translate}}</span>
     </div>
   </div>
   <div class="title">
     <div class="text-container">
       <div class="title-text">
-        Elektronický čtenářský deník
+        {{'landing.title' | translate}}
       </div>
       <div class="info">
-        <div class="text">Vyhledávejte, rozřazujte a trackujte čas čtení</div>
-        <div class="text">Vašich oblíbených knih.</div>
+        <div class="text">{{'landing.aboutFirstLine' | translate}}</div>
+        <div class="text">{{'landing.aboutSecondLine' | translate}}</div>
       </div>
     </div>
   </div>

@@ -12,9 +12,9 @@
         </div>
       </div>
       <div class="actions">
-        <app-loading-button class="button" [loading]="loading" [color]="'primary'" *ngIf="editable" [disabled]="unique" (click)="editShelf($event)" [title]="'Přejmenovat poličku'"></app-loading-button>
-        <app-loading-button class="button" [loading]="loading" [color]="'warn'" *ngIf="editable" (click)="deleteShelf(shelf.id, $event)" [title]="'Smazat poličku'"></app-loading-button>
-        <app-loading-button class="button" [loading]="loading" [color]="'primary'" *ngIf="!editable" (click)="copyShelfF(shelf.id, $event)" [title]="'Zkopírovat poličku'"></app-loading-button>
+        <app-loading-button class="button" [loading]="loading" [color]="'primary'" *ngIf="editable" [disabled]="unique" (click)="editShelf($event)" [title]="'shelves.renameShelf' | translate"></app-loading-button>
+        <app-loading-button class="button" [loading]="loading" [color]="'warn'" *ngIf="editable" (click)="deleteShelf(shelf.id, $event)" [title]="'shelves.deleteShelf' | translate"></app-loading-button>
+        <app-loading-button class="button" [loading]="loading" [color]="'primary'" *ngIf="!editable" (click)="copyShelfF(shelf.id, $event)" [title]="'shelves.copyShelf' | translate"></app-loading-button>
         <i class="material-icons dropdown-icon" [ngClass]="{'expanded': status}">arrow_drop_down_circle</i>
       </div>
     </div>

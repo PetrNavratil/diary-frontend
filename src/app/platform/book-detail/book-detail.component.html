@@ -3,33 +3,33 @@
 </ng-template>
 <div class="book-detail-container">
   <app-card>
-    <div title>Kniha</div>
+    <div title>{{'bookDetail.book' | translate}}</div>
     <div class="actions-row">
       <div class="source-name" *ngIf="bookInfo">
         {{bookInfo.title}} - {{bookInfo.author}}
       </div>
       <div class="actions" *ngIf="bookInfo">
-        <app-loading-button [icon]="'add'" [color]="'primary'" [title]="'Přidat knihu'" [loading]="insertLoading" class="button action-item"
+        <app-loading-button [icon]="'add'" [color]="'primary'" [title]="'bookDetail.addBook' | translate" [loading]="insertLoading" class="button action-item"
                             *ngIf="!bookInfo.inBooks" (click)="addBook()"></app-loading-button>
-        <app-loading-button [icon]="'delete'" [color]="'warn'" class="button action-item" [loading]="insertLoading" [title]="'Odebrat knihu'"
+        <app-loading-button [icon]="'delete'" [color]="'warn'" class="button action-item" [loading]="insertLoading" [title]="'bookDetail.removeBook' | translate"
                             *ngIf="bookInfo.inBooks" (click)="removeBook()"></app-loading-button>
         <app-loading-button [icon]="'play_circle_outline'" [color]="'primary'" class="button action-item" [loading]="false"
-                            [title]="'Začít trackovat'"
+                            [title]="'bookDetail.startTracking' | translate"
                             *ngIf="bookInfo.inBooks && trackings?.lastInterval?.id >= 0 && !showTimetamp"
                             (click)="startTracking()"></app-loading-button>
         <app-loading-button [icon]="'stop'" [color]="'warn'" class="button action-item" [loading]="false"
-                            [title]="'Přestat trackovat'"
+                            [title]="'bookDetail.stopTracking' | translate"
                             *ngIf="bookInfo.inBooks && trackings?.lastInterval?.id >= 0 && showTimetamp"
                             (click)="stopTracking()"></app-loading-button>
-        <app-dropdown class="action-item" [buttonTitle]="bookInfo.status | bookStatus" [closeOnClick]="true" [disabled]="!bookInfo.inBooks">
+        <app-dropdown class="action-item" [dropdownId]="'bookStatus'" [buttonTitle]="bookInfo.status | bookStatus | translate" [closeOnClick]="true" [disabled]="!bookInfo.inBooks">
           <div class="action-dropdown">
             <div class="item" *ngFor="let item of [0,1,2,3]" (click)="changeStatus(item)"
                  [ngClass]="{'selected': bookInfo.status === item }">
-              <span class="name">{{item | bookStatus}}</span>
+              <span class="name">{{item | bookStatus | translate}}</span>
             </div>
           </div>
         </app-dropdown>
-        <app-dropdown class="action-item" [buttonTitle]="'Spravovat poličky'" [disabled]="!bookInfo.inBooks">
+        <app-dropdown class="action-item" [dropdownId]="'shelves'" [buttonTitle]="'bookDetail.manageShelves' | translate" [disabled]="!bookInfo.inBooks">
           <div class="action-dropdown">
             <div class="item" *ngFor="let shelf of shelves" (click)="toggleShelf(shelf.id)">
               <span class="name">{{shelf.name | truncate: 13}}</span>
@@ -37,15 +37,15 @@
             </div>
             <div class="item new">
               <md-input-container>
-                <input mdInput placeholder="Přidat novou poličku" type="text" [(ngModel)]="newShelf">
+                <input mdInput placeholder="{{'shelves.newShelf' | translate}}" type="text" [(ngModel)]="newShelf">
               </md-input-container>
               <button class="button" md-raised-button color="warn" [disabled]="!newShelf.length || existThisShelf"
-                      (click)="addNewShelf($event)">Přidat <i class="material-icons">add</i></button>
+                      (click)="addNewShelf($event)">{{'bookDetail.add' | translate}} <i class="material-icons">add</i></button>
             </div>
           </div>
         </app-dropdown>
         <app-loading-button [color]="'primary'" class="button action-item" [loading]="pdf.loading$ | async"
-                            [title]="'Generovat PDF'"
+                            [title]="'bookDetail.generate' | translate"
                             *ngIf="bookInfo.inBooks"
                             (click)="generatePdf()"></app-loading-button>
       </div>
@@ -67,20 +67,20 @@
 
     <div class="info">
       <app-card>
-        <div title>Informace o knize</div>
+        <div title>{{'bookDetail.bookInfo' | translate}}</div>
         <div class="info-obal" *ngIf="bookRes && !bookResLoading; else spinner">
           <div class="info-container" *ngIf="selectedTab === tabs[0]">
             <div >
               <img class="cover" src="{{bookRes.goodReadsBook.imageUrl}}">
             </div>
             <div class="details">
-              <div class="label">název</div>
+              <div class="label">{{'book.title' | translate}}</div>
               <div class="content">{{bookRes.goodReadsBook.title}}</div>
-              <div class="label">autor</div>
+              <div class="label">{{'book.author' | translate}}</div>
               <div class="content">{{bookRes.goodReadsBook.authors[0].name}}</div>
-              <div class="label">publikovalo</div>
+              <div class="label">{{'book.published' | translate}}</div>
               <div class="content">{{bookRes.goodReadsBook.publisher}}</div>
-              <div class="label">počet stran</div>
+              <div class="label">{{'book.pages' | translate}}</div>
               <div class="content">{{bookRes.goodReadsBook.pages}}</div>
             </div>
             <div class="description">
@@ -92,13 +92,13 @@
               <img class="cover" src="{{bookRes.googleBook.imageUrl}}">
             </div>
             <div class="details">
-              <div class="label">název</div>
+              <div class="label">{{'book.title' | translate}}</div>
               <div class="content">{{bookRes.googleBook.title}}</div>
-              <div class="label">autor</div>
+              <div class="label">{{'book.author' | translate}}</div>
               <div class="content">{{bookRes.googleBook.author}}</div>
-              <div class="label">publikovalo</div>
+              <div class="label">{{'book.published' | translate}}</div>
               <div class="content">{{bookRes.googleBook.publisher}}</div>
-              <div class="label">počet stran</div>
+              <div class="label">{{'book.pages' | translate}}</div>
               <div class="content">{{bookRes.googleBook.pageCount}}</div>
             </div>
             <div class="description">
@@ -107,7 +107,7 @@
           </div>
           <div class="origin">
             <div class="text">
-              Zobrazovaná data pocházejí ze serveru
+              {{'bookDetail.dataOrigin' | translate}}
             </div>
             <a [href]="bookRes.goodReadsBook.originUrl" target="_blank" *ngIf="selectedTab === tabs[0]">
               <img src="https://s.gr-assets.com/assets/layout/header/goodreads_logo.svg" class="logo">
@@ -121,46 +121,47 @@
       <!--Buy section-->
       <div *ngIf="bookInfo  && trackings.readings.length === 0; then buy"></div>
       <app-card *ngIf="bookInfo?.inBooks && (bookInfo.status === BookStatus.READING ||bookInfo.status === BookStatus.READ)">
-       <div title>Přehled čtení knihy</div>
+       <div title>{{'bookDetail.readingOverview' | translate}}</div>
         <div class="reading" *ngIf="!trackingsLoading && trackings.readings.length; else spinner">
           <div class="title-row">
             <div class="reading-item">
-              <div class="label">přečteno</div>
+              <div class="label">{{'bookDetail.read' | translate}}</div>
               <div class="content">{{trackings.readings[selectedReading].completed ? trackings.readings.length : trackings.readings.length
                 -1}}x
               </div>
             </div>
             <div class="reading-item">
-              <div class="label">celková doba čtení</div>
+              <div class="label">{{'bookDetail.readingTime' | translate}}</div>
               <div class="content">{{wholeTimeReading}}</div>
             </div>
             <app-dropdown
-              [buttonTitle]="selectedReading === -1 ? 'Vyberte obdobi' : (selectedReading+1) + '. Čtení'"
+              [buttonTitle]="selectedReading === -1 ? 'Vyberte obdobi' : (selectedReading+1) + '.' + ('bookDetail.reading' | translate)"
               [closeOnClick]="true"
+              [dropdownId]="'readingSelect'"
               [disabled]="trackings.readings.length === 0">
               <div class="action-dropdown">
                 <div class="item" [ngClass]="{'selected': selectedReading === i}" *ngFor="let reading of trackings.readings; let i = index"
                      (click)="selectReading(i)">
-                  <span class="name">Čtení {{i+1}}.</span>
+                  <span class="name">{{'bookDetail.reading' | translate}} {{i+1}}.</span>
                 </div>
               </div>
             </app-dropdown>
           </div>
           <div class="reading-info-row">
             <div class="reading-left-column">
-              <div class="label">období čtení</div>
+              <div class="label">{{'bookDetail.readingPeriod' | translate}}</div>
               <div class="content" style="max-width: 158px;width: 158px;">{{readingStartStop}}</div>
-              <div class="label">stav</div>
-              <div class="content">{{trackings.readings[selectedReading].completed ? (BookStatus.READ | bookStatus) : (BookStatus.READING
-                | bookStatus) }}
+              <div class="label">{{'bookDetail.status' | translate}}</div>
+              <div class="content">{{trackings.readings[selectedReading].completed ? (BookStatus.READ | bookStatus | translate) : (BookStatus.READING
+                | bookStatus | translate) }}
               </div>
             </div>
             <div class="reading-table-column">
               <div class="reading-table" *ngIf="selectedReading > -1">
                 <div class="table-row header-row">
-                  <div class="table-item header">OD</div>
-                  <div class="table-item header">DO</div>
-                  <div class="table-item header">CAS</div>
+                  <div class="table-item header">{{'bookDetail.from' | translate}}</div>
+                  <div class="table-item header">{{'bookDetail.to' | translate}}</div>
+                  <div class="table-item header">{{'bookDetail.duration' | translate}}</div>
                 </div>
                 <div class="table-row" *ngFor="let interval of intervalsTableData">
                   <div class="table-item">{{interval.start}}</div>
@@ -168,7 +169,7 @@
                   <div class="table-item">{{interval.duration}}</div>
                 </div>
                 <div class="table-row footer">
-                  <div class="table-item footer-item">Celkový čas</div>
+                  <div class="table-item footer-item">{{'bookDetail.overallTime' | translate}}</div>
                   <div class="table-item footer-item"></div>
                   <div class="table-item footer-item">{{readingDuration}}</div>
                 </div>
@@ -180,7 +181,7 @@
     </div>
   </div>
   <app-card>
-    <div title>Doporučené knihy podle GoodReads</div>
+    <div title>{{'bookDetail.recommendedBooks' | translate}}</div>
     <div *ngIf="bookResLoading; then spinner"></div>
     <div class="similar-books-container" [ngClass]="{'hidden': bookResLoading}" #bookContainer>
       <div class="navigate left" (mousedown)="shiftLeft()" (mouseup)="stopShift()" (contextmenu)="$event.preventDefault()">
@@ -196,7 +197,7 @@
   </app-card>
 
   <app-card>
-    <div title>Komentáře ke knize</div>
+    <div title>{{'bookDetail.comments' | translate}}</div>
     <div class="comments">
       <div class="my-comment">
         <app-comment
@@ -215,9 +216,9 @@
 
   </app-card>
   <app-card *ngIf="bookInfo?.inBooks" class="educational">
-    <div title> Rozbor díla</div>
-    <app-dropdown-row (status)="changeEducationalVisibility($event)">
-      <div class="header" row-header>Kliknutím {{educationalVisible ? 'skryjete' : 'zobrazíte'}} sekci rozboru díla </div>
+    <div title>{{'bookDetail.analysis' | translate}}</div>
+    <app-dropdown-row (isExpanded)=changeEducationalVisibility($event)>
+      <div class="header" row-header>{{educationalVisible ? ('bookDetail.analysisClose' | translate) : ('bookDetail.analysisOpen' |  translate)}} </div>
       <div class="education-content" dropdown-content>
         <app-education [data]="bookInfo.educational" (dataUpdate)="setEducational($event)"></app-education>
       </div>
@@ -226,7 +227,7 @@
   <ng-template #buy>
     <div [style.margin-top.px]="trackings.readings.length > 0 ? 40 : 0">
       <app-card>
-        <div title>Kupte knihu</div>
+        <div title>{{'bookDetail.buy' | translate}}</div>
         <div class="buy" [ngClass]="{'column': trackings.readings.length > 0 }">
           <a class="image-link" [href]="'https://play.google.com/store/search?c=books&q=' + bookInfo.title + bookInfo.author"
              target="_blank">

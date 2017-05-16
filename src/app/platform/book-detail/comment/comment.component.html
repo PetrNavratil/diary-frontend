@@ -17,9 +17,9 @@
         {{commentData.text.length > 0 ? commentData.text : commentPlaceholder}}
       </div>
       <div class="buttons">
-        <app-loading-button [loading]="loading" [title]="'Odebrat komentář'" [color]="'warn'" class="button" (click)="remove()" *ngIf="commentData.id && editable"></app-loading-button>
-        <app-loading-button [loading]="loading" [title]="'Přidat komentář'" class="button" (click)="add()" *ngIf="!commentData.id"></app-loading-button>
-        <app-loading-button [loading]="loading" [title]="'Upravit komentář'" class="button" (click)="edit()" *ngIf="commentData.id && editable"></app-loading-button>
+        <app-loading-button [loading]="loading" [title]="'comments.remove' | translate" [color]="'warn'" class="button" (click)="remove()" *ngIf="commentData.id && editable"></app-loading-button>
+        <app-loading-button [loading]="loading" [title]="'comments.add' | translate" class="button" (click)="add()" *ngIf="!commentData.id"></app-loading-button>
+        <app-loading-button [loading]="loading" [title]="'comments.edit' | translate" class="button" (click)="edit()" *ngIf="commentData.id && editable"></app-loading-button>
       </div>
     </div>
   </div>

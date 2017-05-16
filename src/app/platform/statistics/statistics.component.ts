@@ -13,6 +13,7 @@ import { getDurationFormat } from '../../shared/duration-format';
 import { Subscription } from 'rxjs';
 import { StatisticInterval } from '../../models/statistic-interval.model';
 import { intervalsActions } from '../../reducers/statistic-intervals.reducer';
+import { LanguageService } from '../../shared/language.service';
 
 @Component({
   selector: 'app-statistics',
@@ -40,8 +41,7 @@ export class StatisticsComponent implements OnDestroy {
   @ViewChild('yearTimeline') yearTimelineElement: ElementRef;
   @ViewChild('monthTimeline') monthTimelineElement: ElementRef;
 
-  constructor(private store: Store<AppState>, private cd: ChangeDetectorRef) {
-    moment.locale('cs');
+  constructor(private store: Store<AppState>, private cd: ChangeDetectorRef, private language: LanguageService) {
     this.months = Array.from(Array(12).keys()).map(index => ({
       id: index,
       name: `${moment().month(index).format('MMMM')}`
@@ -114,7 +114,7 @@ export class StatisticsComponent implements OnDestroy {
   }
 
   get spentReading() {
-    return getDurationFormat(moment.duration(this.statistic.timeSpentReading));
+    return getDurationFormat(moment.duration(this.statistic.timeSpentReading), this.language.getCurrent());
   }
 
   selectMonth(month: Month) {
@@ -175,9 +175,7 @@ export class StatisticsComponent implements OnDestroy {
 
   createOptions(year: boolean): any {
     let opts = {
-      moment: function (date) {
-        return moment(date).locale('cs');
-      },
+      moment: (date) => moment(date).locale(this.language.getCurrent()),
       tooltip: {
         followMouse: true,
       },

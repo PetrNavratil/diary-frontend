@@ -1,0 +1,256 @@
+{
+  "landing": {
+    "title": "Elektronický čtenářský deník",
+    "aboutFirstLine": "Vyhledávejte, rozřazujte a trackujte čas čtení",
+    "aboutSecondLine": "Vašich oblíbených knih.",
+    "forgotten-change": "Zapomenuté heslo / Změna hesla",
+    "fbLogin": "Přihlásit se přes Facebook",
+    "googleLogin": "Přihlásit se přes Google+",
+    "noAcc": "Ještě nemáte účet?",
+    "registerNow": "Registrujte se!",
+    "forgottenHint": "Zadejte email účtu, pro který chcete provést změnu hesla. Na tento email vám bude zaslán resetovací link.",
+    "sendEmail": "Poslat email",
+    "login": "Přihlásit se",
+    "register": "Registrovat",
+    "backTo": "Zpět na ",
+    "loginForm": "přihlášení",
+    "confirmPassword": "Potvrzení hesla",
+    "errors": {
+      "emailNotSet": "Email musí být zadaný",
+      "passwordLength": "Heslo musí být delší než 5 znaků",
+      "usernameNotSet": "Uživatelské jméno musí být zadané",
+      "passwordsNotSame": "Hesla musí být shodná"
+    }
+  },
+  "shared": {
+    "username": "Uživatelské jméno",
+    "password": "Heslo",
+    "firstName": "Jméno",
+    "lastName": "Příjmení",
+    "cs": "Čeština",
+    "en": "Angličtina",
+    "errors" : {
+      "emailNotValid": "Emailová adresa není platná"
+    }
+  },
+  "books": {
+    "title": "Knihy",
+    "yourBooks": "Vaše knihy",
+    "searchAmongBooks": "Vyhledávejte mezi vašemi knihami podle názvu či autora",
+    "generateList": "Generovat seznam",
+    "noBooks": "Zatím nemáte přidatené žádné knihy",
+    "recentBooks": "Nedávno přidané knihy",
+    "searchNewBooks": "Vyhledávejte knihy"
+  },
+  "book": {
+    "NOT_READ": "Nepřečteno",
+    "TO_READ": "Chci číst",
+    "READING": "Čtu",
+    "READ": "Přečteno",
+    "ALL": "Vše",
+    "title": "Název",
+    "author": "Autor",
+    "status": "Stav",
+    "published": "Publikovalo",
+    "pages": "Počet stran"
+  },
+  "shelves": {
+    "title": "Poličky",
+    "yourShelves": "Vaše poličky",
+    "newShelf": "Název nové poličky",
+    "addShelf": "Přidat poličku",
+    "renameShelf": "Přejmenovat poličku",
+    "deleteShelf": "Smazat poličku",
+    "copyShelf": "Zkopířovat poličku",
+    "noShelves" : "Zatím nemáte žádné poličky"
+  },
+  "statistics": {
+    "title": "Přehled čtení",
+    "summary": "Celkový přehled čtení",
+    "bookCount": "Počet knih",
+    "readCount": "Počet přečtených knih",
+    "readingCount": "Počet čtených knih",
+    "toReadCount": "Počet knih k přečtení",
+    "notReadCount": "Počet přidaných, ale nepřečtených knih",
+    "timeSpentReading": "Čas strávený čtením",
+    "intervalSum": "Součet dílčích intervalů",
+    "mostRead": "Nejvícekrát přečtená kniha",
+    "intervalTimeline": "Časová osa čtení knih za období ",
+    "intervalTimelineDesc": "Intervaly jednotlivých úseků čtení",
+    "show": "Klikněte pro zobrazení",
+    "hide": "Klikněte pro skytí",
+    "allTimeline": "Časová osa čtení všech knih",
+    "allTimelineDesc": "Intervaly celkové doby četby",
+    "intervalNoBooks": "Ve zvolenem období nebyla čtena žádná kniha.",
+    "noBooksRead": "Zatím jste nečetli žádnou knihu."
+  },
+  "bookDetail": {
+    "book": "Kniha",
+    "addBook": "Přidat knihu",
+    "removeBook": "Odebrat knihu",
+    "startTracking": "Začít stopovat",
+    "stopTracking": "Přestat stopovat",
+    "manageShelves": "Spravovat poličky",
+    "add": "Přidat",
+    "generate": "Generovat PDF",
+    "buy": "Kupte knihu",
+    "recommendedBooks": "Doporučené knihy podle Goodreads",
+    "comments": "Komentáře ke knize",
+    "analysis": "Rozbor díla",
+    "analysisOpen": "Kliknutím zobrazíte sekci rozboru díla",
+    "analysisClose": "Kliknutím skryjete sekci rozboru díla",
+    "bookInfo": "Informace o knize",
+    "dataOrigin": "Zobrazená data pocházejí ze serveru",
+    "readingOverview": "Přehled čtení knihy",
+    "read": "Přečteno",
+    "readingTime": "Celková doba čtení",
+    "reading": "Čtení",
+    "readingPeriod": "Období čtení",
+    "status": "Stav",
+    "from": "Od",
+    "to": "Do",
+    "duration": "Čas",
+    "overallTime": "Celkový čas"
+  },
+  "educational": {
+    "add": "Přidat nový rozbor",
+    "edit": "Upravit rozbor"
+  },
+  "profile": {
+    "userInfo": "Uživatelské údaje",
+    "confirmChanges": "Potvrdit změny",
+    "changePasswordHint": "Po kliknutí na následující tlačítko Vám bude na vaši emailovou adresu odeslán odkaz, kde je možné provést změni hesla.",
+    "changePassword": "Změnit heslo",
+    "findFriends": "Vyhledávejte přátele",
+    "searchHint": "Hledejte podle jména, příjmení, přezdívky či emailu",
+    "incomingRequests": "Příchozí žádost o přátelství",
+    "noUsers": "Žádní uživatelé nebyli nalezeni",
+    "sendRequest": "Poslat žádost",
+    "abortRequest": "Zrušit žádost",
+    "removeFriend": "Odebrat z přátel",
+    "accept": "Příjmout",
+    "decline": "Odmítnout",
+    "outgoingRequests": "Odeslané žádosti o přátelství",
+    "yourFriends": "Vaši přátelé"
+  },
+  "friend": {
+    "userDetail": "Detail uživatele",
+    "userShelves": "Poličky uživatele",
+    "userBooks": "Knihy uživatele",
+    "friendsSince": "Přátelé od",
+    "books": "Knih",
+    "shelves": "Poliček"
+  },
+  "comments": {
+    "add": "Přidat komentář",
+    "remove": "Odebrat komentář",
+    "edit": "Upravit komentář"
+  },
+  "toasts": {
+    "refresh": "Kliknutím aktualizujete stránku.",
+    "user": {
+      "title": "Uživatel",
+      "getFail": "Nepodařilo se získat uživatele.",
+      "editSuc": "Uživatel byl úspěšně editován.",
+      "editFail": "Nepodařilo editovat uživatele.",
+      "avatarSuc": "Nový avatar byl úspěšně nahrán.",
+      "avatarFail": "Nepodařilo se nahrát nový avatar."
+    },
+    "detail": {
+      "title": "Kniha",
+      "getFail": "Nepodařilo se načíst informace o knize."
+    },
+    "books": {
+      "title": "Kniha",
+      "getBooksFail": "Nepodařilo se načíst vaše knihy.",
+      "getBookFail": "Nepodařilo se načíst knihu.",
+      "insertSuc": "Kniha byla úspěšně přidána mezi vaše knihy.",
+      "insertFail": "Nepodařilo se přidat knihu mezi vaše knihy.",
+      "removeSuc": "Kniha byla úspěšně odebrána z vašich knih.",
+      "removeFail": "Nepodařilo se odebrat knihu z vašich knih",
+      "statusSuc": "Stav knihy byl úspěšně aktualizován.",
+      "statusFail": "Nepodařilo se aktualizovat stav knihy."
+    },
+    "comments": {
+      "title": "Komentáře",
+      "getFail": "Nepodařilo se získat komentáře knihy.",
+      "insertSuc": "Komentář byl úspěšně přidán.",
+      "insertFail": "Nepodařilo se přidat nový komentář.",
+      "removeSuc": "Komentář byl úspěšně smazán.",
+      "removeFail": "Nepodařilo se smazat komentář.",
+      "editSuc": "Komentář byl úspěšně editován.",
+      "editFail": "Nepodařilo se editovat komentář."
+    },
+    "requests": {
+      "title": "Žádost o přátelství",
+      "getFail": "Nepodařilo se žádosti.",
+      "addSuc": "Žádost byla úspěšně odeslána.",
+      "addFail": "Žádost se nepodařilo odeslat.",
+      "declineSuc": "Žádost byla odmítnuta.",
+      "declineFail": "Žádost se nepodařilo odmítnout.",
+      "acceptSuc": "Žádost byla přijata.",
+      "acceptFail": "Žádost se nepodařilo příjmout.",
+      "removeSuc": "Žádost byla úspěšně odebrána.",
+      "removeFail": "Nepodařilo se odebrat žádost."
+    },
+    "friends": {
+      "title": "Přátelé",
+      "getFriendsFail": "Nepodařilo se načíst přátelé.",
+      "getFriendFail": "Nepodařilo se načíst přítele.",
+      "removeFail": "Nepodařilo se odebrat přítele.",
+      "searchFail": "Nepodařilo se vyhledat přátelé."
+    },
+    "latest": {
+      "title": "Přidané knihy",
+      "getFail": "Nepodařilo se získat nově přidané knihy."
+    },
+    "readings": {
+      "title": "Čtení",
+      "getFail": "Nepodařilo se načíst informace o čtení knihy."
+    },
+    "search": {
+      "title": "Vyhledávání",
+      "searchFail": "Během vyhledávání došlo k chybě. Zkuste to znovu"
+    },
+    "shelves": {
+      "title": "Polička",
+      "getShelvesFail": "Nepodařilo se načíst poličky",
+      "addShelfSuc": "Polička byla úspěšně přidána.",
+      "addShelfFail": "Nepodařilo se přidat poličku.",
+      "addBookSuc": "Kniha byla úspěšně přidána do poličky.",
+      "addBookFail": "Nepodařilo se přidat knihu do poličky.",
+      "removeBookSuc": "Kniha byla úspěšně odebrána z poličky.",
+      "removeBookFail": "Nepodařilo se odebrat knihu z poličky.",
+      "removeShelfSuc": "Polička byla úspěšně odebrána.",
+      "removeShelfFail": "Nepodařilo se odebrat poličku.",
+      "editShelfSuc": "Polička byla úspěšně editována.",
+      "editShelfFail": "Nepodařilo se editovat poličku.",
+      "copySuc": "Polička byla úspěšně zkopírována mezi vaše poličky.",
+      "copyFail": "Poličku se nepodařilo zkopírovat."
+    },
+    "intervals": {
+      "title": "Intervaly",
+      "getFail": "Nepodařilo se načíst intervaly pro dané období."
+    },
+    "statistics": {
+      "title": "Statistiky",
+      "getFail": "Nepodařilo se načíst uživatelské statistiky."
+    },
+    "trackings": {
+      "title": "Stopování",
+      "getTrackingFail": "Nepodařilo se načíst stopování knihy.",
+      "getLastFail": "Nepodařilo se načíst poslední stopování.",
+      "startSuc": "Stopování knihy bylo úspěšně zahájeno.",
+      "startFail": "Nepodařilo se začít nové stopování.",
+      "stopSuc": "Stopování knihy bylo úspěšně ukončeno.",
+      "stopFail": "Nepodařilo se načíst ukončit stopování."
+    },
+    "pdf": {
+      "title": "PDF",
+      "detailSuc": "Detail knihy byl úspěšně vygenerován.",
+      "detailFail": "Detail knihy se nepodařilo vygenerovat.",
+      "listSuc": "Seznam knih byl úspěšně vygenerován.",
+      "listFail": "Seznam knih se nepodařilo vygenerovat."
+    }
+  }
+}

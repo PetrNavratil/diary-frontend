@@ -8,6 +8,7 @@ import { SquirrelState } from '@flowup/squirrel';
 import { Subscription } from 'rxjs';
 import { ToastsManager } from 'ng2-toastr';
 import { AuthService } from './shared/auth.service';
+import { LanguageService } from './shared/language.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,13 @@ import { AuthService } from './shared/auth.service';
 export class AppComponent {
   subscription: Subscription;
 
-  constructor(private router: Router, private store: Store <AppState>, private toastr: ToastsManager, private vcr: ViewContainerRef, private auth: AuthService) {
+  constructor(private router: Router,
+              private store: Store <AppState>,
+              private toastr: ToastsManager,
+              private vcr: ViewContainerRef,
+              private auth: AuthService,
+  private language: LanguageService) {
+    this.language.init();
     this.auth.handleAuthentication();
     this.toastr.setRootViewContainerRef(vcr);
     if(auth.isValid()){

@@ -5,7 +5,6 @@ import {
 import { DiaryComment } from '../../../models/comment.model';
 import { getImageUrl } from '../../../shared/getImageUrl';
 import * as moment from 'moment';
-import 'moment/locale/cs';
 
 @Component({
   selector: 'app-comment',
@@ -26,7 +25,6 @@ export class CommentComponent{
   focused = false;
 
   constructor(){
-    moment.locale('cs');
   }
 
   edit() {

@@ -24,9 +24,9 @@ import { shelvesActions } from '../../reducers/shelves.reducer';
 import { trackingActions } from '../../reducers/tracking.reducer';
 import { StoredReading, Interval, Reading } from '../../models/tracking.model';
 import * as moment from 'moment';
-import 'moment/locale/cs';
 import { getDurationFormat } from '../../shared/duration-format';
 import { PdfService } from '../../shared/pdf.service';
+import { LanguageService } from '../../shared/language.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -88,8 +88,8 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
               private router: Router,
               private http: Http,
               private cd: ChangeDetectorRef,
+              private language: LanguageService,
               private pdf: PdfService) {
-    moment.locale('cs');
     this.route.params.subscribe(params => {
       this.id = +params['id'];
       this.store.dispatch({type: 'CLEAR'});
@@ -242,7 +242,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
               if(this.trackings.readings.length){
                 this.wholeTimeReading = getDurationFormat(moment.duration(this.trackings.readings.map(reading => this.getReadingDuration(reading.intervals)).reduce(
                   (acc, val) => acc.add(val), moment.duration(0)
-                )));
+                )), this.language.getCurrent());
                 this.intervalsTableData = this.createIntervalsTableData(this.trackings.readings[this.selectedReading].intervals);
                 this.readingDuration = this.getTimeStampsDurationFormatted(
                   this.getReadingDuration(this.trackings.readings[this.selectedReading].intervals)
@@ -299,7 +299,7 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
    */
   getTimeStampsDurationFormatted(duration: moment.Duration): string {
     if (duration.as('milliseconds') > 0) {
-      return getDurationFormat(duration);
+      return getDurationFormat(duration, this.language.getCurrent());
     } else {
       return '-';
     }
@@ -451,8 +451,8 @@ export class BookDetailComponent implements OnInit, AfterViewChecked, OnDestroy 
   this.pdf.generateBookDetailPdf(this.id);
   }
 
-  changeEducationalVisibility(status: string){
-    this.educationalVisible = status === 'expanded';
+  changeEducationalVisibility(status: boolean){
+    this.educationalVisible = status;
   }
 
   interval: any;

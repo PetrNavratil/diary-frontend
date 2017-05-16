@@ -7,12 +7,16 @@ import { Action } from '@ngrx/store';
 import { friendsActions } from '../reducers/friends.reducer';
 import { environment } from '../../environments/environment';
 import { createOptions } from '../shared/createOptions';
+import { LanguageService } from '../shared/language.service';
 const API_ENDPOINT = '/friends';
 
 @Injectable()
 export class FriendsEffect {
 
-  constructor(private actions: Actions, private http: Http, private toastr: ToastrService) {
+  constructor(private actions: Actions,
+              private http: Http,
+              private language: LanguageService,
+              private toastr: ToastrService) {
   }
 
   @Effect() getFriends: Observable<Action> = this.actions
@@ -20,7 +24,10 @@ export class FriendsEffect {
     .switchMap((action) => this.http.get(`${environment.apiUrl}${API_ENDPOINT}`, createOptions())
       .map(body => ({type: friendsActions.GET, payload: body.json()}))
       .catch(body => {
-        this.toastr.showError('Nepodařilo se načíst přátelé. Kliknutím aktualizujete stránku.', 'Přátelé');
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.friends.getFriendsFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.friends.title')}`
+        );
         return Observable.of({type: friendsActions.API_GET_FAIL, payload: body.json()})
       }));
 
@@ -29,7 +36,10 @@ export class FriendsEffect {
     .switchMap((action) => this.http.get(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`, createOptions())
       .map(body => ({type: friendsActions.GET, payload: [body.json()]}))
       .catch(body => {
-        this.toastr.showError('Nepodařilo se načíst přítele. Kliknutím aktualizujete stránku.', 'Přátelé');
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.friends.getFriendFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.friends.title')}`
+        );
         return Observable.of({type: friendsActions.API_GET_FAIL, payload: body.json()})
       }));
 
@@ -38,7 +48,10 @@ export class FriendsEffect {
     .switchMap((action) => this.http.delete(`${environment.apiUrl}${API_ENDPOINT}/${action.payload}`, createOptions())
       .map(body => ({type: friendsActions.DELETE, payload: body.json()}))
       .catch(body => {
-        this.toastr.showError('Nepodařilo se odebrat přítele. Kliknutím aktualizujete stránku.', 'Přátelé');
+        this.toastr.showError(
+          `${this.language.instantTranslate('toasts.friends.removeFail')}${this.language.instantTranslate('toasts.refresh')}`,
+          `${this.language.instantTranslate('toasts.friends.title')}`
+        );
         return Observable.of({type: friendsActions.API_DELETE_FAIL, payload: body.json()})
       }));
 
